@@ -199,8 +199,8 @@ class PropertyController extends ValuationAdminBaseController
         $this->rentalIncome = isset($propertyData->rental_income) ? $propertyData->rental_income : 0;
         $this->estimatedValue = isset($propertyData->estimated_value) ? $propertyData->estimated_value : 0;
         $this->status = isset($propertyData->status) ? $propertyData->status : 'Draft';
-        $this->dimensions = optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray();
-        $this->addOnCosts = optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray();
+        $this->dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
+        $this->addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
 
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -323,7 +323,7 @@ class PropertyController extends ValuationAdminBaseController
                 }
             )
             ->addIndexColumn()
-            ->rawColumns(['title', 'action'])
+            ->rawColumns(array('title', 'action'))
             ->make(true);
     }
 

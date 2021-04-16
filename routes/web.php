@@ -614,7 +614,6 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('all-time-logs', 'ManageAllTimeLogController');
 
                 // task routes
-                // task routes
                 Route::resource('task', 'ManageAllTasksController', ['only' => ['edit', 'update', 'index']]); // hack to make left admin menu item active
                 Route::group(
                     ['prefix' => 'task'],

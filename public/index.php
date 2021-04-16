@@ -1,54 +1,5 @@
 <?php
 
-/*$servername = "localhost";
-$username = "root";
-$password = "root";
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=valuation_new", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    echo "<pre>"; print_r(menu_hierarchy($conn, 0)); exit;
-    echo "Connected successfully";
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
-
-function menu_hierarchy($conn, $perentId){
-    $query = "SELECT * FROM valuation_menus WHERE parent=".$perentId;
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-
-    //$results = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $results = $stmt->fetchAll();
-    //$return = '';
-    foreach ($results as $key => $result) {
-        $children = menu_hierarchy($conn, $result['id']);
-        $results[$key]['children'] = (!empty($children)) ? $children : array();
-        $return = $results;
-        //echo "<pre>"; print_r($return);
-    }
-    return isset($return)?$return:array();
-
-}
-echo "<pre>"; print_r("var"); exit;*/
-
-
-/*public function menu_hierarchy($parentId)
-{
-    $this->where('status', 'Active');
-    $this->where('parent', $parentId);
-    $results =  $this->get();
-
-    foreach ($results as $key => $result) {
-        $children = $this->menu_hierarchy($result->id);
-        $result->children = (!empty($children)) ? $children : array();
-        $return = $results;
-    }
-    return $return;
-}*/
-
 if(!file_exists('../.env')){
     $GLOBALS["error_type"] = "env-missing";
     include('error_install.php');

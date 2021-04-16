@@ -88,7 +88,7 @@ class AdminBaseController extends Controller
             setlocale(LC_TIME, $this->global->locale . '_' . strtoupper($this->global->locale));
             $this->setFileSystemConfigs();
 
-
+            
             $this->isClient = User::withoutGlobalScope(CompanyScope::class)
                 ->join('role_user', 'role_user.user_id', '=', 'users.id')
                 ->join('roles', 'roles.id', '=', 'role_user.role_id')

@@ -93,5 +93,9 @@ $class['createPropertyClass'] = 'Create Property Class';
 $class['editPropertyClass'] = 'Edit Property Class';
 $valuationLang['property']['class'] = $class;
 
+$propertyImges=array();
+$propertyImges['image']='Property Image';
+$valuationLang['property']['media']=$propertyImges;
+
 
 return $valuationLang;

@@ -24,8 +24,17 @@ jQuery.fn.extend({
             input.each(function (index, el) {
                 var attrName = $(el).data('name');
                 var skipName = $(el).data('skip-name');
+                var singleWay = $(el).data('img-data');
                 if (skipName != true) {
+                    if(singleWay!='undefined' && singleWay==true)
+                    {
+                        $(el).attr("name", group + "[" + key + "]");
+                    }
+                    else
+                    {
                     $(el).attr("name", group + "[" + key + "]" + "[" + attrName + "]");
+                    }
+
                 } else {
                     if (attrName != 'undefined') {
                         $(el).attr("name", attrName);

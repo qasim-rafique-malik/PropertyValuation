@@ -30,7 +30,7 @@ class CreateValuationPropertiesTable extends Migration
                 $table->string('title')->nullable();
                 $table->string('locality')->default('');
                 $table->string('road')->default(null);
-                $table->string('coordinates')->default(null);
+//                $table->string('coordinates')->default(null);
                 $table->string('plot_num')->default(null);
                 $table->string('land_size')->default(null);
                 $table->string('sizes_in_meter_sq')->default(null);
@@ -79,6 +79,19 @@ class CreateValuationPropertiesTable extends Migration
 
                 $table->timestamps();
             });
+        }
+
+        if (!Schema::hasColumn('valuation_properties', 'latitude'))
+        {
+            Schema::table('valuation_properties', function($table) {
+                $table->string('latitude')->default(0);
+             });
+        }
+        if (!Schema::hasColumn('valuation_properties', 'longitude'))
+        {
+            Schema::table('valuation_properties', function($table) {
+                $table->string('longitude')->default(0);
+             });
         }
     }
 

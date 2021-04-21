@@ -135,6 +135,9 @@
         $("#repeaterAddOnCost").createRepeater({
             showFirstItemToDefault: true,
         });
+        $("#repeaterUpload").createRepeater({
+            showFirstItemToDefault: true,
+        });
     </script>
 
     <script data-name="basic">
@@ -199,6 +202,7 @@
                 container: '#saveUpdateProperty',
                 type: "POST",
                 redirect: true,
+                file: true,
                 data: $('#saveUpdateProperty').serialize()
             })
         });

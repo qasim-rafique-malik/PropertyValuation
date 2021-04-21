@@ -3,11 +3,13 @@
 namespace Modules\Valuation\Http\Controllers\Admin\Properties;
 
 use App\Country;
+use App\Helper\Files;
 use App\Helper\Reply;
 use Illuminate\Http\Request;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationGovernorate;
 use Modules\Valuation\Entities\ValuationPropertyClass;
+use Modules\Valuation\Entities\ValuationPropertyMedia;
 use Modules\Valuation\Http\Controllers\Admin\Properties\CategorizationController;
 use Modules\Valuation\Http\Controllers\Admin\Settings\BlockController;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
@@ -258,8 +260,23 @@ class PropertyController extends ValuationAdminBaseController
         $property->rental_income = isset($request->rentalIncome) ? $request->rentalIncome : 0;
         $property->estimated_value = isset($request->estimatedValue) ? $request->estimatedValue : 0;
         $property->status = isset($request->propertyStatus) ? $request->propertyStatus : 'Draft';
+        $property->latitude=isset($request->latitude) ? $request->latitude : '0';
+        $property->longitude=isset($request->longitude) ? $request->longitude : '0';
         $property->save();
+        $propertyId=$property->id;
 
+        if ($request->hasFile('image'))
+        {
+            foreach($request->image as $key=> $img)
+            {
+                $propertyImg=new ValuationPropertyMedia;
+                $imgName=Files::upload($img, 'property-img',300);
+                $propertyImg->property_id=$propertyId;
+                $propertyImg->media_name=$imgName;
+                $propertyImg->save();
+            }
+
+        }
         $dimensions = isset($request->dimensions)?$request->dimensions:array();
         $dimensionsEncode = json_encode($dimensions);
         $addOnCosts = isset($request->addOnCosts)?$request->addOnCosts:array();

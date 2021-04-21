@@ -22,6 +22,8 @@
                                    data-toggle="tab"
                                    aria-controls="LandInfoNeighbourhood"
                                    aria-expanded="false">Neighbourhood</a></li>
+                            <li><a href="#UploadTab" class="nav-link nav-item" data-toggle="tab" aria-controls="UploadTab" aria-expanded="false">Uploads
+                                </a></li>
                         </ul>
 
                     </div>
@@ -139,12 +141,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Coordinates</label>
-                                            <input type="text" name="coordinates" id="coordinates"
-                                                   value="{{isset($coordinates)?$coordinates:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
+                                                    <label class="control-label">Latitude</label>
+                                                    <input type="text" name="latitude" id="latitude" value="{{isset($latitude)?$latitude:''}}"  class="form-control" autocomplete="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Longitude</label>
+                                                    <input type="text" name="longitude" id="longitude" value="{{isset($longitude)?$longitude:''}}"  class="form-control" autocomplete="">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -155,6 +164,11 @@
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="map_canvas" style="width: auto; height: 400px;"></div>
                                     </div>
                                 </div>
 
@@ -478,6 +492,67 @@
                             </div>
                         </div>
                         <!---LandInfoNeighbourhood -->
+
+                        <!-- Upload Tab start -->
+                        <div class="tab-pane fade" id="UploadTab">
+                            <div class="form-body">
+                                <div class="row">
+                                    <label class="control-label">Uploads</label>
+                                    <div id="repeaterUpload" class="">
+                                        <!-- Repeater Heading -->
+                                            <div class="repeater-heading">
+                                                <button type="button" class="btn btn-primary pt-5 pull-right repeater-add-btn">
+                                                    Add More Image
+                                                </button>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        <div class="items" data-group="image">
+                                                <!-- Repeater Content -->
+                                                <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>@lang('valuation::valuation.property.media.image')</label>
+                                                            <div class="form-group">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="https://via.placeholder.com/200x150.png?text={{ str_replace(' ', '+', __('modules.profile.uploadPicture')) }}"   alt=""/>
+                    </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail"
+                                                                         style="max-width: 200px; max-height: 150px;"></div>
+                                                                    <div>
+                                                    <span class="btn btn-info btn-file">
+                                                        <span class="fileinput-new"> @lang('app.selectImage') </span>
+                                                        <span class="fileinput-exists"> @lang('app.change') </span>
+                                                        <input type="file" id="image" name="image" data-img-data="true" > </span>
+                                                                        <a href="javascript:;" class="btn btn-danger fileinput-exists"
+                                                                           data-dismiss="fileinput"> @lang('app.remove') </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                </div>
+<!--                                                <div class="item-content">
+                                                    <div class="form-group">
+                                                        <label for="imageUpload" class="col-lg-2 control-label">Image</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="file" class="form-control image" name='image' id="imageUpload" placeholder="Image" data-name="image">
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <!-- Repeater Remove Btn -->
+                                                <div class="pull-right repeater-remove-btn">
+                                                    <button class="btn btn-danger remove-btn">
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Upload tab end -->
                     </div>
 
                 </div>
@@ -501,5 +576,49 @@
             var modal = $(this);
             modal.find('.modal-title').text(recipient);
         })
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initialize" async defer></script>
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD6kkurmjYtikPMoyinl8R0OTheMOIg30"></script>-->
+<script type="text/javascript">
+        function initialize() {
+            // Creating map object
+            var latitude=$("#latitude").val();
+            var longitude =$("#longitude").val();
+            if(latitude!='' && latitude>0 && longitude!='' && longitude>0)
+            {
+                 var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                zoom: 12,
+                center: new google.maps.LatLng(latitude, longitude),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                // creates a draggable marker to the given coords
+                var vMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(latitude, longitude),
+                    draggable: true
+                });
+            }
+            else
+            {
+                 var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                zoom: 12,
+                center: new google.maps.LatLng(31.4832209, 74.0541922),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                // creates a draggable marker to the given coords
+                var vMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(31.4832209, 74.0541922),
+                    draggable: true
+                });
+            }
+
+
+            google.maps.event.addListener(vMarker, 'dragend', function (evt) {
+                $("#latitude").val(evt.latLng.lat().toFixed(6));
+                $("#longitude").val(evt.latLng.lng().toFixed(6));
+                map.panTo(evt.latLng);
+            });
+            map.setCenter(vMarker.position);
+            vMarker.setMap(map);
+        }
     </script>
 @endpush

@@ -62,6 +62,8 @@ $property['selectClassification'] = 'Select Classification';
 $property['selectCategorization'] = 'Select Categorization';
 $property['createProperty'] = 'Create Property';
 $property['editProperty'] = 'Edit Property';
+$property['detailProperty'] = 'Detail';
+$property['propertyBackBtn'] = 'Back';
 $valuationLang['property'] = $property;
 
 $type = array();

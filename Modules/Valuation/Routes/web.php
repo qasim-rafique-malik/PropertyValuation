@@ -73,6 +73,7 @@ Route::prefix('valuation')->group(function() {
             Route::post('/saveUpdateData/{id?}', 'Admin\Properties\PropertyController@saveUpdateData')->name('valuation.admin.property.saveUpdateData');
             Route::delete('/destroy/{id?}', 'Admin\Properties\PropertyController@destroy')->name('valuation.admin.property.destroy');
             Route::get('/newCreateView', 'Admin\Properties\PropertyController@newCreateView')->name('valuation.admin.property.newCreateView');
+            Route::get('/property-detail/{id?}', 'Admin\Properties\PropertyController@propertyDetail')->name('valuation.admin.property.property-detail');
 
             //Property Type routes
             Route::get('/type', 'Admin\Properties\TypeController@index')->name('valuation.admin.property.type');

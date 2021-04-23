@@ -34,6 +34,7 @@ class PropertyController extends ValuationAdminBaseController
     private $saveUpdateDataRoute = 'valuation.admin.property.saveUpdateData';
     private $addEditViewRoute = 'valuation.admin.property.addEditView';
     private $destroyRoute = 'valuation.admin.property.destroy';
+    private $propertyDetailRoute='valuation.admin.property.property-detail';
 
     public function __construct()
     {
@@ -326,6 +327,7 @@ class PropertyController extends ValuationAdminBaseController
                 <ul role="menu" class="dropdown-menu pull-right">
                   <li><a href="' . route($this->addEditViewRoute, $row->id) . '"><i class="fa fa-pencil" aria-hidden="true"></i> ' . trans('valuation::app.edit') . '</a></li>
                   <li><a href="javascript:void(0)" id="' . $row->id . '" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
+                      <li><a href="' . route($this->propertyDetailRoute, $row->id) . '"><i class="fa fa-eye" aria-hidden="true"></i> ' . trans('valuation::valuation.property.detailProperty') . '</a></li>
                  ';
 
                 $action .= '</ul> </div>';
@@ -342,6 +344,15 @@ class PropertyController extends ValuationAdminBaseController
             ->addIndexColumn()
             ->rawColumns(array('title', 'action'))
             ->make(true);
+    }
+    
+    public function propertyDetail($id)
+    {
+        $this->__customConstruct($this->data);
+        $properties = new ValuationProperty();
+        
+        $this->propertiesCount = $properties->countForCompany();
+        return view($this->viewFolderPath . 'detail.Index', $this->data);
     }
 
 }

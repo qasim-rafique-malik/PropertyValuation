@@ -62,10 +62,10 @@ class Payment extends BaseResource
      * @var \stdClass|null
      */
     public $amountRemaining;
-    
+
     /**
      * The total amount that was charged back for this payment. Only available when the
-     * total charged back amount is not zero. This value is expected to be negative.
+     * total charged back amount is not zero.
      *
      * @var \stdClass|null
      */
@@ -132,6 +132,25 @@ class Payment extends BaseResource
      * @var string|null
      */
     public $failedAt;
+
+    /**
+     * $dueDate is used only for banktransfer method
+     * The date the payment should expire. Please note: the minimum date is tomorrow and the maximum date is 100 days after tomorrow.
+     * UTC due date for the banktransfer payment in ISO-8601 format.
+     *
+     * @example "2021-01-19"
+     * @var string|null
+     */
+    public $dueDate;
+
+    /**
+     * Consumer’s email address, to automatically send the bank transfer details to.
+     * Please note: the payment instructions will be sent immediately when creating the payment.
+     *
+     * @example "user@mollie.com"
+     * @var string|null
+     */
+    public $billingEmail;
 
     /**
      * The profile ID this payment belongs to.
@@ -255,7 +274,7 @@ class Payment extends BaseResource
      *
      * @var \stdClass|null
      */
-    public $applicationFeeAmount;
+    public $applicationFee;
 
     /**
      * The date and time the payment became authorized, in ISO 8601 format. This
@@ -504,6 +523,16 @@ class Payment extends BaseResource
     }
 
     /**
+     * @param array $parameters
+     *
+     * @return Refund
+     */
+    public function listRefunds(array $parameters = [])
+    {
+        return $this->client->paymentRefunds->listFor($this, $this->withPresetOptions($parameters));
+    }
+
+    /**
      * Retrieves all captures associated with this payment
      *
      * @return CaptureCollection
@@ -663,7 +692,7 @@ class Payment extends BaseResource
     {
         return array_merge($this->getPresetOptions(), $options);
     }
-    
+
     /**
      * The total amount that is already captured for this payment. Only available
      * when this payment supports captures.
@@ -701,8 +730,8 @@ class Payment extends BaseResource
      */
     public function getApplicationFeeAmount()
     {
-        if ($this->applicationFeeAmount) {
-            return (float)$this->applicationFeeAmount->value;
+        if ($this->applicationFee) {
+            return (float)$this->applicationFee->amount->value;
         }
 
         return 0.0;

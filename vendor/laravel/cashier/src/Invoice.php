@@ -4,15 +4,19 @@ namespace Laravel\Cashier;
 
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
+use JsonSerializable;
 use Laravel\Cashier\Exceptions\InvalidInvoice;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Invoice as StripeInvoice;
 use Stripe\InvoiceLineItem as StripeInvoiceLineItem;
 use Symfony\Component\HttpFoundation\Response;
 
-class Invoice
+class Invoice implements Arrayable, Jsonable, JsonSerializable
 {
     /**
      * The Stripe model instance.
@@ -185,6 +189,18 @@ class Invoice
     }
 
     /**
+     * Get the coupon name applied to the invoice.
+     *
+     * @return string|null
+     */
+    public function couponName()
+    {
+        if (isset($this->invoice->discount)) {
+            return $this->invoice->discount->coupon->name ?: $this->invoice->discount->coupon->id;
+        }
+    }
+
+    /**
      * Determine if the discount is a percentage.
      *
      * @return bool
@@ -310,7 +326,7 @@ class Invoice
     /**
      * Get all of the "invoice item" line items.
      *
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\InvoiceLineItem[]
+     * @return \Laravel\Cashier\InvoiceLineItem[]
      */
     public function invoiceItems()
     {
@@ -320,7 +336,7 @@ class Invoice
     /**
      * Get all of the "subscription" line items.
      *
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\InvoiceLineItem[]
+     * @return \Laravel\Cashier\InvoiceLineItem[]
      */
     public function subscriptions()
     {
@@ -331,7 +347,7 @@ class Invoice
      * Get all of the invoice items by a given type.
      *
      * @param  string  $type
-     * @return \Illuminate\Support\Collection|\Laravel\Cashier\InvoiceLineItem[]
+     * @return \Laravel\Cashier\InvoiceLineItem[]
      */
     public function invoiceLineItemsByType($type)
     {
@@ -413,7 +429,10 @@ class Invoice
             define('DOMPDF_ENABLE_AUTOLOAD', false);
         }
 
-        $dompdf = new Dompdf;
+        $options = new Options;
+        $options->setChroot(base_path());
+
+        $dompdf = new Dompdf($options);
         $dompdf->setPaper(config('cashier.paper', 'letter'));
         $dompdf->loadHtml($this->view($data)->render());
         $dompdf->render();
@@ -483,6 +502,37 @@ class Invoice
     public function asStripeInvoice()
     {
         return $this->invoice;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->asStripeInvoice()->toArray();
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param  int  $options
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->jsonSerialize(), $options);
+    }
+
+    /**
+     * Convert the object into something JSON serializable.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
 
     /**

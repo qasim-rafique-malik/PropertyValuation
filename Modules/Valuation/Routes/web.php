@@ -109,6 +109,16 @@ Route::prefix('valuation')->group(function() {
 
         });
 
+        Route::prefix('project')->group(function() {
+
+            Route::get('project-template', 'Admin\Projects\ProjectTemplateController@index')->name('valuation.admin.project.templates');
+            Route::get('/project-template/data', 'Admin\Projects\ProjectTemplateController@data')->name('valuation.admin.project.templates.data');
+            //Route::get('project-template/data', array('uses' => 'ProjectTemplateController@data'))->name('project-template.data');
+            //Route::get('project-template/detail/{id?}', array('uses' => 'ProjectTemplateController@taskDetail'))->name('project-template.detail');
+            //Route::resource('project-template', 'Admin\Projects\ProjectTemplateController');
+
+        });
+
 
 
     });

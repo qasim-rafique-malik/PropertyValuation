@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result rollbackApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rollbackApplicationAsync(array $args = [])
  * @method \Aws\Result startApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startApplicationAsync(array $args = [])
  * @method \Aws\Result stopApplication(array $args = [])
@@ -59,5 +61,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
+ * @method \Aws\Result updateApplicationMaintenanceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApplicationMaintenanceConfigurationAsync(array $args = [])
  */
 class KinesisAnalyticsV2Client extends AwsClient {}

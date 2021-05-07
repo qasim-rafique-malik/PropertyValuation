@@ -202,6 +202,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionFMS(array $args = [])
  * @method \Aws\FSx\FSxClient createFSx(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionFSx(array $args = [])
+ * @method \Aws\FinSpaceData\FinSpaceDataClient createFinSpaceData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionFinSpaceData(array $args = [])
  * @method \Aws\Firehose\FirehoseClient createFirehose(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionFirehose(array $args = [])
  * @method \Aws\ForecastQueryService\ForecastQueryServiceClient createForecastQueryService(array $args = [])
@@ -364,6 +366,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNetworkFirewall(array $args = [])
  * @method \Aws\NetworkManager\NetworkManagerClient createNetworkManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
+ * @method \Aws\NimbleStudio\NimbleStudioClient createNimbleStudio(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
@@ -518,6 +522,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionXRay(array $args = [])
+ * @method \Aws\finspace\finspaceClient createfinspace(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionfinspace(array $args = [])
  * @method \Aws\imagebuilder\imagebuilderClient createimagebuilder(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
  * @method \Aws\kendra\kendraClient createkendra(array $args = [])
@@ -529,7 +535,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.178.7';
+    const VERSION = '3.180.4';
 
     /** @var array Arguments for creating clients */
     private $args;

@@ -38,6 +38,42 @@
                              role="tabpanel">
                             <div class="form-body">
                                 <div class="row">
+                                    <table class="table table-bordered table-hover toggle-circle default">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Purchase Price</th>
+                                                <th>Land Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="FinancialInfoAcquisitionCostMore">
+                                        <input type="hidden" id="acqFincialCostCount" value="1">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" name="aqu_Date[]">
+                                                </td>
+                                                <td>
+                                                    <textarea name="aqu_description[]" class="form-control"></textarea>
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="acqpurchasePrice[]" class="form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="acqlandPrice[]" class="form-control">
+                                                </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <button type="button" onclick="addMoreFinancialInfoAcquisitionCost()" class="btn btn-danger">Add More</button>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tfoot>
+                                    </table>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Purchase price</label>
@@ -218,3 +254,31 @@
         </div>
     </div>
 </div>
+<script>
+    function addMoreFinancialInfoAcquisitionCost()
+    {
+       var counterPass=parseInt($('#acqFincialCostCount').val());
+      counterPass=counterPass+1;
+      $('#acqFincialCostCount').val(counterPass);
+      var main_tr=document.getElementById('FinancialInfoAcquisitionCostMore');
+        var tr = document.createElement("tr");
+        var trHtml=[];
+        trHtml.push('<td><input type="text" name="aqu_Date[]" class="form-control"></td>');
+        trHtml.push('<td><textarea name="aqu_description[]" class="form-control"></textarea></td>');
+        trHtml.push('<td><input type="number" name="acqpurchasePrice[]" class="form-control"></td>');
+        trHtml.push('<td><input type="number" name="acqlandPrice[]" class="form-control"><span class="deleteBtn fa fa-trash btn btn-danger"></span></td>');
+        
+         tr.innerHTML=trHtml.join('');
+         main_tr.appendChild(tr);
+    }
+</script>
+@push('footer-script')
+<script>
+ $('#FinancialInfoAcquisitionCostMore').on('click','.deleteBtn', function () {
+    $(this).closest("tr").remove();  
+     var trcountr=parseInt($('#acqFincialCostCount').val()); 
+     trcountr=parseInt(trcountr-1);
+     $('#acqFincialCostCount').val(trcountr);
+});
+</script>
+@endpush

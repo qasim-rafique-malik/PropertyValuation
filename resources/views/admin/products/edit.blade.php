@@ -168,7 +168,7 @@
         var options =  '';
 
         subCategory.forEach(project => {
-            options += `<option ${project.id === product.sub_category_id ? 'selected' : ''} value='${project.id}'>${project.category_name}</option>`
+            options += `<option ${project.id == product.sub_category_id ? 'selected' : ''} value='${project.id}'>${project.category_name}</option>`
         })
 
         $('#sub_category_id').html(defaultOpt+options);

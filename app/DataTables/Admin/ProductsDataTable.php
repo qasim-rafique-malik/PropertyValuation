@@ -9,6 +9,8 @@ use Yajra\DataTables\Html\Column;
 
 class ProductsDataTable extends BaseDataTable
 {
+    public static $count = 0;
+
     /**
      * Build DataTable class.
      *
@@ -29,6 +31,9 @@ class ProductsDataTable extends BaseDataTable
                 $action .= '</ul> </div>';
 
                 return $action;
+            })
+            ->addColumn('#', function ($row) {
+                return ++self::$count;
             })
             ->editColumn('name', function ($row) {
                 return ucfirst($row->name);
@@ -121,7 +126,8 @@ class ProductsDataTable extends BaseDataTable
     protected function getColumns()
     {
         return [
-            '#' => ['data' => 'id', 'name' => 'id', 'visible' => true],
+            Column::computed('#', __('#')),
+            //'#' => ['data' => 'id', 'name' => 'id', 'visible' => true],
             __('app.name') => ['data' => 'name', 'name' => 'name'],
             __('app.price') . '(' . __('app.inclusiveAllTaxes') . ')' => ['data' => 'price', 'name' => 'price'],
             __('app.purchaseAllow') => ['data' => 'allow_purchase', 'name' => 'allow_purchase'],

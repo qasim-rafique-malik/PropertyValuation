@@ -2,7 +2,20 @@
     <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/datatables-bundle.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/prismjs-bundle.css') }}">
 <!--    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/style-bundle.css') }}">-->
-
+<style>
+    .currency
+    {
+        width: 20% !important;
+        display: inherit !important;
+        position: relative !important;
+    }
+    .price
+    {
+        display: inline !important;
+        position: absolute !important;
+        width: 19% !important;
+    }
+</style>
 @endpush
 <div class="tab-pane fade" id="FinancialInfo">
     <div class="inner-panel-Main-div">
@@ -63,7 +76,7 @@
                                                         <th>{{$acquisitionCost['date']}}</th>
                                                         <th>{{$acquisitionCost['trnsectionType']}}</th>
                                                         <th>{{$acquisitionCost['description']}}</th>
-                                                        <th>{{$acquisitionCost['price']}}</th>
+                                                        <th>{{$acquisitionCost['currencyCode'].' '.$acquisitionCost['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
@@ -119,25 +132,32 @@
                         <div class="tab-pane fade" id="FinancialInfoBuiltUpCost">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Construction price</label>
-                                            <input type="number" name="constructionPrice" id="constructionPrice" value="{{isset($constructionPrice)?$constructionPrice:0.00}}"
-                                                   class="form-control priceField"
-                                                   autocomplete="nope">
-                                        </div>
+                                    <div class="pb-10">
+                                        <button class="btn btn-primary" id="FinancialInfoBuiltUpCostAddBtn">Add New Row</button>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Renovation price</label>
-                                            <input type="number" name="renovationPrice" id="renovationPrice" value="{{isset($renovationPrice)?$renovationPrice:0.00}}"
-                                                   class="form-control priceField"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
+                                    <table id="BuildUpCostTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                        <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800">
+                                                        <th>Date</th>
+                                                        <th>Transaction Type</th>
+                                                        <th>Details/Ref</th>
+                                                        <th>Price/Cost</th>
+                                                </tr>
+                                        </thead>
+                                        <tfoot>
+                                            @if(isset($financialBuildUpCost) && !empty($financialBuildUpCost))
+                                             @foreach($financialBuildUpCost as $financialBuildUpCostObj)
+                                                <tr>
+                                                        <th>{{$financialBuildUpCostObj['date']}}</th>
+                                                        <th>{{$financialBuildUpCostObj['trnsectionType']}}</th>
+                                                        <th>{{$financialBuildUpCostObj['description']}}</th>
+                                                        <th>{{$financialBuildUpCostObj['currencyCode'].' '.$financialBuildUpCostObj['price']}}</th>
+                                                </tr>
+                                                @endforeach
+                                                @endif
+                                        </tfoot>
+                                    </table>
                                 </div>
-
-
                             </div>
                         </div>
                         <!---FinancialInfoAcquisitionCost -->
@@ -146,10 +166,35 @@
                         <div class="tab-pane fade" id="FinancialInfoAddOnCosts">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="pb-10">
+                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtn">Add New Row</button>
+                                    </div>
+                                    <table id="AddOnCostTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                        <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800">
+                                                        <th>Date</th>
+                                                        <th>Transaction Type</th>
+                                                        <th>Details/Ref</th>
+                                                        <th>Price/Cost</th>
+                                                </tr>
+                                        </thead>
+                                        <tfoot>
+                                            @if(isset($financialAddonCost) && !empty($financialAddonCost))
+                                             @foreach($financialAddonCost as $financialAddonCostObj)
+                                                <tr>
+                                                        <th>{{$financialAddonCostObj['date']}}</th>
+                                                        <th>{{$financialAddonCostObj['trnsectionType']}}</th>
+                                                        <th>{{$financialAddonCostObj['description']}}</th>
+                                                        <th>{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                </tr>
+                                                @endforeach
+                                                @endif
+                                        </tfoot>
+                                    </table>
+<!--                                    <div class="col-md-12">
                                         <label class="control-label">Add On Cost</label>
                                         <div id="repeaterAddOnCost">
-                                            <!-- Repeater Heading -->
+                                             Repeater Heading 
                                             <div class="repeater-heading">
                                                 <button type="button"
                                                         class="btn btn-primary pt-5 pull-right repeater-add-btn">
@@ -157,12 +202,12 @@
                                                 </button>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <!-- Repeater Items -->
+                                             Repeater Items 
 
                                             @if(isset($addOnCosts) && !empty($addOnCosts))
                                                 @foreach($addOnCosts as $addOnCostIn)
                                                     <div class="items" data-group="addOnCosts">
-                                                        <!-- Repeater Content -->
+                                                         Repeater Content 
                                                         <div class="item-content">
                                                             <div class="form-group">
                                                                 <label for="inputEmail"
@@ -182,7 +227,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Repeater Remove Btn -->
+                                                         Repeater Remove Btn 
                                                         <div class="pull-right repeater-remove-btn">
                                                             <button class="btn btn-danger remove-btn">
                                                                 Remove
@@ -194,7 +239,7 @@
 
                                             @else
                                                 <div class="items" data-group="addOnCosts">
-                                                    <!-- Repeater Content -->
+                                                     Repeater Content 
                                                     <div class="item-content">
                                                         <div class="form-group">
                                                             <label for="inputEmail"
@@ -214,7 +259,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Repeater Remove Btn -->
+                                                     Repeater Remove Btn 
                                                     <div class="pull-right repeater-remove-btn">
                                                         <button class="btn btn-danger remove-btn">
                                                             Remove
@@ -225,7 +270,7 @@
                                             @endif
 
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                 </div>
                             </div>
@@ -272,7 +317,7 @@
         </div>
     </div>
 </div>
-<script>
+<!--<script>
     function addMoreFinancialInfoAcquisitionCost()
     {
        var counterPass=parseInt($('#acqFincialCostCount').val());
@@ -289,18 +334,18 @@
          tr.innerHTML=trHtml.join('');
          main_tr.appendChild(tr);
     }
-</script>
+</script>-->
 @push('footer-script')
 <script src="{{ asset('plugins/metronic_plugin/js/datatables-bundle.js') }}"></script>
 <script src="{{ asset('plugins/metronic_plugin/js/prismjs-bundle.js') }}"></script>
 
 <script>
- $('#FinancialInfoAcquisitionCostMore').on('click','.deleteBtn', function () {
-    $(this).closest("tr").remove();  
-     var trcountr=parseInt($('#acqFincialCostCount').val()); 
-     trcountr=parseInt(trcountr-1);
-     $('#acqFincialCostCount').val(trcountr);
-});
+// $('#FinancialInfoAcquisitionCostMore').on('click','.deleteBtn', function () {
+//    $(this).closest("tr").remove();  
+//     var trcountr=parseInt($('#acqFincialCostCount').val()); 
+//     trcountr=parseInt(trcountr-1);
+//     $('#acqFincialCostCount').val(trcountr);
+//});
 var t = $("#kt_datatable_example_1").DataTable();
 var counter = 1;
 
@@ -309,18 +354,46 @@ $("#kt_datatable_example_1_addrow").on("click", function() {
         '<input type="date" name="aqu_Date[]" class="form-control">',
         '<select name="aqu_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
         '<textarea name="aqu_description[]" class="form-control"></textarea>',
-        '<input type="number" name="acqlandPrice[]" class="form-control">'
+        '<input type="text" readonly="" class="form-control currency" name="currencyCode[]" value="{{$currencyCode}}"><input type="number" name="acqlandPrice[]" class="price form-control">'
     ]).draw(false);
 
     counter++;
 });
 
+//Buildup cost
+var BuildUpCostTable = $("#BuildUpCostTable").DataTable();
+var BuildUpCounter = 1;
+$("#FinancialInfoBuiltUpCostAddBtn").on("click", function() {
+    BuildUpCostTable.row.add([
+        '<input type="date" name="build_up_Date[]" class="form-control">',
+        '<select name="buildup_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
+        '<textarea name="buildup_description[]" class="form-control"></textarea>',
+        '<input type="text" readonly="" class="form-control currency" name="buildupCurrencyCode[]" value="{{$currencyCode}}"><input type="number" name="buildupPrice[]" class="price form-control">'
+    ]).draw(false);
+    BuildUpCounter++;
+});
+
+//AddOn cost
+var AddOnCostTable = $("#AddOnCostTable").DataTable();
+var AddOnCounter = 1;
+$("#FinancialInfoAddOnCostAddBtn").on("click", function() {
+    AddOnCostTable.row.add([
+        '<input type="date" name="addon_cost_Date[]" class="form-control">',
+        '<select name="addon_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
+        '<textarea name="addon_description[]" class="form-control"></textarea>',
+        '<input type="text" readonly="" class="form-control currency" name="addonCurrencyCode[]" value="{{$currencyCode}}"><input type="number" name="addonPrice[]" class="price form-control">'
+    ]).draw(false);
+    AddOnCounter++;
+});
+
 // Automatically add a first row of data
 $("#kt_datatable_example_1_addrow").click();
+$("#FinancialInfoBuiltUpCostAddBtn").click();
+$("#FinancialInfoAddOnCostAddBtn").click();
 $(".transectionType").select2({
-                formatNoMatches: function () {
-                    return "{{ __('messages.noRecordFound') }}";
-                }
-            });
+    formatNoMatches: function () {
+        return "{{ __('messages.noRecordFound') }}";
+    }
+    });
 </script>
 @endpush

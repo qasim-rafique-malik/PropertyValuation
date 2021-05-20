@@ -23,7 +23,7 @@ use Modules\Valuation\Http\Controllers\Admin\Settings\CityController;
 use Modules\Valuation\Http\Controllers\Admin\Properties\ClassController;
 use Modules\Valuation\Http\Controllers\Admin\Properties\ClassificationController;
 use Modules\Valuation\Http\Controllers\Admin\Properties\TypeController;
-
+use App\Currency;
 class PropertyController extends ValuationAdminBaseController
 {
 
@@ -80,7 +80,10 @@ class PropertyController extends ValuationAdminBaseController
         $data['getAjaxPropertyTypeDataRoute'] = TypeController::getAjaxDataRoute;
 
         $data['companyId'] = isset(company()->id)?company()->id:0;
-
+        $currencyId = isset(company()->currency_id)?company()->currency_id:0;
+       $currencyDetails= Currency::withoutGlobalScope('enable')->findOrFail($currencyId);
+       $data['currencyCode']=isset($currencyDetails->currency_code)?$currencyDetails->currency_code:'';
+       
         $data['adminCountryId'] = (isset(user()->country_id) && user()->country_id != '')?user()->country_id:0;
     }
 
@@ -205,6 +208,8 @@ class PropertyController extends ValuationAdminBaseController
         $this->dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
         $this->addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
         $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
+        $this->financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
+        $this->financialAddonCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAddOnCost , array()))->toArray():array();
 
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -288,25 +293,53 @@ class PropertyController extends ValuationAdminBaseController
         $aqu_transection_type=  isset($request->aqu_transection_type)?$request->aqu_transection_type:array();
         $aqu_description=  isset($request->aqu_description)?$request->aqu_description:array();
         $acqlandPrice=  isset($request->acqlandPrice)?$request->acqlandPrice:array();
+        $acqlandCurrencyCode=  isset($request->currencyCode)?$request->currencyCode:array();
         $acqDataArray=array();
         if(!empty($aqu_Date))
         {
             foreach($aqu_Date as $key=>$obj)
             {
-                $acqDataArray[]=array('date'=>$aqu_Date[$key],'trnsectionType'=>$aqu_transection_type[$key],'description'=>$aqu_description[$key],'price'=>$acqlandPrice[$key]);
-            }
-            
+                $acqDataArray[]=array('date'=>$aqu_Date[$key],'trnsectionType'=>$aqu_transection_type[$key],'description'=>$aqu_description[$key],'price'=>$acqlandPrice[$key],'currencyCode'=>$acqlandCurrencyCode[$key]);
+            } 
         }
-//        echo "<pre>";
-//        print_r($acqDataArray);
-//        echo "</pre>";
-//        exit();
         $acqtransectionData=  json_encode($acqDataArray);
+        //Financial Build up cost
+        $buildupcost_cost_Date=  isset($request->build_up_Date)?$request->build_up_Date:array();
+        $buildupcost_transection_type=  isset($request->buildup_transection_type)?$request->buildup_transection_type:array();
+        $buildupcost_description=  isset($request->buildup_description)?$request->buildup_description:array();
+        $buildupcostPrice=  isset($request->buildupPrice)?$request->buildupPrice:array();
+        $buildupCurrencyCode=  isset($request->buildupCurrencyCode)?$request->buildupCurrencyCode:array();
+        $buildUpCostDataArray=array();
+        if(!empty($buildupcost_cost_Date))
+        {
+            foreach($buildupcost_cost_Date as $key=>$obj)
+            {
+                $buildUpCostDataArray[]=array('date'=>$buildupcost_cost_Date[$key],'trnsectionType'=>$buildupcost_transection_type[$key],'description'=>$buildupcost_description[$key],'price'=>$buildupcostPrice[$key],'currencyCode'=>$buildupCurrencyCode[$key]);
+            } 
+        }
+        $buildUpTransectionData=  json_encode($buildUpCostDataArray);
+        //Financial AddOn cost
+        $addOn_cost_Date=  isset($request->addon_cost_Date)?$request->addon_cost_Date:array();
+        $addoncost_transection_type=  isset($request->addon_transection_type)?$request->addon_transection_type:array();
+        $addoncost_description=  isset($request->addon_description)?$request->addon_description:array();
+        $addoncostPrice=  isset($request->addonPrice)?$request->addonPrice:array();
+        $addonCurrencyCode=  isset($request->addonCurrencyCode)?$request->addonCurrencyCode:array();
+        $addonCostDataArray=array();
+        if(!empty($addOn_cost_Date))
+        {
+            foreach($addOn_cost_Date as $key=>$obj)
+            {
+                $addonCostDataArray[]=array('date'=>$addOn_cost_Date[$key],'trnsectionType'=>$addoncost_transection_type[$key],'description'=>$addoncost_description[$key],'price'=>$addoncostPrice[$key],'currencyCode'=>$addonCurrencyCode[$key]);
+            } 
+        }
+        $addonTransectionData=  json_encode($addonCostDataArray);
         // add and update property Meta
         $updatePropertyMeta = array();
         $updatePropertyMeta[ValuationProperty::DimensionsMetaKey] = $dimensionsEncode;
         $updatePropertyMeta[ValuationProperty::AddOnCostMetaKey] = $addOnCostsEncode;
         $updatePropertyMeta[ValuationProperty::FinancialAcquisitionCost] = $acqtransectionData;
+        $updatePropertyMeta[ValuationProperty::FinancialBuildUpCost] = $buildUpTransectionData;
+        $updatePropertyMeta[ValuationProperty::FinancialAddOnCost] = $addonTransectionData;
 
         $property->setMeta($updatePropertyMeta);
         

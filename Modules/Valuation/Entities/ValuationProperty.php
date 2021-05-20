@@ -11,6 +11,8 @@ class ValuationProperty extends ValuationBaseModel
     const DimensionsMetaKey = 'propertyDimensions';
     const AddOnCostMetaKey = 'propertyAddOnCost';
     const FinancialAcquisitionCost='FinancialAcquisitionCost';
+    const FinancialBuildUpCost='FinancialBuildUpCost';
+    const FinancialAddOnCost='FinancialAddOnCost';
 
     protected $metaTable = 'valuation_property_meta';
     protected $fillable = array();

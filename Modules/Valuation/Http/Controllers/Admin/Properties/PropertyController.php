@@ -204,6 +204,7 @@ class PropertyController extends ValuationAdminBaseController
         $this->status = isset($propertyData->status) ? $propertyData->status : 'Draft';
         $this->dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
         $this->addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
+        $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
 
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -282,14 +283,34 @@ class PropertyController extends ValuationAdminBaseController
         $dimensionsEncode = json_encode($dimensions);
         $addOnCosts = isset($request->addOnCosts)?$request->addOnCosts:array();
         $addOnCostsEncode = json_encode($addOnCosts);
-
+        //FinancialInfoAcquisitionCost
+        $aqu_Date=  isset($request->aqu_Date)?$request->aqu_Date:array();
+        $aqu_transection_type=  isset($request->aqu_transection_type)?$request->aqu_transection_type:array();
+        $aqu_description=  isset($request->aqu_description)?$request->aqu_description:array();
+        $acqlandPrice=  isset($request->acqlandPrice)?$request->acqlandPrice:array();
+        $acqDataArray=array();
+        if(!empty($aqu_Date))
+        {
+            foreach($aqu_Date as $key=>$obj)
+            {
+                $acqDataArray[]=array('date'=>$aqu_Date[$key],'trnsectionType'=>$aqu_transection_type[$key],'description'=>$aqu_description[$key],'price'=>$acqlandPrice[$key]);
+            }
+            
+        }
+//        echo "<pre>";
+//        print_r($acqDataArray);
+//        echo "</pre>";
+//        exit();
+        $acqtransectionData=  json_encode($acqDataArray);
         // add and update property Meta
         $updatePropertyMeta = array();
         $updatePropertyMeta[ValuationProperty::DimensionsMetaKey] = $dimensionsEncode;
         $updatePropertyMeta[ValuationProperty::AddOnCostMetaKey] = $addOnCostsEncode;
+        $updatePropertyMeta[ValuationProperty::FinancialAcquisitionCost] = $acqtransectionData;
 
         $property->setMeta($updatePropertyMeta);
-
+        
+       
         return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
     }
 

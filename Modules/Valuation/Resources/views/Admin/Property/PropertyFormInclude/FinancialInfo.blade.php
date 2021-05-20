@@ -1,3 +1,9 @@
+@push('head-script')
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/datatables-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/prismjs-bundle.css') }}">
+<!--    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/style-bundle.css') }}">-->
+
+@endpush
 <div class="tab-pane fade" id="FinancialInfo">
     <div class="inner-panel-Main-div">
         <div class="panel panel-inverse">
@@ -38,13 +44,40 @@
                              role="tabpanel">
                             <div class="form-body">
                                 <div class="row">
-                                    <table class="table table-bordered table-hover toggle-circle default">
+                                    <div class="pb-10">
+                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrow">Add New Row</button>
+                                    </div>
+                                    <table id="kt_datatable_example_1" class="table table-striped table-row-bordered gy-5 gs-7">
+                                        <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800">
+                                                        <th>Date</th>
+                                                        <th>Transaction Type</th>
+                                                        <th>Details/Ref</th>
+                                                        <th>Price/Cost</th>
+                                                </tr>
+                                        </thead>
+                                        <tfoot>
+                                            @if(isset($financialAcquisitionCost) && !empty($financialAcquisitionCost))
+                                             @foreach($financialAcquisitionCost as $acquisitionCost)
+                                                <tr>
+                                                        <th>{{$acquisitionCost['date']}}</th>
+                                                        <th>{{$acquisitionCost['trnsectionType']}}</th>
+                                                        <th>{{$acquisitionCost['description']}}</th>
+                                                        <th>{{$acquisitionCost['price']}}</th>
+                                                </tr>
+                                                @endforeach
+                                                @endif
+                                        </tfoot>
+                                    </table>
+                                </div>
+<!--                                <div class="row">
+                                    <table class="table table-striped table-row-bordered gy-5 gs-7 dataTable">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
-                                                <th>Description</th>
-                                                <th>Purchase Price</th>
-                                                <th>Land Price</th>
+                                                <th>Transaction Type</th>
+                                                <th>Details/Ref</th>
+                                                <th>Price/Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody id="FinancialInfoAcquisitionCostMore">
@@ -74,23 +107,8 @@
                                             
                                         </tfoot>
                                     </table>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Purchase price</label>
-                                            <input type="number" name="purchasePrice" id="purchasePrice" value="{{isset($purchasePrice)?$purchasePrice:0.00}}"
-                                                   class="form-control priceField"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Land price</label>
-                                            <input type="number" name="landPrice" id="landPrice" value="{{isset($landPrice)?$landPrice:0.00}}"
-                                                   class="form-control priceField"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
+                                   
+                                </div>-->
 
 
                             </div>
@@ -273,6 +291,9 @@
     }
 </script>
 @push('footer-script')
+<script src="{{ asset('plugins/metronic_plugin/js/datatables-bundle.js') }}"></script>
+<script src="{{ asset('plugins/metronic_plugin/js/prismjs-bundle.js') }}"></script>
+
 <script>
  $('#FinancialInfoAcquisitionCostMore').on('click','.deleteBtn', function () {
     $(this).closest("tr").remove();  
@@ -280,5 +301,26 @@
      trcountr=parseInt(trcountr-1);
      $('#acqFincialCostCount').val(trcountr);
 });
+var t = $("#kt_datatable_example_1").DataTable();
+var counter = 1;
+
+$("#kt_datatable_example_1_addrow").on("click", function() {
+    t.row.add([
+        '<input type="date" name="aqu_Date[]" class="form-control">',
+        '<select name="aqu_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
+        '<textarea name="aqu_description[]" class="form-control"></textarea>',
+        '<input type="number" name="acqlandPrice[]" class="form-control">'
+    ]).draw(false);
+
+    counter++;
+});
+
+// Automatically add a first row of data
+$("#kt_datatable_example_1_addrow").click();
+$(".transectionType").select2({
+                formatNoMatches: function () {
+                    return "{{ __('messages.noRecordFound') }}";
+                }
+            });
 </script>
 @endpush

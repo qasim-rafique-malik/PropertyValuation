@@ -48,12 +48,30 @@
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Property Title</label>
                                     <input type="text" name="propertyTitle" id="propertyTitle" value="{{isset($propertyTitle)?$propertyTitle:''}}"
                                            class="form-control"
                                            autocomplete="nope">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="">Status</label>
+                                    <select name="propertyStatus" id="propertyStatus" class="form-control">
+                                        <option value="Draft" @if(isset($status) && $status == 'Draft') selected="selected" @endif >
+                                            Draft
+                                        </option>
+                                        <option value="Active" @if(isset($status) && $status == 'Active') selected="selected" @endif >
+                                            Active
+                                        </option>
+                                        <option value="Inactive"
+                                                @if(isset($status) && $status == 'Inactive') selected="selected" @endif >
+                                            Inactive
+                                        </option>
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -84,24 +102,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="">Status</label>
-                                    <select name="propertyStatus" id="propertyStatus" class="form-control">
-                                        <option value="Draft" @if(isset($status) && $status == 'Draft') selected="selected" @endif >
-                                            Draft
-                                        </option>
-                                        <option value="Active" @if(isset($status) && $status == 'Active') selected="selected" @endif >
-                                            Active
-                                        </option>
-                                        <option value="Inactive"
-                                                @if(isset($status) && $status == 'Inactive') selected="selected" @endif >
-                                            Inactive
-                                        </option>
-
-                                    </select>
-                                </div>
-                            </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-actions">
                                     <button type="submit" id="save-form" class="btn btn-success pull-right"><i

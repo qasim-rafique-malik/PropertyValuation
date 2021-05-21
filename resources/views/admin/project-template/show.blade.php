@@ -34,22 +34,7 @@
 
             <section>
                 <div class="sttabs tabs-style-line">
-                    <div class="white-box">
-                        <nav>
-                            <ul>
-                                <li class="tab-current"><a href="{{ route('admin.project-template.show', $project->id) }}"><span>@lang('modules.projects.overview')</span></a>
-                                </li>
-                                @if(in_array('employees',$modules))
-                                <li><a href="{{ route('admin.project-template-member.show', $project->id) }}"><span>@lang('modules.projects.members')</span></a></li>
-                                @endif
-
-                                @if(in_array('tasks',$modules))
-                                <li><a href="{{ route('admin.project-template-task.show', $project->id) }}"><span>@lang('app.menu.tasks')</span></a></li>
-                                @endif
-
-                            </ul>
-                        </nav>
-                    </div>
+                    @include('admin.project-template.show_project_template_menu')
                     <div class="content-wrap">
                         <section id="section-line-1" class="show">
                             <div class="row">
@@ -113,6 +98,6 @@
 <script src="{{ asset('plugins/bower_components/multiselect/js/jquery.multi-select.js') }}"></script>
 <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript">
-
+    $('ul.showProjectTemplateTabs .projectTemplate').addClass('tab-current');
 </script>
 @endpush

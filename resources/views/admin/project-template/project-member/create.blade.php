@@ -33,17 +33,7 @@
 
             <section>
                 <div class="sttabs tabs-style-line">
-                    <div class="white-box">
-                        <nav>
-                            <ul>
-                                <li><a href="{{ route('admin.project-template.show', $project->id) }}"><span>@lang('modules.projectTemplate.overview')</span></a>
-                                </li>
-                                <li class="tab-current"><a href="{{ route('admin.project-template-member.show', $project->id) }}"><span>@lang('modules.projectTemplate.members')</span></a></li>
-
-                                <li><a href="{{ route('admin.project-template-task.show', $project->id) }}"><span>@lang('app.menu.tasks')</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
+                    @include('admin.project-template.show_project_template_menu')
                     <div class="content-wrap">
                         <section id="section-line-2" class="show">
                             <div class="row">
@@ -163,7 +153,7 @@
 <script src="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('plugins/bower_components/multiselect/js/jquery.multi-select.js') }}"></script>
 <script type="text/javascript">
-
+    $('ul.showProjectTemplateTabs .projectTemplateMember').addClass('tab-current');
     $(".select2").select2({
         formatNoMatches: function () {
             return "{{ __('messages.noRecordFound') }}";

@@ -37,17 +37,7 @@
 
             <section>
                 <div class="sttabs tabs-style-line">
-                    <div class="white-box">
-
-                        <nav>
-                            <ul>
-                                <li ><a href="{{ route('admin.project-template.show', $project->id) }}"><span>@lang('modules.projects.overview')</span></a>
-                                </li>
-                                <li><a href="{{ route('admin.project-template-member.show', $project->id) }}"><span>@lang('modules.projects.members')</span></a></li>
-                                <li class="tab-current"><a href="{{ route('admin.project-template-task.show', $project->id) }}"><span>@lang('app.menu.tasks')</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
+                    @include('admin.project-template.show_project_template_menu')
                     <div class="content-wrap">
                         <section id="section-line-3" class="show">
                             <div class="row">
@@ -261,6 +251,7 @@
     });
 </script>
 <script type="text/javascript">
+    $('ul.showProjectTemplateTabs .projectTemplateTask').addClass('tab-current');
     var newTaskpanel = $('#new-task-panel');
     var taskListPanel = $('#task-list-panel');
     var editTaskPanel = $('#edit-task-panel');

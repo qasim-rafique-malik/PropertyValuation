@@ -210,7 +210,7 @@ class PropertyController extends ValuationAdminBaseController
         $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
         $this->financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
         $this->financialAddonCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAddOnCost , array()))->toArray():array();
-
+        $this->ref_id=isset($propertyData->ref_id)?$propertyData->ref_id:'';
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
 
@@ -269,6 +269,7 @@ class PropertyController extends ValuationAdminBaseController
         $property->status = isset($request->propertyStatus) ? $request->propertyStatus : 'Draft';
         $property->latitude=isset($request->latitude) ? $request->latitude : '0';
         $property->longitude=isset($request->longitude) ? $request->longitude : '0';
+        $this->ref_id=isset($request->propertyRefId) ? $request->propertyRefId : '';
         $property->save();
         $propertyId=$property->id;
 

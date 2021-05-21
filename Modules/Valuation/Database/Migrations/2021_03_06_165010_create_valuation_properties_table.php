@@ -93,6 +93,12 @@ class CreateValuationPropertiesTable extends Migration
                 $table->string('longitude')->default(0);
              });
         }
+        if (!Schema::hasColumn('valuation_properties', 'ref_id'))
+        {
+            Schema::table('valuation_properties', function($table) {
+                $table->string('ref_id')->default(0);
+             });
+        }
     }
 
     /**

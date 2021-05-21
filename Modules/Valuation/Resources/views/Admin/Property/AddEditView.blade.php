@@ -41,9 +41,25 @@
         <div class="col-md-12">
 
             <div class="panel panel-inverse">
-                <div class="panel-heading"> Property Detail</div>
-
-
+                <div class="panel-heading"> Property Detail
+                <div class="pull-right">
+                        <div class="btn-group m-r-10">
+<!--                                    <label class="">Status</label>-->
+                                    <select name="propertyStatus" id="propertyStatus" class="form-control">
+                                        <option value="Draft" @if(isset($status) && $status == 'Draft') selected="selected" @endif >
+                                            Draft
+                                        </option>
+                                        <option value="Active" @if(isset($status) && $status == 'Active') selected="selected" @endif >
+                                            Active
+                                        </option>
+                                        <option value="Inactive"
+                                                @if(isset($status) && $status == 'Inactive') selected="selected" @endif >
+                                            Inactive
+                                        </option>
+                                    </select>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
@@ -58,20 +74,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="">Status</label>
-                                    <select name="propertyStatus" id="propertyStatus" class="form-control">
-                                        <option value="Draft" @if(isset($status) && $status == 'Draft') selected="selected" @endif >
-                                            Draft
-                                        </option>
-                                        <option value="Active" @if(isset($status) && $status == 'Active') selected="selected" @endif >
-                                            Active
-                                        </option>
-                                        <option value="Inactive"
-                                                @if(isset($status) && $status == 'Inactive') selected="selected" @endif >
-                                            Inactive
-                                        </option>
-
-                                    </select>
+                                    <label class="control-label">Reference ID</label>
+                                    <input type="text" name="propertyRefId" id="propertyRefId" value="{{isset($ref_id)?$ref_id:''}}"
+                                           class="form-control"
+                                           autocomplete="nope">
                                 </div>
                             </div>
                         </div>

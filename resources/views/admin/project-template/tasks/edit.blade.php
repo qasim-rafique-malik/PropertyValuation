@@ -102,6 +102,20 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-xs-12">
+                        <label class="control-label">@lang('modules.projects.milestones')</label>
+                        <div class="form-group">
+                            <select class="form-control" name="milestone_id" id="milestone_id"
+                                    data-style="form-control">
+                                <option value="">--</option>
+                                @foreach($task->projectTemplate->milestones as $milestone)
+                                    <option
+                                            @if($milestone->id == $task->milestone_id) selected @endif
+                                    value="{{ $milestone->id }}">{{ $milestone->milestone_title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <!--/span-->
                     <div class="col-xs-12">
                         <div class="form-group">

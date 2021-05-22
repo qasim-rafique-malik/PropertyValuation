@@ -59,6 +59,7 @@ class ProjectTemplateTaskController extends AdminBaseController
         $task->project_template_task_category_id = $request->category_id;
         $task->project_template_id = $request->project_id;
         $task->priority = $request->priority;
+        $task->milestone_id = $request->milestone_id;
         $task->save();
 
         // Sync task users
@@ -120,6 +121,7 @@ class ProjectTemplateTaskController extends AdminBaseController
         }
         $task->project_template_task_category_id = $request->category_id;
         $task->priority = $request->priority;
+        $task->milestone_id = $request->milestone_id;
 
         $task->save();
         $task->users_many()->sync($request->user_id);

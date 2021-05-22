@@ -68,7 +68,7 @@
                                                                 </div>
                                                                 <div class="col-xs-12">
                                                                     <div class="form-group">
-                                                                        <label class="control-label">@lang('modules.tasks.taskCategory') 
+                                                                        <label class="control-label">@lang('modules.tasks.taskCategory')
                                                                         </label>
                                                                         <select class="selectpicker form-control" name="category_id" id="category_id"
                                                                                 data-style="form-control">
@@ -97,6 +97,18 @@
                                                                             <option value=""></option>
                                                                             @foreach($project->members as $member)
                                                                                 <option value="{{ $member->user->id }}">{{ ucwords($member->user->name) }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12">
+                                                                    <label class="control-label">@lang('modules.projects.milestones')</label>
+                                                                    <div class="form-group">
+                                                                        <select class="selectpicker" name="milestone_id" id="milestone_id"
+                                                                                data-style="form-control">
+                                                                            <option value="">--</option>
+                                                                            @foreach($project->milestones as $milestone)
+                                                                                <option value="{{ $milestone->id }}">{{ $milestone->milestone_title }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>

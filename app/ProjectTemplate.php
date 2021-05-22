@@ -41,6 +41,11 @@ class ProjectTemplate extends BaseModel
         return $this->hasMany(ProjectTemplateTask::class, 'project_template_id')->orderBy('id', 'desc');
     }
 
+    public function milestones()
+    {
+        return $this->hasMany(ProjectTemplateMilestone::class, 'project_template_id');
+    }
+
 
     /**
      * @return bool

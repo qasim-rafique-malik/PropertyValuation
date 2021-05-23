@@ -77,7 +77,7 @@
                                                                 </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {{--<div class="row">
                                                         <div class="col-md-6 ">
                                                             <div class="form-group">
                                                                 <label>@lang('modules.projects.milestoneCost')</label>
@@ -94,7 +94,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>--}}
                                                     
 
                                                     <div class="row m-t-20">
@@ -125,7 +125,7 @@
                                                 <tr>
                                                     <th>@lang('app.id')</th>
                                                     <th>@lang('modules.projects.milestoneTitle')</th>
-                                                    <th>@lang('modules.projects.milestoneCost')</th>
+                                                    {{--<th>@lang('modules.projects.milestoneCost')</th>--}}
                                                     <th>@lang('app.status')</th>
                                                     <th>@lang('app.action')</th>
                                                 </tr>
@@ -199,7 +199,7 @@
         columns: [
             {data: 'id', name: 'id'},
             {data: 'milestone_title', name: 'milestone_title'},
-            {data: 'cost', name: 'cost'},
+            /*{data: 'cost', name: 'cost'},*/
             {data: 'status', name: 'status'},
             {data: 'action', name: 'action'}
         ]

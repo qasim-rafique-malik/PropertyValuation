@@ -186,10 +186,30 @@ class ManageProjectsController extends AdminBaseController
                     $memberExistsInTemplate = true;
                 }
             }
+
+            //adding template milestone in project milestone
+            $milestones = isset($template->milestones)?$template->milestones:array();
+            $projectMilestoneNewIds = array();
+            foreach($milestones as $milestone){
+                $projectMilestone = new ProjectMilestone();
+                $projectMilestone->project_id = $project->id;
+                $projectMilestone->currency_id = isset($milestone->currency_id)?$milestone->currency_id:'';
+                $projectMilestone->milestone_title = isset($milestone->milestone_title)?$milestone->milestone_title:'';
+                $projectMilestone->summary = isset($milestone->milestone_title)?$milestone->summary:'';
+                $projectMilestone->cost = isset($milestone->milestone_title)?$milestone->cost:'';
+                $projectMilestone->status = isset($milestone->milestone_title)?$milestone->status:'';
+                $projectMilestone->save();
+
+                $projectMilestoneNewIds[$milestone->id] = $projectMilestone->id;
+
+            }
+
             foreach ($template->tasks as $task) {
                 $projectTask = new Task();
 
                 $projectTask->project_id  = $project->id;
+                $projectTask->milestone_id   = isset($projectMilestoneNewIds[$task->milestone_id])?$projectMilestoneNewIds[$task->milestone_id]:'';
+
                 $projectTask->heading     = $task->heading;
                 $projectTask->task_category_id     = $task->project_template_task_category_id;
                 $projectTask->description = $task->description;

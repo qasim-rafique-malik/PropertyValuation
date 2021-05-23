@@ -37,13 +37,13 @@
                                                         </select>
                                                     </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            {{--<div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>@lang('modules.projects.milestoneCost')</label>
                                                     <input id="cost" name="cost" type="number" value="{{ $milestone->cost }}"
                                                            class="form-control" value="0" min="0" step=".01">
                                                 </div>
-                                            </div>
+                                            </div>--}}
                                         
                                             
                                         </div>

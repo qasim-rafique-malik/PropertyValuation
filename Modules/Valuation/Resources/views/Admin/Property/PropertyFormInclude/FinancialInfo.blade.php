@@ -163,7 +163,7 @@
                                                 @endforeach
                                                 <tr>
                                                     <th colspan="3"><b>Total</b></th>
-                                                    <th><b>{{$totalBuildUp}}</b></th>
+                                                    <th><b>{{$currencyCode.' '.$totalBuildUp}}</b></th>
                                                 </tr>
                                                 @endif
                                         </tfoot>
@@ -207,7 +207,7 @@
                                                 @endforeach
                                                 <tr>
                                                     <th colspan="3"><b>Total</b></th>
-                                                    <th><b>{{$addonTotal}}</b></th>
+                                                    <th><b>{{$currencyCode.' '.$addonTotal}}</b></th>
                                                 </tr>
                                                 @endif
                                         </tfoot>

@@ -74,10 +74,10 @@
                                             @if(isset($financialAcquisitionCost) && !empty($financialAcquisitionCost))
                                              @foreach($financialAcquisitionCost as $acquisitionCost)
                                                 <tr>
-                                                        <th>{{$acquisitionCost['date']}}</th>
-                                                        <th>{{$acquisitionCost['trnsectionType']}}</th>
-                                                        <th>{{$acquisitionCost['description']}}</th>
-                                                        <th>{{$acquisitionCost['currencyCode'].' '.$acquisitionCost['price']}}</th>
+                                                    <th><input type="hidden" name="aqu_Date[]" value="{{$acquisitionCost['date']}}"> {{$acquisitionCost['date']}}</th>
+                                                    <th><input type="hidden" name="aqu_transection_type[]" value="{{$acquisitionCost['trnsectionType']}}">{{$acquisitionCost['trnsectionType']}}</th>
+                                                    <th><input type="hidden" name="aqu_description[]" value="{{$acquisitionCost['description']}}">{{$acquisitionCost['description']}}</th>
+                                                    <th><input type="hidden" name="currencyCode[]" value="{{$acquisitionCost['currencyCode']}}"><input type="hidden" name="acqlandPrice[]" value="{{$acquisitionCost['price']}}">{{$acquisitionCost['currencyCode'].' '.$acquisitionCost['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
@@ -149,10 +149,10 @@
                                             @if(isset($financialBuildUpCost) && !empty($financialBuildUpCost))
                                              @foreach($financialBuildUpCost as $financialBuildUpCostObj)
                                                 <tr>
-                                                        <th>{{$financialBuildUpCostObj['date']}}</th>
-                                                        <th>{{$financialBuildUpCostObj['trnsectionType']}}</th>
-                                                        <th>{{$financialBuildUpCostObj['description']}}</th>
-                                                        <th>{{$financialBuildUpCostObj['currencyCode'].' '.$financialBuildUpCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="build_up_Date[]" value="{{$financialBuildUpCostObj['date']}}">{{$financialBuildUpCostObj['date']}}</th>
+                                                    <th><input type="hidden" name="buildup_transection_type[]" value="{{$financialBuildUpCostObj['trnsectionType']}}">{{$financialBuildUpCostObj['trnsectionType']}}</th>
+                                                        <th><input type="hidden" name="buildup_description[]" value="{{$financialBuildUpCostObj['description']}}">{{$financialBuildUpCostObj['description']}}</th>
+                                                        <th><input type="hidden" name="buildupCurrencyCode[]" value="{{$financialBuildUpCostObj['currencyCode']}}"> <input type="hidden" name="buildupPrice[]" value="{{$financialBuildUpCostObj['price']}}">{{$financialBuildUpCostObj['currencyCode'].' '.$financialBuildUpCostObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
@@ -182,11 +182,12 @@
                                         <tfoot>
                                             @if(isset($financialAddonCost) && !empty($financialAddonCost))
                                              @foreach($financialAddonCost as $financialAddonCostObj)
+                                            
                                                 <tr>
-                                                        <th>{{$financialAddonCostObj['date']}}</th>
-                                                        <th>{{$financialAddonCostObj['trnsectionType']}}</th>
-                                                        <th>{{$financialAddonCostObj['description']}}</th>
-                                                        <th>{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="addon_cost_Date[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
+                                                        <th> <input type="hidden" name="addon_transection_type[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
+                                                        <th> <input type="hidden" name="addon_description[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
+                                                        <th> <input type="hidden" name="addonCurrencyCode[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="addonPrice[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif

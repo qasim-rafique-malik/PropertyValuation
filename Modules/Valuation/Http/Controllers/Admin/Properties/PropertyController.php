@@ -296,11 +296,14 @@ class PropertyController extends ValuationAdminBaseController
         $acqlandPrice=  isset($request->acqlandPrice)?$request->acqlandPrice:array();
         $acqlandCurrencyCode=  isset($request->currencyCode)?$request->currencyCode:array();
         $acqDataArray=array();
-        if(!empty($aqu_Date))
+        if(!empty($aqu_Date) && !empty($aqu_transection_type) && !empty($aqu_description) && !empty($acqlandPrice) )
         {
             foreach($aqu_Date as $key=>$obj)
             {
-                $acqDataArray[]=array('date'=>$aqu_Date[$key],'trnsectionType'=>$aqu_transection_type[$key],'description'=>$aqu_description[$key],'price'=>$acqlandPrice[$key],'currencyCode'=>$acqlandCurrencyCode[$key]);
+                if(!empty($aqu_Date[$key]) && !empty($aqu_transection_type[$key]) && !empty($aqu_description[$key]) && !empty($acqlandPrice[$key]))
+                {
+                 $acqDataArray[]=array('date'=>$aqu_Date[$key],'trnsectionType'=>$aqu_transection_type[$key],'description'=>$aqu_description[$key],'price'=>$acqlandPrice[$key],'currencyCode'=>$acqlandCurrencyCode[$key]);   
+                }               
             } 
         }
         $acqtransectionData=  json_encode($acqDataArray);
@@ -311,11 +314,14 @@ class PropertyController extends ValuationAdminBaseController
         $buildupcostPrice=  isset($request->buildupPrice)?$request->buildupPrice:array();
         $buildupCurrencyCode=  isset($request->buildupCurrencyCode)?$request->buildupCurrencyCode:array();
         $buildUpCostDataArray=array();
-        if(!empty($buildupcost_cost_Date))
+        if(!empty($buildupcost_cost_Date) && !empty($buildupcost_transection_type) && !empty($buildupcost_description) && !empty($buildupcostPrice))
         {
             foreach($buildupcost_cost_Date as $key=>$obj)
             {
-                $buildUpCostDataArray[]=array('date'=>$buildupcost_cost_Date[$key],'trnsectionType'=>$buildupcost_transection_type[$key],'description'=>$buildupcost_description[$key],'price'=>$buildupcostPrice[$key],'currencyCode'=>$buildupCurrencyCode[$key]);
+                if(!empty($buildupcost_cost_Date[$key]) && !empty($buildupcost_transection_type[$key]) && !empty($buildupcost_description[$key]) && !empty($buildupcostPrice[$key]))
+                {
+                   $buildUpCostDataArray[]=array('date'=>$buildupcost_cost_Date[$key],'trnsectionType'=>$buildupcost_transection_type[$key],'description'=>$buildupcost_description[$key],'price'=>$buildupcostPrice[$key],'currencyCode'=>$buildupCurrencyCode[$key]); 
+                }  
             } 
         }
         $buildUpTransectionData=  json_encode($buildUpCostDataArray);
@@ -326,11 +332,15 @@ class PropertyController extends ValuationAdminBaseController
         $addoncostPrice=  isset($request->addonPrice)?$request->addonPrice:array();
         $addonCurrencyCode=  isset($request->addonCurrencyCode)?$request->addonCurrencyCode:array();
         $addonCostDataArray=array();
-        if(!empty($addOn_cost_Date))
+        if(!empty($addOn_cost_Date) && !empty($addoncost_transection_type) && !empty($addoncost_description) && !empty($addoncostPrice))
         {
             foreach($addOn_cost_Date as $key=>$obj)
             {
-                $addonCostDataArray[]=array('date'=>$addOn_cost_Date[$key],'trnsectionType'=>$addoncost_transection_type[$key],'description'=>$addoncost_description[$key],'price'=>$addoncostPrice[$key],'currencyCode'=>$addonCurrencyCode[$key]);
+                if(!empty($addOn_cost_Date[$key]) && !empty($addoncost_transection_type[$key]) && !empty($addoncost_description[$key]) && !empty($addoncostPrice[$key]))
+                {
+                   $addonCostDataArray[]=array('date'=>$addOn_cost_Date[$key],'trnsectionType'=>$addoncost_transection_type[$key],'description'=>$addoncost_description[$key],'price'=>$addoncostPrice[$key],'currencyCode'=>$addonCurrencyCode[$key]); 
+                }
+                
             } 
         }
         $addonTransectionData=  json_encode($addonCostDataArray);

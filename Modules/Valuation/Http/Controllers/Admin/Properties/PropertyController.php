@@ -354,8 +354,15 @@ class PropertyController extends ValuationAdminBaseController
 
         $property->setMeta($updatePropertyMeta);
         
-       
-        return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
+       if($request->id)
+       {
+               return Reply::redirect(route($this->addEditViewRoute,$request->id), __('Updated Success'));
+       }
+       else
+       {
+           return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
+       }
+//        return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
     }
 
     /**

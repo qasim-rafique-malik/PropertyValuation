@@ -24,6 +24,7 @@ use Modules\Valuation\Http\Controllers\Admin\Properties\ClassController;
 use Modules\Valuation\Http\Controllers\Admin\Properties\ClassificationController;
 use Modules\Valuation\Http\Controllers\Admin\Properties\TypeController;
 use App\Currency;
+use Modules\Valuation\Entities\ValuationMeasurementUnit;
 class PropertyController extends ValuationAdminBaseController
 {
 
@@ -85,6 +86,11 @@ class PropertyController extends ValuationAdminBaseController
        $data['currencyCode']=isset($currencyDetails->currency_code)?$currencyDetails->currency_code:'';
        
         $data['adminCountryId'] = (isset(user()->country_id) && user()->country_id != '')?user()->country_id:0;
+        $unitObj = new ValuationMeasurementUnit;
+           
+        $units=  $unitObj->getCompanyUnitSetting(isset(company()->id)?company()->id:0);
+        $unit=isset($units)? $units[0]:'';
+        $data['measurementUnit']=$unit->measure_unit;
     }
 
     public function newCreateView()
@@ -243,8 +249,21 @@ class PropertyController extends ValuationAdminBaseController
         $property->coordinates = isset($request->coordinates) ? $request->coordinates : '';
         $property->plot_num = isset($request->plotNum) ? $request->plotNum : 0;
         $property->land_size = isset($request->landSize) ? $request->landSize : 0;
-        $property->sizes_in_meter_sq = isset($request->sizeMeterSQ) ? $request->sizeMeterSQ : 0;
-        $property->sizes_in_sq_feet = isset($request->sizeSQFeet) ? $request->sizeSQFeet : 0;
+        if(isset($data['measurementUnit']))
+        {
+            if($data['measurementUnit']=='meter')
+            {
+                $property->sizes_in_meter_sq = isset($request->landSize) ? $request->landSize : 0;
+                $property->sizes_in_sq_feet = isset($request->landSize) ? $request->landSize*3.28084 : 0;
+            }
+            else if($data['measurementUnit']=='feet')
+            {
+                $property->sizes_in_meter_sq = isset($request->landSize) ? $request->landSize/3.28084 : 0;
+                $property->sizes_in_sq_feet = isset($request->landSize) ? $request->landSize : 0;
+            }
+        }
+//        $property->sizes_in_meter_sq = isset($request->sizeMeterSQ) ? $request->sizeMeterSQ : 0;
+//        $property->sizes_in_sq_feet = isset($request->sizeSQFeet) ? $request->sizeSQFeet : 0;
         $property->buildup_sizes = isset($request->buildupSizes) ? $request->buildupSizes : 0;
         $property->front_elivation = isset($request->frontElivation) ? $request->frontElivation : 0;
         $property->common_area = isset($request->commonArea) ? $request->commonArea : 0;

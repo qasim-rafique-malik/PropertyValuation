@@ -60,8 +60,11 @@ Route::prefix('valuation')->group(function() {
             Route::get('/block/addEditView/{id?}', 'Admin\Settings\BlockController@addEditView')->name('valuation.admin.settings.block.addEditView');
             Route::post('/block/saveUpdateData/{id?}', 'Admin\Settings\BlockController@saveUpdateData')->name('valuation.admin.settings.block.saveUpdateData');
             Route::delete('/block/destroy/{id?}', 'Admin\Settings\BlockController@destroy')->name('valuation.admin.settings.block.destroy');
-
-        });
+            
+            //Land measuremnt Unit
+            Route::get('/Measurement/addEditView/{id?}', 'Admin\Settings\MeasurementController@addEditView')->name('valuation.admin.settings.Measurement.addEditView');
+            Route::post('/Measurement/saveUpdateData/{id?}', 'Admin\Settings\MeasurementController@saveUpdateData')->name('valuation.admin.settings.Measurement.saveUpdateData');
+        }); 
 
         //Property routes group
         Route::prefix('property')->group(function() {

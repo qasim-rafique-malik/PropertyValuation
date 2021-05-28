@@ -85,7 +85,9 @@
 
                         <div class="tabbable">
                             <ul class="nav nav-tabs wizard">
-                                <li class="active"><a class="nav-link nav-item" href="#LandInfo" data-toggle="tab"
+                                <li class="active"><a class="nav-link nav-item" href="#PropertyInfo" data-toggle="tab"
+                                                      aria-controls="PropertyInfo" aria-expanded="false">Property info</a></li>
+                                <li><a class="nav-link nav-item" href="#LandInfo" data-toggle="tab"
                                                       aria-controls="LandInfo" aria-expanded="false">Land info</a>
                                 </li>
                                 <li><a href="#StructureInfo" class="nav-link nav-item" data-toggle="tab"
@@ -101,6 +103,7 @@
 
 
                         <div class="tab-content" id="myTabContent">
+                            @include('valuation::Admin.Property.PropertyFormInclude.PropertyInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.LandInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.StructureInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.OtherInfo')

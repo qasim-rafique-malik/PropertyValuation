@@ -99,5 +99,9 @@ $propertyImges=array();
 $propertyImges['image']='Property Image';
 $valuationLang['property']['media']=$propertyImges;
 
+$measurementUnit=array();
+$measurementUnit['measurementTitle']='Measurement Unit';
+$measurementUnit['Title']='Measurement Unit Setting';
+$valuationLang['measurement']=$measurementUnit;
 
 return $valuationLang;

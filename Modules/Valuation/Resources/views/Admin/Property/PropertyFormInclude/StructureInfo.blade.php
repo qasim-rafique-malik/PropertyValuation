@@ -1,3 +1,22 @@
+@push('head-script')
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/datatables-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/prismjs-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/style-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/plugins-bundle.css') }}">
+    <style>
+        legend
+        {
+            width: initial !important;
+            border-bottom: none !important;
+        }
+        fieldset
+        {
+            padding: .35em .625em .75em !important;
+            margin: 0 2px !important;
+            border: 1px solid silver !important;
+        }
+    </style>
+@endpush
 <div class="tab-pane fade" id="StructureInfo">
     <div class="inner-panel-Main-div">
         <div class="panel panel-inverse">
@@ -23,6 +42,13 @@
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="StructureInfoPropertyCharacteristics"
                                    aria-expanded="false">Property Characteristics</a></li>
+                                   <li>
+                                       <a href="#StructureInfoUnitListTab" class="nav-link nav-item" data-toggle="tab"
+                                   aria-controls="StructureInfoUnitListTab"
+                                   aria-expanded="false">
+                                           Unit List
+                                       </a>
+                                   </li>
                         </ul>
 
                     </div>
@@ -34,6 +60,9 @@
                              role="tabpanel">
                             <div class="form-body">
                                 <div class="row">
+                                    <fieldset>
+                                        <legend>Measurements</legend>
+                                        <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Buildup sizes</label>
@@ -69,43 +98,75 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Entrance #</label>
-                                            <input type="text" name="entranceNum" id="entranceNum" value="{{isset($entranceNum)?$entranceNum:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">BLDG #</label>
-                                            <input type="text" name="BLDGNum" id="BLDGNum" value="{{isset($BLDGNum)?$BLDGNum:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
+                                    </fieldset>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Unit #</label>
-                                            <input type="text" name="unitNum" id="unitNum" value="{{isset($unitNum)?$unitNum:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
+                                    <fieldset>
+                                        <legend>Address</legend>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Entrance #</label>
+                                                    <input type="text" name="entranceNum" id="entranceNum" value="{{isset($entranceNum)?$entranceNum:''}}"
+                                                           class="form-control"
+                                                           autocomplete="nope">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">BLDG #</label>
+                                                    <input type="text" name="BLDGNum" id="BLDGNum" value="{{isset($BLDGNum)?$BLDGNum:''}}"
+                                                           class="form-control"
+                                                           autocomplete="nope">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Age</label>
-                                            <input type="text" name="age" id="age" value="{{isset($age)?$age:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
+                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Unit #</label>
+                                                    <input type="text" name="unitNum" id="unitNum" value="{{isset($unitNum)?$unitNum:''}}"
+                                                           class="form-control"
+                                                           autocomplete="nope">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Name</label>
+                                                    <input type="text" name="name" id="name" value="{{isset($name)?$name:''}}"
+                                                           class="form-control"
+                                                           autocomplete="nope">
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </div>
+                                    </fieldset>
                                 </div>
                                 <div class="row">
+                                    <fieldset>
+                                        <legend>Usage</legend>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                               <div class="form-group">
+                                                   <label class="control-label">Use</label>
+                                                   <input type="text" name="use" id="use" value="{{isset($use)?$use:''}}"
+                                                          class="form-control"
+                                                          autocomplete="nope">
+                                               </div>
+                                            </div>
+                                           <div class="col-md-6">
+                                               <div class="form-group">
+                                                   <label class="control-label">Age</label>
+                                                   <input type="text" name="age" id="age" value="{{isset($age)?$age:''}}"
+                                                          class="form-control"
+                                                          autocomplete="nope">
+                                               </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+<!--                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Status</label>
@@ -116,31 +177,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Name</label>
-                                            <input type="text" name="name" id="name" value="{{isset($name)?$name:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label class="control-label">Role</label>
                                             <input type="text" name="role" id="role" value="{{isset($role)?$role:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Use</label>
-                                            <input type="text" name="use" id="use" value="{{isset($use)?$use:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
+                                   
+                                </div>-->
                             </div>
                         </div>
                         <!---StructureInfoPrimaryInfo -->
@@ -374,6 +418,28 @@
                             </div>
                         </div>
                         <!---StructureInfoPropertyCharacteristics -->
+                        
+                        <!-- StructureInfoPropertyUnitList -->
+                        <div class="tab-pane fade" id="StructureInfoUnitListTab">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="pb-10">
+                                           <button class="btn btn-primary" id="StructureInfoUnitListAddBtn">Add New Row</button>
+                                      </div>
+                                   <table id="StructureInfoUnitListTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                           <thead>
+                                                   <tr class="fw-bold fs-6 text-gray-800">
+                                                           <th>Unit Type</th>
+                                                           <th>Unit Id</th>
+                                                           <th>Description</th>
+                                                   </tr>
+                                           </thead>
+
+                                       </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- StructureInfoPropertyUnitList end -->
                     </div>
 
                 </div>
@@ -381,3 +447,22 @@
         </div>
     </div>
 </div>
+@push('footer-script')
+<script src="{{ asset('plugins/metronic_plugin/js/datatables-bundle.js') }}"></script>
+<script src="{{ asset('plugins/metronic_plugin/js/prismjs-bundle.js') }}"></script>
+<script>
+var StructureInfoUnitListTable =$("#StructureInfoUnitListTable").DataTable();
+var unitListCounter=1;
+$("#StructureInfoUnitListAddBtn").on("click", function() {
+    StructureInfoUnitListTable.row.add([
+        '<input type="text" name="structureUnitType[]" class="form-control">',
+        '<input type="text" name="structureUnitId[]" class="form-control">',
+        '<textarea name="structureUnitDescription[]" class="form-control"></textarea>'
+        
+    ]).draw(false);
+    unitListCounter++;
+});
+// Automatically add a first row of data
+$("#StructureInfoUnitListAddBtn").click();
+</script>
+@endpush

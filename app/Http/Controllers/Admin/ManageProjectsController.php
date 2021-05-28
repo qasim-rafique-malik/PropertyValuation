@@ -292,6 +292,12 @@ class ManageProjectsController extends AdminBaseController
         }
 
 
+        $this->dayPassed = '--';
+        if(isset($this->project->start_date) && !empty($this->project->start_date)){
+            $now = Carbon::now();
+            $this->dayPassed = $this->project->start_date->diffInDays($now);
+        }
+
         $this->hoursLogged = $this->project->times()->sum('total_minutes');
 
         $this->hoursLogged = intdiv($this->hoursLogged, 60);
@@ -321,6 +327,7 @@ class ManageProjectsController extends AdminBaseController
             $this->taskStatus = json_encode($taskStatus);
         }
 
+        $this->projectPendingTask = Task::projectOpenTasks($id)->count();
 
         $incomes = [];
         $graphData = [];

@@ -104,4 +104,21 @@ $measurementUnit['measurementTitle']='Measurement Unit';
 $measurementUnit['Title']='Measurement Unit Setting';
 $valuationLang['measurement']=$measurementUnit;
 
+$propertyFeatures=array();
+$propertyFeatures['Title']="Property Type Feature Setting";
+$propertyFeatures['createFeature']="Create Feature";
+$propertyFeatures['totalFeture']="Total Feature";
+$propertyFeatures['name']="Feature Name";
+$propertyFeatures['category']="Category";
+
+$valuationLang['propertyFeature']=$propertyFeatures;
+
+
+$feactureCategory=array();
+$feactureCategory['Title']="Property Feature Category";
+$feactureCategory['createCategory']="New Category";
+$feactureCategory['categoryName']="Category Name";
+$feactureCategory['categoryCount']="Total Category";
+
+$valuationLang['propertyFeatureCategory']=$feactureCategory;
 return $valuationLang;

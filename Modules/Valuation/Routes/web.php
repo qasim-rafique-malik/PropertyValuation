@@ -64,6 +64,21 @@ Route::prefix('valuation')->group(function() {
             //Land measuremnt Unit
             Route::get('/Measurement/addEditView/{id?}', 'Admin\Settings\MeasurementController@addEditView')->name('valuation.admin.settings.Measurement.addEditView');
             Route::post('/Measurement/saveUpdateData/{id?}', 'Admin\Settings\MeasurementController@saveUpdateData')->name('valuation.admin.settings.Measurement.saveUpdateData');
+            
+            //Property Feature 
+            Route::get('/feature','Admin\Settings\FeatureController@index')->name('valuation.admin.settings.feature');
+            Route::get('/feature/data','Admin\Settings\FeatureController@data')->name('valuation.admin.settings.feature.data');
+            Route::get('/feature/addEditView/{id?}','Admin\Settings\FeatureController@addEditView')->name('valuation.admin.settings.feature.addEditView');
+            Route::post('/feature/saveUpdateData/{id?}','Admin\Settings\FeatureController@saveUpdateData')->name('valuation.admin.settings.feature.saveUpdateData');
+            Route::delete('/feature/destroy/{id?}','Admin\Settings\FeatureController@destroy')->name('valuation.admin.settings.feature.destroy');
+            
+            //Property Feature Category
+            Route::get('/category','Admin\Settings\FeatureCategoryController@index')->name('valuation.admin.settings.category');
+            Route::get('/category/addEditView/{id?}','Admin\Settings\FeatureCategoryController@addEditView')->name('valuation.admin.settings.category.addEditView');
+            Route::post('/category/saveUpdateData/{id?}','Admin\Settings\FeatureCategoryController@saveUpdateData')->name('valuation.admin.settings.category.saveUpdateData');
+            Route::get('/category/data','Admin\Settings\FeatureCategoryController@data')->name('valuation.admin.settings.category.data');
+            Route::get('/category/getAjaxData', 'Admin\Settings\FeatureCategoryController@getAjaxData')->name('valuation.admin.settings.category.getAjaxData');
+            Route::delete('/category/destroy/{id?}','Admin\Settings\FeatureCategoryController@destroy')->name('valuation.admin.settings.category.destroy');
         }); 
 
         //Property routes group

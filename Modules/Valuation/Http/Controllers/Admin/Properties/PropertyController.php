@@ -89,8 +89,10 @@ class PropertyController extends ValuationAdminBaseController
         $unitObj = new ValuationMeasurementUnit;
            
         $units=  $unitObj->getCompanyUnitSetting(isset(company()->id)?company()->id:0);
-        $unit=isset($units)? $units[0]:'';
-        $data['measurementUnit']=$unit->measure_unit;
+
+        $unit = (isset($units[0]))? $units[0]:null;
+
+        $data['measurementUnit']= isset($unit->measure_unit)?$unit->measure_unit:$unitObj->default;
     }
 
     public function newCreateView()

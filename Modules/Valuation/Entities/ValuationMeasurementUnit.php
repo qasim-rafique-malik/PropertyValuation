@@ -9,6 +9,7 @@ class ValuationMeasurementUnit extends ValuationBaseModel
     protected $table = 'valuation_measurement_unit';
     public $timestamps = true;
     protected $fillable = ['company_id','measure_unit'];
+    public $default = 'sqf';
     public function getCompanyUnitSetting($id)
     {
         return $this->where('company_id', $id)->orderBy('id', 'desc')->limit(1)->get();

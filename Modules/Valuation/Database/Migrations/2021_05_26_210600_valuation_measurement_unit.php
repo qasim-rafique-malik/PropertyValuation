@@ -18,7 +18,7 @@ class ValuationMeasurementUnit extends Migration
          if (!Schema::hasTable('valuation_measurement_unit')) {
             Schema::create('valuation_measurement_unit', function (Blueprint $table) {
                 $table->id();
-                $table->bigInteger('company_id')->nullable();
+                $table->unsignedInteger('company_id')->nullable();
                 $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
                 $table->string('measure_unit')->nullable();
                 $table->timestamps();

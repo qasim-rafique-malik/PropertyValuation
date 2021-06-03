@@ -20,7 +20,7 @@ class CreateValuationPropertyFeatureTable extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('company_id')->nullable();
                 $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
-                $table->bigInteger('category_id')->nullable();
+                $table->unsignedInteger('category_id')->nullable();
                 $table->foreign('category_id')->references('id')->on('property_feature_category')->onDelete('cascade')->onUpdate('cascade');
                  $table->string('feature_name')->default(null);
                  $table->string('field_type')->default(null);

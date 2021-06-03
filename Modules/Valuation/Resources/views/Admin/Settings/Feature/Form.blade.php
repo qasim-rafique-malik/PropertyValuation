@@ -50,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(isset($sub_fields) && count($sub_fields)>0)
+                @if(isset($sub_fields) && !empty($sub_fields))
                 @foreach($sub_fields as $key=>$subField)
                 <tr>
                     <td><input type="text" name="subField[]" id="subField-{{$key}}" class="form-control" value="{{isset($subField)?$subField->name:''}}"></td>
@@ -152,7 +152,7 @@
         }
         
     var subFieldTable = $("#subFieldTable").DataTable();
-    var counterSubField = '{{isset($sub_fields)?count($sub_fields)+1:1}}';
+    var counterSubField = '{{(isset($sub_fields) && !empty($sub_fields))?count($sub_fields)+1:1}}';
     var isEdit='{{(isset($sub_fields) && isset($id))? "true":"false"}}';
     $("#addMoreField").on("click", function() {
         subFieldTable.row.add([

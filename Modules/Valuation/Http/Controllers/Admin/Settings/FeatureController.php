@@ -166,6 +166,8 @@ class FeatureController extends ValuationAdminBaseController
 
     public function data()
     {
+
+        echo "<pre>"; print_r(ValuationFeature::find(1)->comments()); exit;
         $featureObj = new ValuationFeature();
 
 //        $fetureList = $featureObj->getAllForCompany();

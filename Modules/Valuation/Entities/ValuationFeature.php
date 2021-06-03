@@ -8,11 +8,15 @@ class ValuationFeature extends ValuationBaseModel
     public $timestamps = true;
     protected $fillable = ['category_id','company_id','feature_name','field_type','sub_fields'];
 
-    public function categoryBaseFeature()
+    public function category()
+    {
+        return $this->belongsTo(ValuationFeatureCategory::class, 'category_id', 'id');
+    }
+    /*public function categoryBaseFeature()
     {
          
-         return $this->belongsTo('Modules\Valuation\Entities\ValuationFeatureCategory');
-    }
+         return $this->belongsTo(ValuationFeatureCategory::class, 'category_id');
+    }*/
     public function getFeature()
     {
        return $this->join('property_feature_category', 'valuation_property_feature.category_id', '=', 'property_feature_category.id')

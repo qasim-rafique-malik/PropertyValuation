@@ -35,6 +35,8 @@ class MeasurementController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
         $this->title = 'valuation::valuation.measurement.Title';
+        $unitObj = new ValuationMeasurementUnit;
+        $unit = null;
         if($id>0)
         {
             $this->id=$id;
@@ -48,10 +50,10 @@ class MeasurementController extends ValuationAdminBaseController
             $unitObj = new ValuationMeasurementUnit;
            
             $units=  $unitObj->getCompanyUnitSetting($this->data['companyId']);
-            $unit=isset($units)? $units[0]:'';
+            $unit = (isset($units[0]))? $units[0]:null;
         }
 
-        $this->measure_unit = isset($unit->measure_unit) ? $unit->measure_unit : '';
+        $this->measure_unit = isset($unit->measure_unit)?$unit->measure_unit:$unitObj->default;
         return view($this->viewFolderPath . 'Index', $this->data);
     }
     public function saveUpdateData(Request $request)

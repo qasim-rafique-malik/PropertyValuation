@@ -1,22 +1,19 @@
 <?php
 
 namespace Modules\Valuation\Entities;
-use Modules\Valuation\Entities\ValuationBaseModel;
-class ValuationFeature extends ValuationBaseModel
+
+class ValuationPropertyFeature extends ValuationBaseModel
 {
-    protected $table = 'valuation_property_feature';
+    /*protected $table = 'valuation_property_feature';*/
     public $timestamps = true;
     protected $fillable = ['category_id','company_id','feature_name','field_type','sub_fields'];
 
-    public function category()
+    public function featureCategory()
     {
-        return $this->belongsTo(ValuationFeatureCategory::class, 'category_id', 'id');
+        //return 'aa';
+        return $this->belongsTo(ValuationPropertyFeatureCategory::class, 'category_id');
     }
-    /*public function categoryBaseFeature()
-    {
-         
-         return $this->belongsTo(ValuationFeatureCategory::class, 'category_id');
-    }*/
+
     public function getFeature()
     {
        return $this->join('property_feature_category', 'valuation_property_feature.category_id', '=', 'property_feature_category.id')

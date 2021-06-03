@@ -6,7 +6,7 @@ use App\Helper\Reply;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Modules\Valuation\Entities\ValuationFeatureCategory;
+use Modules\Valuation\Entities\ValuationPropertyFeatureCategory;
 
 class FeatureCategoryController extends ValuationAdminBaseController
 {
@@ -48,7 +48,7 @@ class FeatureCategoryController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
 
-        $feactureCategory = new ValuationFeatureCategory();
+        $feactureCategory = new ValuationPropertyFeatureCategory();
 
         $this->feactureCategoryCount = $feactureCategory->countForCompany();
 
@@ -65,7 +65,7 @@ class FeatureCategoryController extends ValuationAdminBaseController
 
 
         if ($id > 0) {
-            $category = ValuationFeatureCategory::find($id);
+            $category = ValuationPropertyFeatureCategory::find($id);
         }
 
         $this->category_name = isset($category->category_name) ? $category->category_name : '';
@@ -79,10 +79,10 @@ class FeatureCategoryController extends ValuationAdminBaseController
         $data = array();
         $this->__customConstruct($data);
 
-        if (ValuationFeatureCategory::find($request->id)) {
-            $category = ValuationFeatureCategory::find($request->id);
+        if (ValuationPropertyFeatureCategory::find($request->id)) {
+            $category = ValuationPropertyFeatureCategory::find($request->id);
         } else {
-            $category = new ValuationFeatureCategory;
+            $category = new ValuationPropertyFeatureCategory;
         }
         $category->company_id = isset($data['companyId']) ? $data['companyId'] : 0;
         $category->category_name = isset($request->feactureCategory) ? $request->feactureCategory : 0;
@@ -100,20 +100,20 @@ class FeatureCategoryController extends ValuationAdminBaseController
     public function destroy($id)
     {
 
-        $feactureCategory = ValuationFeatureCategory::find($id);
+        $feactureCategory = ValuationPropertyFeatureCategory::find($id);
 
         if (empty($feactureCategory)) {
             return Reply::error(__('valuation::messages.dataNotFound'));
         }
 
-        ValuationFeatureCategory::destroy($id);
+        ValuationPropertyFeatureCategory::destroy($id);
 
         return Reply::success(__('valuation::messages.dataDeleted'));
     }
 
     public function getAjaxData()
     {
-        $feactureCategory = new ValuationFeatureCategory();
+        $feactureCategory = new ValuationPropertyFeatureCategory();
 
         $category = $feactureCategory->getAllAjaxForCompany();
 
@@ -122,7 +122,7 @@ class FeatureCategoryController extends ValuationAdminBaseController
 
     public function data()
     {
-        $feactureCategory = new ValuationFeatureCategory();
+        $feactureCategory = new ValuationPropertyFeatureCategory();
 
         $categorList = $feactureCategory->getAllForCompany();
 

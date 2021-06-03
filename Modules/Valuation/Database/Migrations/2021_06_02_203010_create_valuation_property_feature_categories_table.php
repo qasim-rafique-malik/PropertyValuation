@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePropertyFeatureCategoryTable extends Migration
+class CreateValuationPropertyFeatureCategoriesTable extends Migration
 {
 
     /**
@@ -13,9 +13,9 @@ class CreatePropertyFeatureCategoryTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('property_feature_category')) 
+        if (!Schema::hasTable('valuation_property_feature_categories'))
         {
-            Schema::create('property_feature_category', function(Blueprint $table)
+            Schema::create('valuation_property_feature_categories', function(Blueprint $table)
             {
                 $table->increments('id');
                 $table->unsignedInteger('company_id')->nullable();
@@ -33,7 +33,7 @@ class CreatePropertyFeatureCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::drop('property_feature_category');
+        Schema::drop('valuation_property_feature_categories');
     }
 
 }

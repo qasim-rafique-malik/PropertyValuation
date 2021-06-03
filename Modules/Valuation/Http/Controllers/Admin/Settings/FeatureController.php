@@ -4,14 +4,10 @@ namespace Modules\Valuation\Http\Controllers\Admin\Settings;
 
 use App\Helper\Reply;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
-use App\Country;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Modules\Valuation\Entities\ValuationGovernorate;
-use Modules\Valuation\Entities\ValuationCity;
-use Modules\Valuation\Entities\ValuationBlock;
-use Modules\Valuation\Entities\ValuationFeatureCategory;
-use Modules\Valuation\Entities\ValuationFeature;
+use Modules\Valuation\Entities\ValuationPropertyFeatureCategory;
+use Modules\Valuation\Entities\ValuationPropertyFeature;
 class FeatureController extends ValuationAdminBaseController
 {
     const viewFolderPath = 'valuation::Admin.Settings.Feature.';
@@ -52,7 +48,7 @@ class FeatureController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
 
-        $feture = new ValuationFeature();
+        $feture = new ValuationPropertyFeature();
 
         $this->fetureCount = $feture->countForCompany();
 
@@ -66,11 +62,11 @@ class FeatureController extends ValuationAdminBaseController
         $governorate = null;
         $this->title = 'valuation::valuation.propertyFeature.createFeature';
         $this->id = $id;
-        $categoryObj=new ValuationFeatureCategory();
+        $categoryObj=new ValuationPropertyFeatureCategory();
         $this->category=$categoryObj->getAllForCompany();
         if ($id > 0)
         {
-            $featureObj = new ValuationFeature;
+            $featureObj = new ValuationPropertyFeature;
             $features = $featureObj->find($id);
             $this->id=$id;
         }
@@ -89,10 +85,10 @@ class FeatureController extends ValuationAdminBaseController
         $data = array();
         $this->__customConstruct($data);
 
-        if (ValuationFeature::find($request->id)) {
-            $features = ValuationFeature::find($request->id);
+        if (ValuationPropertyFeature::find($request->id)) {
+            $features = ValuationPropertyFeature::find($request->id);
         } else {
-            $features = new ValuationFeature;
+            $features = new ValuationPropertyFeature;
         }
         $features->company_id = isset($data['companyId']) ? $data['companyId'] : 0;
         $features->feature_name = isset($request->featureName) ? $request->featureName : '';
@@ -144,20 +140,20 @@ class FeatureController extends ValuationAdminBaseController
     public function destroy($id)
     {
 
-        $feature = ValuationFeature::find($id);
+        $feature = ValuationPropertyFeature::find($id);
 
         if (empty($feature)) {
             return Reply::error(__('valuation::messages.dataNotFound'));
         }
 
-        ValuationFeature::destroy($id);
+        ValuationPropertyFeature::destroy($id);
 
         return Reply::success(__('valuation::messages.dataDeleted'));
     }
 
     public function getAjaxData()
     {
-        $featureObj = new ValuationFeature();
+        $featureObj = new ValuationPropertyFeature();
 
         $fetureList = $featureObj->getAllAjaxForCompany();
 
@@ -166,18 +162,10 @@ class FeatureController extends ValuationAdminBaseController
 
     public function data()
     {
+        $featureObj = new ValuationPropertyFeature();
+        $featureList = $featureObj->getAllForCompany();
 
-        echo "<pre>"; print_r(ValuationFeature::find(1)->comments()); exit;
-        $featureObj = new ValuationFeature();
-
-//        $fetureList = $featureObj->getAllForCompany();
-//        $categories =$featureObj->getAllForCompany()->categoryBaseFeature;
-        $fetureList =$featureObj->getFeature();
-//        echo "<pre>";
-//        print_r($categories);
-//        echo "</pre>";
-//        exit();
-        return DataTables::of($fetureList)
+        return DataTables::of($featureList)
             ->addColumn('action', function ($row) {
 
                 $action = '<div class="btn-group dropdown m-r-10">
@@ -202,7 +190,7 @@ class FeatureController extends ValuationAdminBaseController
             ->editColumn(
                 'category',
                 function ($row) {
-                    return ucfirst($row->category_name);
+                    return ucfirst(isset($row->featureCategory->category_name)?$row->featureCategory->category_name:'Category not found');
                 }
             )
             ->addIndexColumn()

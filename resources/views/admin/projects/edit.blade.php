@@ -231,15 +231,37 @@
                             </div>
                             <!--/span-->
 
-                            <h3 class="box-title m-b-30">@lang('modules.projects.budgetInfo')</h3>
+                            {{--<h3 class="box-title m-b-30">@lang('modules.projects.budgetInfo')</h3>--}}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Select Property</label>
+                                        <select name="projectPropertyId"
+                                                id="projectPropertyId"
+                                                class="form-control projectPropertyId select2"
+                                                required>
+                                            <option value="">--</option>
+                                            @if(isset($properties))
+                                                @foreach($properties as $property)
+                                                    <option
+                                                            @if($project->property_id == $property->id)
+                                                            selected
+                                                            @endif
+                                                            value="{{ isset($property->id)?$property->id:'' }}">
+                                                        {{ isset($property->title)?$property->title: '' }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                {{--<div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">@lang('modules.projects.projectBudget')</label>
                                         <input type="text" class="form-control" name="project_budget" value="{{ $project->project_budget }}">
                                     </div>
-                                </div>
-                                <div class="col-md-4">
+                                </div>--}}
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">@lang('modules.invoices.currency')</label>
                                         <select name="currency_id" id="" class="form-control select2">
@@ -252,12 +274,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                {{--<div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">@lang('modules.projects.hours_allocated')</label>
                                         <input type="text" name="hours_allocated" class="form-control" value="{{ $project->hours_allocated }}">
                                     </div>
-                                </div>
+                                </div>--}}
 
 
                             </div>

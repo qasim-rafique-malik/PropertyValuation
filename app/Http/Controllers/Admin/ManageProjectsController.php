@@ -33,6 +33,7 @@ use App\ProjectMilestone;
 use App\TaskUser;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Valuation\Entities\ValuationProperty;
 use Yajra\DataTables\Facades\DataTables;
 use App\Traits\ProjectProgress;
 
@@ -108,6 +109,9 @@ class ManageProjectsController extends AdminBaseController
         $this->currencies = Currency::all();
         $this->employees = User::allEmployees();
 
+        $propertyObj = new ValuationProperty();
+        $this->properties = $propertyObj->getAllForCompany();
+
         $project = new Project();
         $this->upload = can_upload();
         $this->fields = $project->getCustomFieldGroupsWithFields()->fields;
@@ -169,6 +173,8 @@ class ManageProjectsController extends AdminBaseController
 
         $project->hours_allocated = $request->hours_allocated;
         $project->status = $request->status;
+
+        $project->property_id = (isset($request->projectPropertyId) && $request->projectPropertyId != '' )?$request->projectPropertyId:'';
 
         $project->save();
 
@@ -402,6 +408,8 @@ class ManageProjectsController extends AdminBaseController
         $this->project = Project::findOrFail($id)->withCustomFields();
         $this->fields = $this->project->getCustomFieldGroupsWithFields()->fields;
         $this->currencies = Currency::all();
+        $propertyObj = new ValuationProperty();
+        $this->properties = $propertyObj->getAllForCompany();
         return view('admin.projects.edit', $this->data);
     }
 
@@ -467,6 +475,8 @@ class ManageProjectsController extends AdminBaseController
         $project->currency_id = $request->currency_id;
         $project->hours_allocated = $request->hours_allocated;
         $project->status = $request->status;
+
+        $project->property_id = (isset($request->projectPropertyId) && $request->projectPropertyId != '' )?$request->projectPropertyId:'';
 
         $project->save();
 

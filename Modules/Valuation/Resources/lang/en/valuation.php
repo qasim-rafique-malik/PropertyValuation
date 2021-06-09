@@ -121,4 +121,20 @@ $feactureCategory['categoryName']="Category Name";
 $feactureCategory['categoryCount']="Total Category";
 
 $valuationLang['propertyFeatureCategory']=$feactureCategory;
+
+$weightageCategory = array();
+$weightageCategory['title'] = 'Weightage Category';
+$weightageCategory['totalWeightageCategory'] = 'Total Weightage Category';
+$weightageCategory['createWeightageCategory'] = 'Create Weightage Category';
+$weightageCategory['editWeightageCategory'] = 'Edit Weightage Category';
+$valuationLang['weightageCategory'] = $weightageCategory;
+
+$propertyWeightage = array();
+$propertyWeightage['title'] = 'Weightage';
+$propertyWeightage['totalWeightage'] = 'Total Weightage';
+$propertyWeightage['createWeightage'] = 'Create Weightage';
+$propertyWeightage['editWeightage'] = 'Edit Weightage';
+$propertyWeightage['category'] = 'Weightage Category';
+$valuationLang['propertyWeightage'] = $propertyWeightage;
+
 return $valuationLang;

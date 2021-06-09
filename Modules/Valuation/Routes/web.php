@@ -79,6 +79,22 @@ Route::prefix('valuation')->group(function() {
             Route::get('/category/data','Admin\Settings\FeatureCategoryController@data')->name('valuation.admin.settings.category.data');
             Route::get('/category/getAjaxData', 'Admin\Settings\FeatureCategoryController@getAjaxData')->name('valuation.admin.settings.category.getAjaxData');
             Route::delete('/category/destroy/{id?}','Admin\Settings\FeatureCategoryController@destroy')->name('valuation.admin.settings.category.destroy');
+
+
+            //Property Weightage
+            Route::get('/weightage','Admin\Settings\WeightageController@index')->name('valuation.admin.settings.weightage');
+            Route::get('/weightage/data','Admin\Settings\WeightageController@data')->name('valuation.admin.settings.weightage.data');
+            Route::get('/weightage/addEditView/{id?}','Admin\Settings\WeightageController@addEditView')->name('valuation.admin.settings.weightage.addEditView');
+            Route::post('/weightage/saveUpdateData/{id?}','Admin\Settings\WeightageController@saveUpdateData')->name('valuation.admin.settings.weightage.saveUpdateData');
+            Route::delete('/weightage/destroy/{id?}','Admin\Settings\WeightageController@destroy')->name('valuation.admin.settings.weightage.destroy');
+
+            //Property Weightage Category
+            Route::get('/weightageCategory','Admin\Settings\WeightageCategoryController@index')->name('valuation.admin.settings.weightageCategory');
+            Route::get('/weightageCategory/addEditView/{id?}','Admin\Settings\WeightageCategoryController@addEditView')->name('valuation.admin.settings.weightageCategory.addEditView');
+            Route::post('/weightageCategory/saveUpdateData/{id?}','Admin\Settings\WeightageCategoryController@saveUpdateData')->name('valuation.admin.settings.weightageCategory.saveUpdateData');
+            Route::get('/weightageCategory/data','Admin\Settings\WeightageCategoryController@data')->name('valuation.admin.settings.weightageCategory.data');
+            Route::get('/weightageCategory/getAjaxData', 'Admin\Settings\WeightageCategoryController@getAjaxData')->name('valuation.admin.settings.weightageCategory.getAjaxData');
+            Route::delete('/weightageCategory/destroy/{id?}','Admin\Settings\WeightageCategoryController@destroy')->name('valuation.admin.settings.weightageCategory.destroy');
         }); 
 
         //Property routes group

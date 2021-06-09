@@ -64,11 +64,18 @@ class ManageProjectValuationMethodController extends AdminBaseController
      */
     public function show($id)
     {
+
         $propertyObj = new ValuationProperty();
+        $allProperties = $propertyObj->getAllForCompany();
+        $this->properties = $allProperties;
 
-        $this->properties = $propertyObj->getAllForCompany();
+        $project = Project::findOrFail($id);
+        $this->project = $project;
 
-        $this->project = Project::findOrFail($id);
+        $basePropertyId = isset($project->property_id)?$project->property_id:'0';
+        $baseProperty = ValuationProperty::findOrFail($basePropertyId);
+        $this->baseProperty = $baseProperty;
+
         $this->employees = User::doesntHave('member', 'and', function ($query) use ($id) {
             $query->where('project_id', $id);
         })
@@ -82,6 +89,25 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $this->groups = Team::all();
 
         return view('admin.projects.ValuationMethodology.ComparativeMothod', $this->data);
+    }
+
+    public function processComparison(Request $request)
+    {
+        $propertyIdOne = $request->comparePropertyOne;
+        $propertyIdTwo = $request->comparePropertyTwo;
+        $propertyIdThree = $request->comparePropertyThree;
+        $propertyInfoOne = ValuationProperty::findOrFail($propertyIdOne);
+        $propertyInfoTwo = ValuationProperty::findOrFail($propertyIdTwo);
+        $propertyInfoThree = ValuationProperty::findOrFail($propertyIdThree);
+
+        $propertyInfo = array();
+        $propertyInfo['propertyInfoOne'] = $propertyInfoOne;
+        $propertyInfo['propertyInfoTwo'] = $propertyInfoTwo;
+        $propertyInfo['propertyInfoThree'] = $propertyInfoThree;
+
+        $returnArray['propertyInfo'] = $propertyInfo;
+        $returnArray['status'] = 'success';
+        echo json_encode($returnArray); exit;
     }
 
     /**

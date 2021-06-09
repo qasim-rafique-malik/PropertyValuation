@@ -581,6 +581,7 @@ Route::group(['middleware' => 'auth'], function () {
                         Route::get('milestones/data/{id}', ['uses' => 'ManageProjectMilestonesController@data'])->name('milestones.data');
                         Route::resource('milestones', 'ManageProjectMilestonesController');
 
+                        Route::post('valuation-method/processComparison', ['uses' => 'ManageProjectValuationMethodController@processComparison'])->name('valuation-method.processComparison');
                         Route::resource('valuation-method', 'ManageProjectValuationMethodController');
 
                         Route::resource('project-expenses', 'ManageProjectExpensesController');

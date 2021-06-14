@@ -64,31 +64,43 @@ class ManageProjectValuationMethodController extends AdminBaseController
      */
     public function show($id)
     {
-
-        $propertyObj = new ValuationProperty();
-        $allProperties = $propertyObj->getAllForCompany();
-        $this->properties = $allProperties;
-
+        $this->projectId = $id;
         $project = Project::findOrFail($id);
         $this->project = $project;
 
+        $propertyObj = new ValuationProperty();
+
+
+        $this->baseproprety = null;
         $basePropertyId = isset($project->property_id)?$project->property_id:'0';
-        $baseProperty = ValuationProperty::findOrFail($basePropertyId);
-        $this->baseProperty = $baseProperty;
+        if($basePropertyId > 0){
+            $baseProperty = ValuationProperty::findOrFail($basePropertyId);
+            $this->baseProperty = $baseProperty;
+        }
 
-        $this->employees = User::doesntHave('member', 'and', function ($query) use ($id) {
-            $query->where('project_id', $id);
-        })
-            ->join('role_user', 'role_user.user_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'role_user.role_id')
-            ->select('users.id', 'users.name', 'users.email', 'users.created_at')
-            ->where('roles.name', 'employee')
-            ->groupBy('users.id')
-            ->distinct('users.id')
-            ->get();
-        $this->groups = Team::all();
+        $allProperties = $propertyObj->getAllForCompany()->except($basePropertyId);
+        $this->properties = $allProperties;
 
-        return view('admin.projects.ValuationMethodology.ComparativeMothod', $this->data);
+        return view('admin.projects.ValuationMethodology.ComparativeMethod', $this->data);
+    }
+
+    public function saveProjectBaseProperty(Request $request)
+    {
+        $projectId = isset($request->projectId)?$request->projectId:0;
+        if($projectId <= 0){
+            return Reply::error('Project id should be greater then 0');
+        }
+
+        $projectPropertyId = (isset($request->projectBaseProperty) && $request->projectBaseProperty > 0 ) ? $request->projectBaseProperty : 0;
+        if($projectPropertyId <= 0){
+            return Reply::error('Project property id should be greater then 0');
+        }
+
+        $project = Project::findOrFail($projectId);
+        $project->property_id = (isset($request->projectBaseProperty) && $request->projectBaseProperty != '' )?$request->projectBaseProperty:'';
+        $project->save();
+
+        return Reply::redirect(route('admin.valuation-method.show', $project->id), 'Project base property saved');
     }
 
     public function processComparison(Request $request)

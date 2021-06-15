@@ -13,11 +13,17 @@ class AddPropertyIdFieldProjects extends Migration
      */
     public function up()
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->unsignedBigInteger('property_id')->nullable();
-            $table->foreign('property_id')->references('id')->on('valuation_properties')->onDelete('cascade')->onUpdate('cascade');
+        if (!Schema::hasTable('projects')) 
+        {
+           if (!Schema::hasColumn('projects', 'property_id'))
+            {
+                Schema::table('projects', function (Blueprint $table) {
+                    $table->unsignedBigInteger('property_id')->nullable();
+                    $table->foreign('property_id')->references('id')->on('valuation_properties')->onDelete('cascade')->onUpdate('cascade');
 
-        });
+                });
+            }
+        }
     }
 
     /**

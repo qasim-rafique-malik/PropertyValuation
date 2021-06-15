@@ -39,6 +39,18 @@
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="FinancialInfoAddOnCosts"
                                    aria-expanded="false">Add-on costs</a></li>
+                            <li>
+                                <a href="#FinancialInfoContracts"
+                                   class="nav-link nav-item" data-toggle="tab"
+                                   aria-controls="FinancialInfoContracts"
+                                   aria-expanded="false">Contracts</a>
+                            </li>
+                            <li>
+                                <a href="#FinancialInfoCollections"
+                                   class="nav-link nav-item" data-toggle="tab"
+                                   aria-controls="FinancialInfoCollections"
+                                   aria-expanded="false">Collections</a>
+                            </li>
                             <li><a href="#FinancialInfoIncome"
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="FinancialInfoIncome"
@@ -297,7 +309,23 @@
                             </div>
                         </div>
                         <!---FinancialInfoAddOnCosts -->
-
+                        
+                        <!--FinancialInfoContracts-->
+                        <div class="tab-pane fade" id="FinancialInfoContracts">
+                            <div class="form-body">
+                                
+                            </div>
+                        </div>
+                        <!--FinancialInfoCollections-->
+                        
+                        <!--FinancialInfoContracts-->
+                        <div class="tab-pane fade" id="FinancialInfoCollections">
+                            <div class="form-body">
+                                
+                            </div>
+                        </div>
+                        <!--FinancialInfoCollections-->
+                        
                         <!---FinancialInfoIncome -->
                         <div class="tab-pane fade" id="FinancialInfoIncome">
                             <div class="form-body">

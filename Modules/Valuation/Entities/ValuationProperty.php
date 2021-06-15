@@ -13,6 +13,8 @@ class ValuationProperty extends ValuationBaseModel
     const FinancialAcquisitionCost='FinancialAcquisitionCost';
     const FinancialBuildUpCost='FinancialBuildUpCost';
     const FinancialAddOnCost='FinancialAddOnCost';
+    const StructureUnit='StructureUnit';
+    const OwnerShip='OwnerShip';
 
     protected $metaTable = 'valuation_property_meta';
     protected $fillable = array();

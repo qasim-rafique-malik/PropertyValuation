@@ -17,6 +17,15 @@
                                    data-toggle="tab"
                                    aria-controls="PropertyInfoNeighbourhood"
                                    aria-expanded="false">Neighbourhood</a></li>
+                            <li>
+                               <a class="nav-link nav-item" href="#LandInfoAddress" data-toggle="tab" aria-controls="LandInfoAddress" aria-expanded="false">Address</a>
+                            </li>
+                             <li>
+                                 <a href="#UploadTab" class="nav-link nav-item" data-toggle="tab" aria-controls="UploadTab" aria-expanded="false">Uploads</a>
+                             </li>
+                             <li><a class="nav-link nav-item" href="#LandInfo" data-toggle="tab"
+                                                      aria-controls="LandInfo" aria-expanded="false">Land info</a>
+                                </li>
                             
                         </ul>
 
@@ -131,7 +140,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Land size</label>
-                                            <input type="text" name="landSize1" id="landSize"
+                                            <input type="text" name="landSizePropertyInfo" id="landSizePropertyInfo"
                                                    value="{{isset($landSize)?$landSize:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
@@ -140,7 +149,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Sizes in Meter sq</label>
-                                            <input type="text" name="sizeMeterSQ" id="sizeMeterSQ"
+                                            <input type="text" name="sizeMeterSQPropertyInfo" id="sizeMeterSQPropertyInfo"
                                                    value="{{isset($sizeMeterSQ)?$sizeMeterSQ:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
@@ -161,7 +170,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Sizes in sq feet)</label>
-                                            <input type="text" name="sizeSQFeet" id="sizeSQFeet"
+                                            <input type="text" name="sizeSQFeetPropertyInfo" id="sizeSQFeetPropertyInfo"
                                                    value="{{isset($sizeSQFeet)?$sizeSQFeet:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
@@ -341,6 +350,213 @@
                             </div>
                         </div>
                         <!---LandInfoNeighbourhood -->
+                        
+                         <!---LandInfoAddress -->
+                        <div class="tab-pane fade" id="LandInfoAddress"
+                             role="tabpanel">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Country </label>
+                                            <select name="country"
+                                                    id="country"
+                                                    class="form-control"
+                                                    required>
+                                                <option value="">--</option>
+                                                @if(isset($countries))
+                                                    @foreach($countries as $country)
+                                                        <option @if(isset($adminCountryId) && $adminCountryId == $country->id) selected="selected"
+                                                                @endif value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Governorate</label>
+                                            <select name="governorate"
+                                                    id="governorate"
+                                                    class="form-control"
+                                                    required>
+                                                <option value="">--</option>
+                                                @if(isset($governorates))
+                                                    @foreach($governorates as $governorate)
+                                                        <option @if(isset($governorateId) && $governorate->id == $governorateId) selected="selected"
+                                                                @endif value="{{ $governorate->id }}">
+                                                            {{ $governorate->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">City</label>
+                                            <small class="pull-right cursor-pointer openModal addCity"
+                                                   data-toggle="modal" data-target="#addCity" data-whatever="Add City">Add</small>
+                                            <select name="city"
+                                                    id="propertyCity"
+                                                    class="form-control propertyCity"
+                                                    required>
+                                                <option value="">--</option>
+                                                @if($cities)
+                                                    @foreach($cities as $city)
+                                                        <option @if(isset($cityId) && $city->id == $cityId) selected="selected"
+                                                                @endif value="{{ $city->id }}">
+                                                            {{ $city->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Block</label>
+                                            <small class="pull-right cursor-pointer openModal addBlock"
+                                                   data-toggle="modal" data-target="#addBlock"
+                                                   data-whatever="Add Block">Add</small>
+                                            <select name="block"
+                                                    id="propertyBlock"
+                                                    class="form-control propertyBlock"
+                                                    required>
+                                                <option value="">--</option>
+                                                @if(isset($blocks))
+                                                    @foreach($blocks as $block)
+                                                        <option @if(isset($blockId) && $block->id == $blockId) selected="selected"
+                                                                @endif value="{{ $block->id }}">
+                                                            {{ $block->name }}
+                                                        </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Locality </label>
+                                            <input type="text" name="locality" id="locality"
+                                                   value="{{isset($locality)?$locality:''}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Road</label>
+                                            <input type="text" name="road" id="road" value="{{isset($road)?$road:''}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                                    <label class="control-label">Latitude</label>
+                                                    <input type="text" name="latitude" id="latitude" value="{{isset($latitude)?$latitude:''}}"  class="form-control" autocomplete="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Longitude</label>
+                                                    <input type="text" name="longitude" id="longitude" value="{{isset($longitude)?$longitude:''}}"  class="form-control" autocomplete="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Plot #</label>
+                                            <input type="text" name="plotNum" id="plotNum"
+                                                   value="{{isset($plotNum)?$plotNum:''}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="map_canvas" style="width: auto; height: 400px;"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!---LandInfoAddress -->
+                        <!-- Upload Tab start -->
+                        <div class="tab-pane fade" id="UploadTab">
+                            <div class="form-body">
+                                <div class="row">
+                                    <label class="control-label">Uploads</label>
+                                    <div id="repeaterUpload" class="">
+                                        <!-- Repeater Heading -->
+                                            <div class="repeater-heading">
+                                                <button type="button" class="btn btn-primary pt-5 pull-right repeater-add-btn">
+                                                    Add More Image
+                                                </button>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        <div class="items" data-group="image">
+                                                <!-- Repeater Content -->
+                                                <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label>@lang('valuation::valuation.property.media.image')</label>
+                                                            <div class="form-group">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="https://via.placeholder.com/200x150.png?text={{ str_replace(' ', '+', __('modules.profile.uploadPicture')) }}"   alt=""/>
+                    </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail"
+                                                                         style="max-width: 200px; max-height: 150px;"></div>
+                                                                    <div>
+                                                    <span class="btn btn-info btn-file">
+                                                        <span class="fileinput-new"> @lang('app.selectImage') </span>
+                                                        <span class="fileinput-exists"> @lang('app.change') </span>
+                                                        <input type="file" id="image" name="image" data-img-data="true" > </span>
+                                                                        <a href="javascript:;" class="btn btn-danger fileinput-exists"
+                                                                           data-dismiss="fileinput"> @lang('app.remove') </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                </div>
+<!--                                                <div class="item-content">
+                                                    <div class="form-group">
+                                                        <label for="imageUpload" class="col-lg-2 control-label">Image</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="file" class="form-control image" name='image' id="imageUpload" placeholder="Image" data-name="image">
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <!-- Repeater Remove Btn -->
+                                                <div class="pull-right repeater-remove-btn">
+                                                    <button class="btn btn-danger remove-btn">
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Upload tab end -->
+                        @include('valuation::Admin.Property.PropertyFormInclude.LandInfo')
                     </div>
 
                 </div>

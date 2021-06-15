@@ -434,7 +434,17 @@
                                                            <th>Description</th>
                                                    </tr>
                                            </thead>
-
+                                            <tfoot>
+                                            @if(isset($StructureUnit) && !empty($StructureUnit))
+                                         @foreach($StructureUnit as $StructureUnitObj)
+                                         <tr>
+                                             <th><input type="hidden" name="structureUnitType[]" value="{{$StructureUnitObj['unitType']}}">{{$StructureUnitObj['unitType']}}</th>
+                                             <th><input type="hidden" name="structureUnitId[]" value="{{$StructureUnitObj['unitId']}}">{{$StructureUnitObj['unitId']}}</th>
+                                             <th><input type="hidden" name="structureUnitDescription[]" value="{{$StructureUnitObj['unitDescription']}}">{{$StructureUnitObj['unitDescription']}}</th>
+                                         </tr>
+                                         @endforeach
+                                         @endif
+                                          </tfoot>
                                        </table>
                                 </div>
                             </div>

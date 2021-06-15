@@ -218,6 +218,8 @@ class PropertyController extends ValuationAdminBaseController
         $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
         $this->financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
         $this->financialAddonCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAddOnCost , array()))->toArray():array();
+        $this->StructureUnit = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::StructureUnit , array()))->toArray():array();
+        $this->OwnerShip = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::OwnerShip , array()))->toArray():array();
         $this->ref_id=isset($propertyData->ref_id)?$propertyData->ref_id:'';
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -365,6 +367,45 @@ class PropertyController extends ValuationAdminBaseController
             } 
         }
         $addonTransectionData=  json_encode($addonCostDataArray);
+        //Structure Unit
+        $structureUnitType=isset($request->structureUnitType)?$request->structureUnitType:array();
+        $structureUnitId=isset($request->structureUnitId)?$request->structureUnitId:array();
+        $structureUnitDescription=isset($request->structureUnitDescription)?$request->structureUnitDescription:array();
+        
+        $structureUnitArray=array();
+        if(!empty($structureUnitType) && !empty($structureUnitId) && !empty($structureUnitDescription))
+        {
+            foreach($structureUnitType as $unitKey=> $strUnit)
+            {
+                if(!empty($structureUnitType[$unitKey]) && !empty($structureUnitId[$unitKey]) && !empty($structureUnitDescription[$unitKey]))
+                {
+                    $structureUnitArray[]=array('unitType'=>$structureUnitType[$unitKey],'unitId'=>$structureUnitId[$unitKey],'unitDescription'=>$structureUnitDescription[$unitKey]);
+                }
+            }
+        }
+        $structureUnitJsonData=json_encode($structureUnitArray);
+        
+        //Ownership
+        $onwership_cpr_no=isset($request->onwership_cpr_no)?$request->onwership_cpr_no:array();
+        $onwership_passport_no=isset($request->onwership_passport_no)?$request->onwership_passport_no:array();
+        $onwership_first_name=isset($request->onwership_first_name)?$request->onwership_first_name:array();
+        $onwership_last_name=isset($request->onwership_last_name)?$request->onwership_last_name:array();
+        $onwership_email=isset($request->onwership_email)?$request->onwership_email:array();
+        $onwership_phone=isset($request->onwership_phone)?$request->onwership_phone:array();
+        $onwership_sale_agreement=isset($request->onwership_sale_agreement)?$request->onwership_sale_agreement:array();
+        $onwership_date_of_purchase=isset($request->onwership_date_of_purchase)?$request->onwership_date_of_purchase:array();
+        $ownerShipDataArray=array();
+        if(!empty($onwership_cpr_no) && !empty($onwership_passport_no) && !empty($onwership_first_name) && !empty($onwership_last_name) && !empty($onwership_email) && !empty($onwership_phone) && !empty($onwership_sale_agreement) && !empty($onwership_date_of_purchase))
+        {
+            foreach($onwership_cpr_no as $ownerKey=>$ownerObj)
+            {
+                if(!empty($onwership_cpr_no[$ownerKey]) && !empty($onwership_passport_no[$ownerKey]) && !empty($onwership_first_name[$ownerKey]) && !empty($onwership_last_name[$ownerKey]) && !empty($onwership_email[$ownerKey]) && !empty($onwership_phone[$ownerKey]) && !empty($onwership_sale_agreement[$ownerKey]) && !empty($onwership_date_of_purchase[$ownerKey]))
+                {
+                    $ownerShipDataArray[]=array('cprNo'=>$onwership_cpr_no[$ownerKey],'passportNo'=>$onwership_passport_no[$ownerKey],'firstName'=>$onwership_first_name[$ownerKey],'lastName'=>$onwership_last_name[$ownerKey],'email'=>$onwership_email[$ownerKey],'phone'=>$onwership_phone[$ownerKey],'saleAgrement'=>$onwership_sale_agreement[$ownerKey],'dateOfpurchase'=>$onwership_date_of_purchase[$ownerKey]);
+                }
+            }
+        }
+        $ownerShipJsonData=  json_encode($ownerShipDataArray);
         // add and update property Meta
         $updatePropertyMeta = array();
         $updatePropertyMeta[ValuationProperty::DimensionsMetaKey] = $dimensionsEncode;
@@ -372,6 +413,8 @@ class PropertyController extends ValuationAdminBaseController
         $updatePropertyMeta[ValuationProperty::FinancialAcquisitionCost] = $acqtransectionData;
         $updatePropertyMeta[ValuationProperty::FinancialBuildUpCost] = $buildUpTransectionData;
         $updatePropertyMeta[ValuationProperty::FinancialAddOnCost] = $addonTransectionData;
+        $updatePropertyMeta[ValuationProperty::StructureUnit] = $structureUnitJsonData;
+        $updatePropertyMeta[ValuationProperty::OwnerShip] = $ownerShipJsonData;
 
         $property->setMeta($updatePropertyMeta);
         

@@ -26,32 +26,38 @@
 
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        @include('sections.admin_setting_menu')
-                        {!! Form::open(['id'=>'saveUpdateMeasurement','class'=>'ajax-form','method'=>'POST']) !!}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                        <div class="m-b-10">
-                                            <label class="control-label">Measurement Unit</label>
-                                        </div>
-                                        <div class="radio radio-inline">
-                                            <input type="radio" name="land_measurement_unit" @if(isset($measure_unit) && $measure_unit == 'meter') checked="checked" @endif id="land_measurement_unit1" value="meter">
-                                            <label for="email_notifications1" class="">Meter sq</label>
+                        <div class="vtabs customvtab m-t-10">
+                            @include('sections.valuation_sub_setting_menu')
+                            <div class="tab-content">
+                                <div id="vhome3" class="tab-pane active">
+                                    {!! Form::open(['id'=>'saveUpdateMeasurement','class'=>'ajax-form','method'=>'POST']) !!}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                    <div class="m-b-10">
+                                                        <label class="control-label">Measurement Unit</label>
+                                                    </div>
+                                                    <div class="radio radio-inline">
+                                                        <input type="radio" name="land_measurement_unit" @if(isset($measure_unit) && $measure_unit == 'meter') checked="checked" @endif id="land_measurement_unit1" value="meter">
+                                                        <label for="email_notifications1" class="">Meter sq</label>
 
+                                                    </div>
+                                                    <div class="radio radio-inline ">
+                                                        <input type="radio" name="land_measurement_unit" @if(isset($measure_unit) && $measure_unit == 'feet') checked="checked" @endif id="land_measurement_unit2" value="feet">
+                                                        <label for="email_notifications2" class="">Sq feet</label>
+                                                    </div>
+                                            </div>
                                         </div>
-                                        <div class="radio radio-inline ">
-                                            <input type="radio" name="land_measurement_unit" @if(isset($measure_unit) && $measure_unit == 'feet') checked="checked" @endif id="land_measurement_unit2" value="feet">
-                                            <label for="email_notifications2" class="">Sq feet</label>
-                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" id="saveMeasurementForm" class="btn btn-success"><i
+                                                class="fa fa-check"></i> @lang('app.save')</button>
+
+                                    </div>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" id="saveMeasurementForm" class="btn btn-success"><i
-                                    class="fa fa-check"></i> @lang('app.save')</button>
-
-                        </div>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

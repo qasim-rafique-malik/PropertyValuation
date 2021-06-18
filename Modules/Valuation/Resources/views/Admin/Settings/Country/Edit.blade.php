@@ -28,109 +28,115 @@
                 <div class="panel-heading"> Edit Country</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        @include('sections.admin_setting_menu')
-                        {!! Form::open(['id'=>'saveUpdateCountry','class'=>'ajax-form','method'=>'POST']) !!}
-                        <div class="form-body">
+                        <div class="vtabs customvtab m-t-10">
+                        @include('sections.valuation_sub_setting_menu')
+                        <div class="tab-content">
+                            <div id="vhome3" class="tab-pane active">
+                            {!! Form::open(['id'=>'saveUpdateCountry','class'=>'ajax-form','method'=>'POST']) !!}
+                            <div class="form-body">
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">Country Name</label>
-                                        <input type="text" name="countryName" id="countryName" value="{{$countryName}}"
-                                               class="form-control"
-                                               autocomplete="nope">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">Country Name</label>
+                                            <input type="text" name="countryName" id="countryName" value="{{$countryName}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">ISO Alpha 2</label>
+                                            <input type="text" name="isoAlpha2" id="isoAlpha2" value="{{$isoAlpha2}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">ISO Alpha 3</label>
+                                            <input type="text" name="isoAlpha3" id="isoAlpha3" value="{{$isoAlpha3}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">ISO Numeric</label>
+                                            <input type="text" name="isoNumeric" id="isoNumeric" value="{{$isoNumeric}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
                                     </div>
                                 </div>
+                                <!--/row-->
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">ISO Alpha 2</label>
-                                        <input type="text" name="isoAlpha2" id="isoAlpha2" value="{{$isoAlpha2}}"
-                                               class="form-control"
-                                               autocomplete="nope">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">Currency Name</label>
+                                            <input type="text" name="currencyName" id="currencyName"
+                                                   value="{{$currencyName}}" class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">Currency Code</label>
+                                            <input type="text" name="currencyCode" id="currencyCode"
+                                                   value="{{$currencyCode}}" class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">Currency Symbol</label>
+                                            <input type="text" name="currencySymbol" id="currencySymbol"
+                                                   value="{{$currencySymbol}}"
+                                                   class="form-control" autocomplete="nope">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="required">flag</label>
+                                            <input type="text" name="flag" id="flag" class="form-control" value="{{$flag}}"
+                                                   autocomplete="nope">
+                                        </div>
                                     </div>
                                 </div>
+                                <!--/row-->
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">ISO Alpha 3</label>
-                                        <input type="text" name="isoAlpha3" id="isoAlpha3" value="{{$isoAlpha3}}"
-                                               class="form-control"
-                                               autocomplete="nope">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="required">Is visible</label>
+                                            <select name="isVisible" id="isVisible" class="form-control">
+                                                <option value="1" @if($isVisible == 1) selected="selected" @endif >Yes
+                                                </option>
+                                                <option value="0" @if($isVisible == 0) selected="selected" @endif >No
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
+                                <!--/row-->
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">ISO Numeric</label>
-                                        <input type="text" name="isoNumeric" id="isoNumeric" value="{{$isoNumeric}}"
-                                               class="form-control"
-                                               autocomplete="nope">
-                                    </div>
-                                </div>
                             </div>
-                            <!--/row-->
+                            <div class="form-actions">
+                                <button type="submit" id="save-form" class="btn btn-success"><i
+                                            class="fa fa-check"></i> @lang('app.save')</button>
 
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">Currency Name</label>
-                                        <input type="text" name="currencyName" id="currencyName"
-                                               value="{{$currencyName}}" class="form-control"
-                                               autocomplete="nope">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">Currency Code</label>
-                                        <input type="text" name="currencyCode" id="currencyCode"
-                                               value="{{$currencyCode}}" class="form-control"
-                                               autocomplete="nope">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">Currency Symbol</label>
-                                        <input type="text" name="currencySymbol" id="currencySymbol"
-                                               value="{{$currencySymbol}}"
-                                               class="form-control" autocomplete="nope">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label class="required">flag</label>
-                                        <input type="text" name="flag" id="flag" class="form-control" value="{{$flag}}"
-                                               autocomplete="nope">
-                                    </div>
-                                </div>
                             </div>
-                            <!--/row-->
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="required">Is visible</label>
-                                        <select name="isVisible" id="isVisible" class="form-control">
-                                            <option value="1" @if($isVisible == 1) selected="selected" @endif >Yes
-                                            </option>
-                                            <option value="0" @if($isVisible == 0) selected="selected" @endif >No
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
+                            {!! Form::close() !!}
                             </div>
-                            <!--/row-->
-
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" id="save-form" class="btn btn-success"><i
-                                        class="fa fa-check"></i> @lang('app.save')</button>
-
                         </div>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

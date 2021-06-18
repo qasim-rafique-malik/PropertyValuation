@@ -34,7 +34,10 @@
                 <div class="panel-heading">{{ __($title) }}</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        @include('sections.admin_setting_menu')
+                        <div class="vtabs customvtab m-t-10">
+                         @include('sections.valuation_sub_setting_menu')
+                         <div class="tab-content">
+                        <div id="vhome3" class="tab-pane active">
                         {!! Form::open(['id'=>'saveUpdateMenu','class'=>'ajax-form','method'=>'POST']) !!}
                         <div class="form-body">
 
@@ -112,6 +115,9 @@
 
                         </div>
                         {!! Form::close() !!}
+                        </div>
+                         </div>
+                         </div>
                     </div>
                 </div>
             </div>

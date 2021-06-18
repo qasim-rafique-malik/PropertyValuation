@@ -34,10 +34,14 @@
                 <div class="panel-heading">{{ __($title) }}</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        @include('sections.admin_setting_menu')
-
-                        @include($viewFolderPath.'Form')
-
+                        <div class="vtabs customvtab m-t-10">
+                            @include('sections.valuation_sub_setting_menu')
+                            <div class="tab-content">
+                                <div id="vhome3" class="tab-pane active">
+                            @include($viewFolderPath.'Form')
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

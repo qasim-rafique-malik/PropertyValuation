@@ -38,20 +38,26 @@
     <div class="row">
 
         <div class="col-md-12">
-            @include('sections.admin_setting_menu')
-            <div class="white-box">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover toggle-circle default footable-loaded footable"
-                           id="users-table">
-                        <thead>
-                        <tr>
-                            <th>@lang('valuation::app.id')</th>
-                            <th>@lang('valuation::valuation.propertyWeightage.title')</th>
-                            <th>@lang('valuation::valuation.propertyWeightage.category')</th>
-                            <th>@lang('valuation::app.action')</th>
-                        </tr>
-                        </thead>
-                    </table>
+            <div class="vtabs customvtab m-t-10">
+                @include('sections.valuation_sub_setting_menu')
+                <div class="tab-content">
+                    <div id="vhome3" class="tab-pane active">
+                        <div class="white-box">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover toggle-circle default footable-loaded footable"
+                                       id="users-table">
+                                    <thead>
+                                    <tr>
+                                        <th>@lang('valuation::app.id')</th>
+                                        <th>@lang('valuation::valuation.propertyWeightage.title')</th>
+                                        <th>@lang('valuation::valuation.propertyWeightage.category')</th>
+                                        <th>@lang('valuation::app.action')</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

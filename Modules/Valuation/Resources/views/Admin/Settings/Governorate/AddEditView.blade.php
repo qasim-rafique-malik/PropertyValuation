@@ -34,60 +34,66 @@
                 <div class="panel-heading">{{ __($title) }}</div>
                 <div class="panel-wrapper collapse in" aria-expanded="true">
                     <div class="panel-body">
-                        @include('sections.admin_setting_menu')
-                        {!! Form::open(['id'=>'saveUpdateGovernorate','class'=>'ajax-form','method'=>'POST']) !!}
-                        <div class="form-body">
+                        <div class="vtabs customvtab m-t-10">
+                        @include('sections.valuation_sub_setting_menu')
+                        <div class="tab-content">
+                            <div id="vhome3" class="tab-pane active">
+                                {!! Form::open(['id'=>'saveUpdateGovernorate','class'=>'ajax-form','method'=>'POST']) !!}
+                                <div class="form-body">
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="required">Name</label>
-                                        <input type="text" name="name" id="name" value="{{$name}}"
-                                               class="form-control"
-                                               autocomplete="nope">
-                                    </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="required">Name</label>
+                                                <input type="text" name="name" id="name" value="{{$name}}"
+                                                       class="form-control"
+                                                       autocomplete="nope">
+                                            </div>
+                                        </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="required">@lang('valuation::valuation.governorate.selectCountry')</label>
-                                        <select name="countryId" id="countryId" class="form-control" required>
-                                            <option value="">--</option>
-                                            @foreach($countries as $country)
-                                                <option value="{{ $country->id }}"
-                                                        @if($country->id == $country_id) selected="selected" @endif>
-                                                    {{ $country->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="required">@lang('valuation::valuation.governorate.selectCountry')</label>
+                                                <select name="countryId" id="countryId" class="form-control" required>
+                                                    <option value="">--</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country->id }}"
+                                                                @if($country->id == $country_id) selected="selected" @endif>
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="required">Status</label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="Active" @if($status == 'Active') selected="selected" @endif >
-                                                Active
-                                            </option>
-                                            <option value="Inactive"
-                                                    @if($status == 'Inactive') selected="selected" @endif >
-                                                Inactive
-                                            </option>
-                                        </select>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="required">Status</label>
+                                                <select name="status" id="status" class="form-control">
+                                                    <option value="Active" @if($status == 'Active') selected="selected" @endif >
+                                                        Active
+                                                    </option>
+                                                    <option value="Inactive"
+                                                            @if($status == 'Inactive') selected="selected" @endif >
+                                                        Inactive
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <!--/row-->
+
+
                                 </div>
+                                <div class="form-actions">
+                                    <button type="submit" id="save-form" class="btn btn-success"><i
+                                                class="fa fa-check"></i> @lang('app.save')</button>
+
+                                </div>
+                                {!! Form::close() !!}
                             </div>
-                            <!--/row-->
-
-
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" id="save-form" class="btn btn-success"><i
-                                        class="fa fa-check"></i> @lang('app.save')</button>
-
                         </div>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

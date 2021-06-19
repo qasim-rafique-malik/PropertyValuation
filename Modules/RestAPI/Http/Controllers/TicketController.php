@@ -2,6 +2,7 @@
 
 namespace Modules\RestAPI\Http\Controllers;
 
+use Froiden\RestAPI\ApiResponse;
 use Modules\RestAPI\Entities\Ticket;
 use Modules\RestAPI\Entities\TicketReply;
 use Modules\RestAPI\Http\Requests\Ticket\IndexRequest;
@@ -35,5 +36,37 @@ class TicketController extends ApiBaseController
         $ticketReply->save();
 
         return $ticket;
+    }
+
+    public function me()
+    {
+        app()->make($this->indexRequest);
+
+        $query = $this->parseRequest()
+            ->addIncludes()
+            ->addFilters()
+            ->addOrdering()
+            ->addPaging()
+            ->getQuery();
+
+
+        $user = api_user();
+
+        $query->where('tickets.agent_id', $user->id)->orWhere('tickets.user_id', $user->id);
+
+        // Load employees relation, if not loaded
+        $relations = $query->getEagerLoads();
+
+        $query->setEagerLoads($relations);
+
+        /** @var Collection $results */
+        $results = $this->getResults();
+
+
+        $results = $results->toArray();
+
+        $meta = $this->getMetaData();
+
+        return ApiResponse::make(null, $results, $meta);
     }
 }

@@ -9,7 +9,8 @@ class AppController extends ApiBaseController
 {
     public function app()
     {
-        $setting = GlobalSetting::select('company_name')->first();
+        $setting = GlobalSetting::select('company_name', 'logo')->first();
+
         return ApiResponse::make('Application data fetched successfully', $setting->toArray());
     }
 }

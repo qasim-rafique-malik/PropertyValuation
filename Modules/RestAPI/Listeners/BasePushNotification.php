@@ -29,7 +29,7 @@ class BasePushNotification
         if (($authUser && $user->id === $authUser->id) || ($authUserApi && $user->id === $authUserApi->id)) {
             return [];
         }
-        $userRestAPI =  User::find($user->id);
+        $userRestAPI =  User::withoutGlobalScope('active')->find($user->id);
         return array_column($userRestAPI->devices->where('type', $deviceType)->toArray(), 'registration_id');
     }
 

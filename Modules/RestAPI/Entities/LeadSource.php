@@ -8,7 +8,5 @@ class LeadSource extends \App\LeadSource
 
     protected $default = ['id', 'type'];
 
-    protected $guarded = ['id'];
-
     protected $filterable = ['type'];
 }

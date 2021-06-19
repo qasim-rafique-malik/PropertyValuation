@@ -15,7 +15,7 @@ class ValuationController extends ValuationBaseController
     public function __construct()
     {
         parent::__construct();
-        echo "<pre>"; print_r(getValuationMenuHTML()); exit;
+//        echo "<pre>"; print_r(getValuationMenuHTML()); exit;
         $this->pageTitle = 'app.menu.dashboard';
         $this->pageIcon = 'icon-speedometer';
 

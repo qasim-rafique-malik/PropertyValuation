@@ -13,7 +13,9 @@ class TaskPushListener extends BasePushNotification
         $task = $event->task;
         $role = '';
         // NewClientTask, NewTask, TaskUpdated, TaskCompleted, TaskUpdatedClient
-        if ($event->notificationName !== 'NewClientTask' && $event->notificationName !== 'TaskUpdatedClient') {
+        if ($event->notificationName !== 'NewClientTask'
+            && $event->notificationName !== 'TaskUpdatedClient'
+            && $event->notificationName != 'TaskCompletedClient') {
             $title = ucwords(Str::snake($event->notificationName, ' '));
 
             foreach ($event->notifyUser as $user) {

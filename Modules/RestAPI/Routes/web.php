@@ -12,7 +12,7 @@
 */
 
 Route::prefix('restapi')->group(function () {
-    Route::get('/', 'RestAPIController@index');
+    //Route::get('/', 'RestAPIController@index');
 });
 Route::group(['middleware' => 'auth'], function () {
 

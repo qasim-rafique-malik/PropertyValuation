@@ -13,6 +13,10 @@
                                    data-toggle="tab"
                                    aria-controls="PropertyInfoMeasurements"
                                    aria-expanded="false">Measurements</a></li>
+                            <li><a href="#PropertyInfoFeatures" class="nav-link nav-item"
+                                   data-toggle="tab"
+                                   aria-controls="PropertyInfoFeatures"
+                                   aria-expanded="false">Features</a></li>
                             <li><a href="#PropertyInfoNeighbourhood" class="nav-link nav-item"
                                    data-toggle="tab"
                                    aria-controls="PropertyInfoNeighbourhood"
@@ -263,6 +267,57 @@
                             </div>
                         </div>
                         <!---LandInfoMeasurements -->
+                        <!---PropertyInfoFeatures -->
+                        <div class="tab-pane fade" id="PropertyInfoFeatures">
+                            <div class="form-body">
+                                @php
+                                $featureCount= 0;
+                                @endphp
+                                @foreach ($featureCategorList as $featureCategorListIn)
+                                <div class="row">
+                                            <fieldset>
+                                                <legend>{{$featureCategorListIn->category_name}}</legend>
+                                                <div class="row">
+                                                    @foreach ($featureCategorListIn->featureItems as $featureKey => $featureItemsIn)
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                                <div class="checkbox checkbox-info  col-md-10">
+                                                                    <input id="{{$featureItemsIn->id}}"
+                                                                           onchange="checkFeature({{$featureItemsIn->id}})"
+                                                                           name="feature[{{$featureCount}}][id]" value="{{$featureItemsIn->id}}"
+                                                                           type="checkbox">
+                                                                    <label for="client_view_task">{{$featureItemsIn->feature_name}}</label>
+                                                                    <span id="feature-{{$featureItemsIn->id}}" style="display:none;" class="ml-20">
+                                                                       @if(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="select" )
+                                                                            <select name="feature[{{$featureCount}}][value]" class="form-control">
+
+                                                                           @php
+                                                                            $arr = json_decode($featureItemsIn->sub_fields,true);
+                                                                            foreach($arr as $field){
+                                                                                echo '<option value="'.$field['name'].'">'.$field['name'].'</option>';
+                                                                            }
+                                                                            @endphp
+                                                                                </select>
+                                                                        @elseif(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="textarea" )
+                                                                            <textarea name=feature[{{$featureCount}}][value]" class="form-control"></textarea>
+                                                                           @else
+                                                                            <input type="text" name="feature[{{$featureCount}}][value]" class="form-control">
+                                                                           @endif
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                        @php
+                                                            $featureCount++;
+                                                        @endphp
+                                                    @endforeach
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    @endforeach
+                                </div>
+                        </div>
+                        <!---PropertyInfoFeatures -->
 
                         <!---LandInfoNeighbourhood -->
                         <div class="tab-pane fade" id="PropertyInfoNeighbourhood">
@@ -584,6 +639,13 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initialize" async defer></script>
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD6kkurmjYtikPMoyinl8R0OTheMOIg30"></script>-->
 <script type="text/javascript">
+    function checkFeature(i){
+        if($('#'+i).is(":checked")) {
+            $("#feature-"+i).show();
+        }else{
+            $("#feature-"+i).hide();
+    }
+    }
         function initialize() {
             // Creating map object
             var latitude=$("#latitude").val();

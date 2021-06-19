@@ -25,8 +25,8 @@ Route::prefix('valuation')->group(function() {
     Route::prefix('admin')->group(function() {
 
 
-        Route::get('/orderOrigination', 'Admin\OrderManagement\OrderOriginationController@create')->name('valuation.admin.orderOrigination');
-        Route::post('/orderOrigination/store', 'Admin\OrderManagement\OrderOriginationController@store')->name('valuation.admin.orderOrigination.store');
+//        Route::get('/orderOrigination', 'Admin\OrderManagement\OrderOriginationController@create')->name('valuation.admin.orderOrigination');
+//        Route::post('/orderOrigination/store', 'Admin\OrderManagement\OrderOriginationController@store')->name('valuation.admin.orderOrigination.store');
 
         Route::prefix('settings')->group(function() {
 
@@ -160,7 +160,7 @@ Route::prefix('valuation')->group(function() {
 
     Route::get('/', 'ValuationController@index');
 
-    Route::get('/orderOrigination', 'OrderManagement\OrderOriginationController@index')->name('valuation.orderOrigination');
+//    Route::get('/orderOrigination', 'OrderManagement\OrderOriginationController@index')->name('valuation.orderOrigination');
 
     Route::prefix('member')->group(function() {
         Route::get('/dashboard', 'Member\MemberDashboardController@index')->name('valuation.member.dashboard');

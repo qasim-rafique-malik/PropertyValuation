@@ -1,21 +1,22 @@
 <?php
 
-namespace Modules\Valuation\Entities;
+namespace Modules\RestAPI\Entities;
 
-use Modules\Valuation\Entities\ValuationBaseModel;
+use App\BaseModel;
+use App\Traits\CustomFieldsTrait;
 use Zoha\Metable;
 
-class ValuationProperty extends ValuationBaseModel
+class ValuationProperty extends BaseModel
 {
+    use CustomFieldsTrait;
     use Metable;
+    protected $guarded = ['id'];
     const DimensionsMetaKey = 'propertyDimensions';
     const PropertyFeatureMetaKey = 'propertyFeatures';
     const AddOnCostMetaKey = 'propertyAddOnCost';
     const FinancialAcquisitionCost='FinancialAcquisitionCost';
     const FinancialBuildUpCost='FinancialBuildUpCost';
     const FinancialAddOnCost='FinancialAddOnCost';
-    const StructureUnit='StructureUnit';
-    const OwnerShip='OwnerShip';
 
     protected $metaTable = 'valuation_property_meta';
     protected $fillable = array();

@@ -51,7 +51,7 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
     ApiRoute::resource('task-category', 'TaskCategoryController');
     ApiRoute::resource('taskboard-columns', 'TaskboardColumnController');
 
-
+    ApiRoute::get('/lead/me', ['as' => 'lead.me', 'uses' => 'LeadController@me']);
     ApiRoute::resource('lead', 'LeadController');
     ApiRoute::resource('lead-category', 'LeadCategoryController');
     ApiRoute::resource('lead-source', 'LeadSourceController');
@@ -82,13 +82,24 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
     );
     ApiRoute::resource('invoice', 'InvoiceController');
 
+    ApiRoute::get('userchat/message-setting', 'UserChatController@messageSetting');
+    ApiRoute::get('userchat/user-list', 'UserChatController@userList');
+    ApiRoute::get('userchat/messages/{userid}', 'UserChatController@getMessages');
+    ApiRoute::resource('userchat', 'UserChatController');
+
+    ApiRoute::get('timelog/me', 'TimeLogController@me');
+    ApiRoute::resource('timelog', 'TimeLogController', ['only' => ['index', 'store', 'update']]);
+
+    ApiRoute::get('/ticket/me', ['as' => 'ticket.me', 'uses' => 'TicketController@me']);
     ApiRoute::resource('ticket', 'TicketController');
     ApiRoute::post('ticket-reply-file', 'TicketReplyController@ticketReplyFile');
     ApiRoute::resource('ticket-reply', 'TicketReplyController');
     ApiRoute::resource('ticket-group', 'TicketGroupController', ['only' => ['index']]);
     ApiRoute::resource('ticket-channel', 'TicketChannelController', ['only' => ['index']]);
     ApiRoute::resource('ticket-type', 'TicketTypeController', ['only' => ['index']]);
-
+//    ApiRoute::get('property/addEditView/{id?}', 'PropertyController@addEditView');
+    ApiRoute::put('property/saveUpdateData/{id?}', 'PropertyController@saveUpdateData');
+    ApiRoute::resource('property', 'PropertyController',['only' => ['show', 'update']]);
     ApiRoute::resource('product', 'ProductController');
     ApiRoute::get(
         '/employee/last-employee-id',

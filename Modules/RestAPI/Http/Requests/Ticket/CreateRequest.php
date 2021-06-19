@@ -20,8 +20,8 @@ class CreateRequest extends BaseRequest
             'description' => 'required',
             'priority' => 'required|in:low,medium,high,urgent',
             'status' => 'sometimes|required|in:open,pending,resolved,closed',
-            'requester.id' => 'required|exists:users,id',
-            'agent.id' => 'required|exists:users,id'
+            'requester.id' => 'sometimes|required|exists:users,id',
+            'agent.id' => 'sometimes|required|exists:users,id'
         ];
     }
 }

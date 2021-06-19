@@ -3,6 +3,7 @@
 namespace Modules\RestAPI\Http\Controllers;
 
 use App\LeadStatus;
+use Froiden\RestAPI\ApiResponse;
 use Modules\RestAPI\Entities\Lead;
 use Modules\RestAPI\Http\Requests\Lead\IndexRequest;
 use Modules\RestAPI\Http\Requests\Lead\CreateRequest;
@@ -30,5 +31,37 @@ class LeadController extends ApiBaseController
         $leadStatus = LeadStatus::where('default', '1')->first();
         $lead->status_id = $leadStatus->id;
         return $lead;
+    }
+
+    public function me()
+    {
+        app()->make($this->indexRequest);
+
+        $query = $this->parseRequest()
+            ->addIncludes()
+            ->addFilters()
+            ->addOrdering()
+            ->addPaging()
+            ->getQuery();
+
+
+        $user = api_user();
+
+        $query->where('leads.agent_id', $user->id);
+
+        // Load employees relation, if not loaded
+        $relations = $query->getEagerLoads();
+
+        $query->setEagerLoads($relations);
+
+        /** @var Collection $results */
+        $results = $this->getResults();
+
+
+        $results = $results->toArray();
+
+        $meta = $this->getMetaData();
+
+        return ApiResponse::make(null, $results, $meta);
     }
 }

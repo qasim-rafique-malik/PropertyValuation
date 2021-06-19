@@ -13,7 +13,7 @@ class CreateRequest extends BaseRequest
 
         // Either user has role admin or has permission view_projects
         // Plus he needs to have projects module enabled from settings
-        return in_array('tasks', $user->modules) && ($user->hasRole('admin') || $user->cans('create_tasks'));
+        return in_array('tasks', $user->modules) && ($user->hasRole('admin') || $user->hasRole('employee'));
     }
 
     public function rules()

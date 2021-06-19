@@ -4,7 +4,7 @@ use Modules\Valuation\Helper\ValuationModelHelper;
 
 define('ValuationSettingMenuID', 2);
 if (!function_exists('getValuationMenu')) {
-    function getValuationMenu($modules = array(), $openValuationMainMenu)
+    function getValuationMenu($modules = array(), $openValuationMainMenu = array())
     {
         $valuationMenuObj = ValuationModelHelper::valuationMenu();
         $data = array();
@@ -63,7 +63,7 @@ if (!function_exists('getValuationMenuHTML')) {
 }
 
 if (!function_exists('getValuationSettingMenu')) {
-    function getValuationSettingMenu($modules = array(), $openValuationMainMenu)
+    function getValuationSettingMenu($modules = array(), $openValuationMainMenu = array())
     {
         $valuationMenuObj = ValuationModelHelper::valuationMenu();
         $data = array();

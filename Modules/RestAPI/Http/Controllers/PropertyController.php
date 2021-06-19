@@ -1,11 +1,18 @@
 <?php
 
-namespace Modules\Valuation\Http\Controllers\Admin\Properties;
+namespace Modules\RestAPI\Http\Controllers;
 
 use App\Country;
 use App\Helper\Files;
 use App\Helper\Reply;
+use Illuminate\Database\Eloquent\Model;
+use Modules\RestAPI\Entities\ValuationProperty;
+use App\Setting;
+use Froiden\RestAPI\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Modules\RestAPI\Http\Requests\Property\ShowRequest;
+use Modules\RestAPI\Http\Requests\Property\UpdateRequest;
 use Modules\Valuation\Entities\ValuationBaseModel;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationGovernorate;
@@ -16,7 +23,6 @@ use Modules\Valuation\Entities\ValuationPropertyMedia;
 use Modules\Valuation\Http\Controllers\Admin\Properties\CategorizationController;
 use Modules\Valuation\Http\Controllers\Admin\Settings\BlockController;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
-use Modules\Valuation\Entities\ValuationProperty;
 use Modules\Valuation\Entities\ValuationCity;
 use Modules\Valuation\Entities\ValuationPropertyType;
 use Modules\Valuation\Entities\ValuationPropertyCategorization;
@@ -28,8 +34,13 @@ use Modules\Valuation\Http\Controllers\Admin\Properties\ClassificationController
 use Modules\Valuation\Http\Controllers\Admin\Properties\TypeController;
 use App\Currency;
 use Modules\Valuation\Entities\ValuationMeasurementUnit;
-class PropertyController extends ValuationAdminBaseController
+
+class PropertyController extends ApiBaseController
 {
+    protected $model = ValuationProperty::class;
+
+    protected $updateRequest = UpdateRequest::class;
+    protected $showRequest = ShowRequest::class;
 
     private $viewFolderPath = 'valuation::Admin.Property.';
 
@@ -38,7 +49,7 @@ class PropertyController extends ValuationAdminBaseController
     private $saveUpdateDataRoute = 'valuation.admin.property.saveUpdateData';
     private $addEditViewRoute = 'valuation.admin.property.addEditView';
     private $destroyRoute = 'valuation.admin.property.destroy';
-    private $propertyDetailRoute='valuation.admin.property.property-detail';
+    private $query = null;
 
     public function __construct()
     {
@@ -98,51 +109,54 @@ class PropertyController extends ValuationAdminBaseController
         $data['measurementUnit']= isset($unit->measure_unit)?$unit->measure_unit:$unitObj->default;
     }
 
-    public function newCreateView()
+
+    public function show(...$args)
     {
+//        echo "<pre>here--";print_r($args); exit;
+        // We need to do this in order to support multiple parameter resource routes. For example,
+        // if we map route /user/{user}/comments/{comment} to a controller, Laravel will pass `user`
+        // as first argument and `comment` as last argument. So, id object that we want to fetch
+        // is the last argument.
+        $id = last(func_get_args());
 
-        $this->__customConstruct($this->data);
+        if ($id > 0) {
+            $propertyObj = new ValuationProperty();
+            $propertyData = $propertyObj->find($id);
+        }
 
-        $properties = new ValuationProperty();
+        $dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
+        $addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
+        $financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
+        $financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
+        $financialAddonCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAddOnCost , array()))->toArray():array();
+        $feature = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::PropertyFeatureMetaKey , array()))->toArray():array();
+        $ref_id=isset($propertyData->ref_id)?$propertyData->ref_id:'';
 
-        $this->propertiesCount = $properties->count();
-        $this->valuationMethods = array();
-        $this->propertyCategories = array();
+        $data = [
+            'propertyData'=>$propertyData,
+            'dimensions'=>$dimensions,
+            'addOnCosts'=>$addOnCosts,
+            'financialAcquisitionCost'=>$financialAcquisitionCost,
+            'financialBuildUpCost'=>$financialBuildUpCost,
+            'financialAddonCost'=>$financialAddonCost,
+            'feature'=>$feature,
+            'ref_id'=>$ref_id
+        ];
+//        echo "<pre>here--";print_r($data); exit;
+        $meta = parent::getMetaData(true);
 
-        $countryObj = new Country();
-        $this->countries = $countryObj->get();
-
-        $governorateObj = new ValuationGovernorate();
-        $this->governorates = $governorateObj->getAllForCompany();
-
-        $cityObj = new ValuationCity();
-        $this->cities = $cityObj->getAllForCompany();
-
-        $blockObj = new ValuationBlock();
-        $this->blocks = $blockObj->getAllForCompany();
-
-
-        return view($this->viewFolderPath . 'newCreateView', $this->data);
-    }
-
-    public function index()
-    {
-        $this->__customConstruct($this->data);
-
-        $properties = new ValuationProperty();
-
-        $this->propertiesCount = $properties->countForCompany();
-
-        return view($this->viewFolderPath . 'Index', $this->data);
+        return ApiResponse::make(null, $data,$meta);
     }
 
     public function addEditView($id = 0)
     {
-        $this->__customConstruct($this->data);
+        //$this->__customConstruct($this->data);
+        echo "<pre>here--";print_r($id); exit;
 
         $this->title = 'valuation::valuation.property.createProperty';
         $this->id = $id;
 
+//        echo "<pre>here--";print_r($id); exit;
         $properties = new ValuationProperty();
 
         $this->propertiesCount = $properties->countForCompany();
@@ -175,12 +189,6 @@ class PropertyController extends ValuationAdminBaseController
 
         //echo "<pre>"; print_r(ValuationPropertyFeatureCategory::with("featureCategory")->get()); exit;
         $this->featureCategorList = $featureCategory->getAllForCompany();
-        foreach ($this->featureCategorList as $featureCategorListIn){
-
-//            echo "<pre>"; print_r($featureCategorListIn->featureItems); exit;
-
-        }
-            //ValuationPropertyFeatureCategory::with("featureCategory")->get();
 
         $propertyData = null;
         if ($id > 0) {
@@ -227,15 +235,18 @@ class PropertyController extends ValuationAdminBaseController
         $this->rentalIncome = isset($propertyData->rental_income) ? $propertyData->rental_income : 0;
         $this->estimatedValue = isset($propertyData->estimated_value) ? $propertyData->estimated_value : 0;
         $this->status = isset($propertyData->status) ? $propertyData->status : 'Draft';
+
         $this->dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
         $this->addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
         $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
         $this->financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
         $this->financialAddonCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAddOnCost , array()))->toArray():array();
-        $this->StructureUnit = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::StructureUnit , array()))->toArray():array();
-        $this->OwnerShip = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::OwnerShip , array()))->toArray():array();
         $this->ref_id=isset($propertyData->ref_id)?$propertyData->ref_id:'';
-        return view($this->viewFolderPath . 'AddEditView', $this->data);
+
+        $meta = $parent::getMetaData(true);
+
+        return ApiResponse::make(null, $this->data);
+//        return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
 
     public function saveUpdateData(Request $request)
@@ -380,45 +391,6 @@ class PropertyController extends ValuationAdminBaseController
             } 
         }
         $addonTransectionData=  json_encode($addonCostDataArray);
-        //Structure Unit
-        $structureUnitType=isset($request->structureUnitType)?$request->structureUnitType:array();
-        $structureUnitId=isset($request->structureUnitId)?$request->structureUnitId:array();
-        $structureUnitDescription=isset($request->structureUnitDescription)?$request->structureUnitDescription:array();
-        
-        $structureUnitArray=array();
-        if(!empty($structureUnitType) && !empty($structureUnitId) && !empty($structureUnitDescription))
-        {
-            foreach($structureUnitType as $unitKey=> $strUnit)
-            {
-                if(!empty($structureUnitType[$unitKey]) && !empty($structureUnitId[$unitKey]) && !empty($structureUnitDescription[$unitKey]))
-                {
-                    $structureUnitArray[]=array('unitType'=>$structureUnitType[$unitKey],'unitId'=>$structureUnitId[$unitKey],'unitDescription'=>$structureUnitDescription[$unitKey]);
-                }
-            }
-        }
-        $structureUnitJsonData=json_encode($structureUnitArray);
-        
-        //Ownership
-        $onwership_cpr_no=isset($request->onwership_cpr_no)?$request->onwership_cpr_no:array();
-        $onwership_passport_no=isset($request->onwership_passport_no)?$request->onwership_passport_no:array();
-        $onwership_first_name=isset($request->onwership_first_name)?$request->onwership_first_name:array();
-        $onwership_last_name=isset($request->onwership_last_name)?$request->onwership_last_name:array();
-        $onwership_email=isset($request->onwership_email)?$request->onwership_email:array();
-        $onwership_phone=isset($request->onwership_phone)?$request->onwership_phone:array();
-        $onwership_sale_agreement=isset($request->onwership_sale_agreement)?$request->onwership_sale_agreement:array();
-        $onwership_date_of_purchase=isset($request->onwership_date_of_purchase)?$request->onwership_date_of_purchase:array();
-        $ownerShipDataArray=array();
-        if(!empty($onwership_cpr_no) && !empty($onwership_passport_no) && !empty($onwership_first_name) && !empty($onwership_last_name) && !empty($onwership_email) && !empty($onwership_phone) && !empty($onwership_sale_agreement) && !empty($onwership_date_of_purchase))
-        {
-            foreach($onwership_cpr_no as $ownerKey=>$ownerObj)
-            {
-                if(!empty($onwership_cpr_no[$ownerKey]) && !empty($onwership_passport_no[$ownerKey]) && !empty($onwership_first_name[$ownerKey]) && !empty($onwership_last_name[$ownerKey]) && !empty($onwership_email[$ownerKey]) && !empty($onwership_phone[$ownerKey]) && !empty($onwership_sale_agreement[$ownerKey]) && !empty($onwership_date_of_purchase[$ownerKey]))
-                {
-                    $ownerShipDataArray[]=array('cprNo'=>$onwership_cpr_no[$ownerKey],'passportNo'=>$onwership_passport_no[$ownerKey],'firstName'=>$onwership_first_name[$ownerKey],'lastName'=>$onwership_last_name[$ownerKey],'email'=>$onwership_email[$ownerKey],'phone'=>$onwership_phone[$ownerKey],'saleAgrement'=>$onwership_sale_agreement[$ownerKey],'dateOfpurchase'=>$onwership_date_of_purchase[$ownerKey]);
-                }
-            }
-        }
-        $ownerShipJsonData=  json_encode($ownerShipDataArray);
         // add and update property Meta
         $updatePropertyMeta = array();
         $updatePropertyMeta[ValuationProperty::DimensionsMetaKey] = $dimensionsEncode;
@@ -426,14 +398,14 @@ class PropertyController extends ValuationAdminBaseController
         $updatePropertyMeta[ValuationProperty::FinancialAcquisitionCost] = $acqtransectionData;
         $updatePropertyMeta[ValuationProperty::FinancialBuildUpCost] = $buildUpTransectionData;
         $updatePropertyMeta[ValuationProperty::FinancialAddOnCost] = $addonTransectionData;
-        $updatePropertyMeta[ValuationProperty::StructureUnit] = $structureUnitJsonData;
-        $updatePropertyMeta[ValuationProperty::OwnerShip] = $ownerShipJsonData;
         $updatePropertyMeta[ValuationProperty::PropertyFeatureMetaKey] = $propertyFeatureEncode;
         $property->setMeta($updatePropertyMeta);
-        
+        $meta = $this->getMetaData(true);
        if($request->id)
        {
-               return Reply::redirect(route($this->addEditViewRoute,$request->id), __('Updated Success'));
+           return ApiResponse::make("Resource updated successfully", [ "id" => $request->id ], $meta);
+
+//           return Reply::redirect(route($this->addEditViewRoute,$request->id), __('Updated Success'));
        }
        else
        {
@@ -459,69 +431,6 @@ class PropertyController extends ValuationAdminBaseController
             }
         }
         return  json_encode($data);
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-
-        $property = ValuationProperty::find($id);
-
-        if (empty($property)) {
-            return Reply::error(__('valuation::messages.dataNotFound'));
-        }
-
-        ValuationProperty::destroy($id);
-
-        return Reply::success(__('valuation::messages.dataDeleted'));
-    }
-
-    public function data()
-    {
-        $propertyObj = new ValuationProperty();
-
-        $properties = $propertyObj->getAllForCompany();
-
-        return DataTables::of($properties)
-            ->addColumn('action', function ($row) {
-
-                $action = '<div class="btn-group dropdown m-r-10">
-                <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle waves-effect waves-light" type="button"><i class="ti-more"></i></button>
-                <ul role="menu" class="dropdown-menu pull-right">
-                  <li><a href="' . route($this->addEditViewRoute, $row->id) . '"><i class="fa fa-pencil" aria-hidden="true"></i> ' . trans('valuation::app.edit') . '</a></li>
-                  <li><a href="javascript:void(0)" id="' . $row->id . '" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
-                      <li><a href="' . route($this->propertyDetailRoute, $row->id) . '"><i class="fa fa-eye" aria-hidden="true"></i> ' . trans('valuation::valuation.property.detailProperty') . '</a></li>
-                 ';
-
-                $action .= '</ul> </div>';
-
-                return $action;
-
-            })
-            ->editColumn(
-                'title',
-                function ($row) {
-                    return ucfirst($row->title);
-                }
-            )
-            ->addIndexColumn()
-            ->rawColumns(array('title', 'action'))
-            ->make(true);
-    }
-    
-    public function propertyDetail($id)
-    {
-        $this->__customConstruct($this->data);
-        $properties = new ValuationProperty();
-        
-        $this->propertiesCount = $properties->countForCompany();
-        return view($this->viewFolderPath . 'detail.Index', $this->data);
     }
 
 }

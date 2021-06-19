@@ -72,30 +72,31 @@ class Task extends \App\Task
 
     public function meTaskQuery($query)
     {
-        $query->rightJoin(
-            \DB::raw(
-                '(SELECT `id` as `a_project_id`, 
-                `client_id` as `project_client_id`, 
-                `deleted_at` as `project_deleted_at`, 
-                `project_name` FROM `projects`) as `a`'
-            ),
-            'a.a_project_id',
-            '=',
-            'tasks.project_id'
-        )
-            ->join(
+        if (request()->filters && str_contains(request()->filters, 'project_client_id')) {
+            $query->rightJoin(
                 \DB::raw(
-                    '(SELECT `task_id` as `tu_task_id`, 
-                    `user_id` as `task_user_id` FROM `task_users`) as `tu`'
+                    '(SELECT `id` as `a_project_id`, 
+                    `client_id` as `project_client_id`, 
+                    `deleted_at` as `project_deleted_at`, 
+                    `project_name` FROM `projects`) as `a`'
                 ),
-                'tu.tu_task_id',
+                'a.a_project_id',
                 '=',
-                'tasks.id'
-            )
+                'tasks.project_id'
+            )->whereNull('project_deleted_at');
+        }
+        $query->join(
+            \DB::raw(
+                '(SELECT `task_id` as `tu_task_id`, 
+                    `user_id` as `task_user_id` FROM `task_users`) as `tu`'
+            ),
+            'tu.tu_task_id',
+            '=',
+            'tasks.id'
+        )
             ->join('users as member', 'task_user_id', '=', 'member.id')
             ->leftJoin('users as creator_user', 'creator_user.id', '=', 'tasks.created_by')
-            ->join('taskboard_columns', 'taskboard_columns.id', '=', 'tasks.board_column_id')
-            ->whereNull('project_deleted_at');
+            ->join('taskboard_columns', 'taskboard_columns.id', '=', 'tasks.board_column_id');
 
         $query->where(
             function ($q) {

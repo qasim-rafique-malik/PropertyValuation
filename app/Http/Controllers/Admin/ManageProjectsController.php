@@ -14,12 +14,14 @@ use App\Http\Requests\Project\StoreProject;
 use App\Http\Requests\Project\UpdateProject;
 use App\Payment;
 use App\Pinned;
+use App\Product;
 use App\ProjectActivity;
 use App\ProjectCategory;
 use App\ProjectFile;
 use App\ProjectMember;
 use App\ProjectTemplate;
 use App\ProjectTemplateMember;
+use App\ProjectTemplateProductRef;
 use App\ProjectTimeLog;
 use App\SubTask;
 use App\Task;
@@ -210,6 +212,15 @@ class ManageProjectsController extends AdminBaseController
 
             }
 
+            //adding product id in project;
+            $projectTemplateProductRefObj = new ProjectTemplateProductRef();
+            $projectTemplateProductRefData = $projectTemplateProductRefObj->where('project_template_id', '=', $request->template_id)->first();
+            $tempProductId = isset($projectTemplateProductRefData->product_id)?$projectTemplateProductRefData->product_id:0;
+
+            $project = Project::findOrFail($project->id);
+            $project->product_id = $tempProductId;
+            $project->save();
+
             foreach ($template->tasks as $task) {
                 $projectTask = new Task();
 
@@ -391,6 +402,14 @@ class ManageProjectsController extends AdminBaseController
                 DB::raw('FLOOR(sum(total_minutes/60)) as total_hours')
             ])
             ->toJSON();
+
+        //project project data
+        $productId = isset($this->project->product_id)?$this->project->product_id:0;
+        $this->product = Product::find($productId);
+        $this->productName = isset($this->product->name)?$this->product->name:'--';
+        $this->productCategory = isset($this->product->category->category_name)?$this->product->category->category_name:'--';
+        $this->productSubCategory = isset($this->product->category->category_name)?$this->product->category->category_name:'--';
+
 
         return view('admin.projects.show', $this->data);
     }

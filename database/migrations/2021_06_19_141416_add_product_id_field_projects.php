@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPropertyIdFieldProjects extends Migration
+class AddProductIdFieldProjects extends Migration
 {
     /**
      * Run the migrations.
@@ -15,11 +15,11 @@ class AddPropertyIdFieldProjects extends Migration
     {
         if (Schema::hasTable('projects'))
         {
-           if (!Schema::hasColumn('projects', 'property_id'))
+           if (!Schema::hasColumn('projects', 'product_id'))
             {
                 Schema::table('projects', function (Blueprint $table) {
-                    $table->unsignedBigInteger('property_id')->nullable();
-                    $table->foreign('property_id')->references('id')->on('valuation_properties')->onDelete('cascade')->onUpdate('cascade');
+                    $table->unsignedInteger('product_id')->nullable();
+                    $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
 
                 });
             }
@@ -34,7 +34,7 @@ class AddPropertyIdFieldProjects extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropColumn(['property_id']);
+            $table->dropColumn(['product_id']);
         });
     }
 }

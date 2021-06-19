@@ -19,6 +19,11 @@
                 </li>
             @endif
 
+
+            <li class="projectTemplateProduct">
+                <a href="{{ route('admin.project-template-product.show', $project->id) }}"><span>@lang('app.menu.products')</span></a>
+            </li>
+
         </ul>
     </nav>
 </div>

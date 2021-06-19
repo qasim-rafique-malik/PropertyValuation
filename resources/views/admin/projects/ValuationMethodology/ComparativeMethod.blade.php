@@ -116,6 +116,7 @@
                                         </div>
 
                                         {!! Form::open(['id'=>'createMembers','class'=>'ajax-form','method'=>'POST']) !!}
+                                        <input type="hidden" name="basePropertyId" value="{{$basePropertyId}}">
                                         <div class="col-md-9 b-l">
                                             <div class="panel panel-inverse">
 

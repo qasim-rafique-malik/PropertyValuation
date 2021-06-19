@@ -244,13 +244,13 @@
                                                         <div class="col-xs-6">
                                                             <label class="font-semi-bold">Title</label><br>
                                                             <p>
-                                                                Title Value
+                                                                {{$productName}}
                                                             </p>
                                                         </div>
                                                         <div class="col-xs-6">
                                                             <label class="font-semi-bold">Category</label><br>
                                                             <p>
-                                                                Category Value
+                                                                {{$productCategory}}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -259,7 +259,7 @@
                                                         <div class="col-xs-6">
                                                             <label class="font-semi-bold">Sub Category</label><br>
                                                             <p>
-                                                               Sub Category Value
+                                                               {{$productSubCategory}}
                                                             </p>
                                                         </div>
 

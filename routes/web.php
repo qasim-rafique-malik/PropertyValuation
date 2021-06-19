@@ -420,6 +420,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('project-template-milestone/detail/{id?}', ['uses' => 'ProjectTemplateMilestoneController@detail'])->name('project-template-milestone.detail');
                 Route::resource('project-template-milestone', 'ProjectTemplateMilestoneController');
 
+                Route::resource('project-template-product', 'ProjectTemplateProductController');
+
                 Route::resource('project-template-sub-task', 'ProjectTemplateSubTaskController');
 
                 Route::post('projectCategory/store-cat', ['uses' => 'ManageProjectCategoryController@storeCat'])->name('projectCategory.store-cat');

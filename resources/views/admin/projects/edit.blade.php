@@ -475,6 +475,11 @@
 
 
     $('#save-form').click(function () {
+        let projectPropertyId = $('#projectPropertyId').val();
+        if( projectPropertyId == ''){
+            alert('Please Select Property');
+            return false;
+        }
         $.easyAjax({
             url: '{{route('admin.projects.update', [$project->id])}}',
             container: '#updateProject',

@@ -233,7 +233,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Select Property</label>
+                                        <label class="control-label required">Select Property</label>
                                         <select name="projectPropertyId"
                                                 id="projectPropertyId"
                                                 class="form-control projectPropertyId select2"
@@ -566,6 +566,11 @@
     });
 
     $('#save-form').click(function () {
+        let projectPropertyId = $('#projectPropertyId').val();
+        if( projectPropertyId == ''){
+            alert('Please Select Property');
+            return false;
+        }
         $.easyAjax({
             url: '{{route('admin.projects.store')}}',
             container: '#createProject',

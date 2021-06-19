@@ -73,31 +73,6 @@
 
 
     </div>
-    <!-- .row -->
-<!--    <div class="row">
-
-        <div class="col-md-12">
-            @include('sections.admin_setting_menu')
-            <div class="white-box">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover toggle-circle default footable-loaded footable"
-                           id="users-table">
-                        <thead>
-                        <tr>
-                            <th>@lang('valuation::app.id')</th>
-                            <th>@lang('valuation::valuation.menu.title')</th>
-                            <th>@lang('valuation::valuation.menu.menuParent')</th>
-                            <th>@lang('valuation::app.status')</th>
-                            <th>@lang('valuation::app.action')</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>-->
-    <!-- .row -->
-
 @endsection
 
 @push('footer-script')

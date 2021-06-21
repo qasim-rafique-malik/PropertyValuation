@@ -236,6 +236,7 @@ return array(
     'addNewProject' => 'Add New Project',
     'noClientFound' => 'No Client Found',
     'projectName' => 'Project Name',
+    'createScopeOfWork' => 'Create Scope Of Work',
     'projectMembers' => 'Project Members',
     'createTitle' => 'Add Project',
     'selectClient' => 'Select Client',

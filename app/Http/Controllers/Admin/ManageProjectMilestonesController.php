@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\BaseDataTable;
 use App\Project;
 use App\Http\Requests\Milestone\StoreMilestone;
+use App\DataTables\Admin\ScopeOfWorkDataTable;
 use App\ProjectMilestone;
 use App\Helper\Reply;
 use Yajra\DataTables\Facades\DataTables;
@@ -80,8 +82,13 @@ class ManageProjectMilestonesController extends AdminBaseController
      */
     public function show($id)
     {
-        $this->project = Project::findorFail($id);
+        //echo "here"; exit;
+        $this->dataTable = New ScopeOfWorkDataTable();
+
         $this->currencies = Currency::all();
+        $this->project = Project::findorFail($id);
+        return $this->dataTable->render('admin.projects.milestones.show', $this->data);
+        //dd($test->table(['class' => 'table table-bordered table-hover toggle-circle default footable-loaded footable']));
         return view('admin.projects.milestones.show', $this->data);
     }
 

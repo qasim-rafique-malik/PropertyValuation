@@ -19,6 +19,7 @@ use App\Notifications\ContractSigned;
 use App\Notifications\NewInvoice;
 use App\Notifications\NewNotice;
 use App\ProjectMilestone;
+use App\ScopeOfWork;
 use App\Scopes\CompanyScope;
 use App\Setting;
 use App\UniversalSearch;
@@ -79,6 +80,55 @@ class PublicUrlController extends FrontBaseController
             'taxes' => $taxes,
             'settings' => $settings,
             'discount' => $discount,
+            'setting' => $settings,
+            'global' => $this->global,
+            'companyName' => $settings->company_name,
+            'pageTitle' => $pageTitle,
+            'pageIcon' => $pageIcon,
+            'company' => $company,
+        ]);
+    }
+
+    public function scopeOfWorkView(Request $request, $id)
+    {
+        $pageTitle = __('app.menu.scopeOfWork');
+        $pageIcon = 'icon-people';
+        $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();
+        $company = Company::find($estimate->company_id);
+        App::setLocale(isset($company->locale) ? $company->locale : 'en');
+
+        // public url company session set.
+        session(['company' => $company]);
+
+
+       $data = [
+           'info'=>[
+               'Valuer' => '--',
+               'Client' => '--',
+               'Intended User' => '--',
+               'Currency' => '--',
+               'Purpose Of Valuation' => '--',
+               'Basis Of Valuation' => '--',
+               'Valuation Date' => '--',
+           ],
+           'property'=>[
+                'Type' => '--',
+               'Classification' => '--',
+               'Address' => '--',
+           ],
+           'product'=>[
+                'Tittle' => '--',
+               'Category' => '--',
+               'Sub Category' => '--',
+               'Price' => '--',
+           ]
+       ];
+
+        $settings = $company;
+        return view('scopeOfWork', [
+            'allData' => $data,
+            'estimate' => $estimate,
+            'settings' => $settings,
             'setting' => $settings,
             'global' => $this->global,
             'companyName' => $settings->company_name,

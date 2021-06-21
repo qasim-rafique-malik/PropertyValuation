@@ -21,6 +21,7 @@ Route::get('/contract/download/{id}', ['uses' => 'Front\PublicUrlController@cont
 Route::get('contract/sign-modal/{id}', ['uses' => 'Front\PublicUrlController@contractSignModal'])->name('front.contract.sign-modal');
 Route::post('contract/sign/{id}', ['uses' => 'Front\PublicUrlController@contractSign'])->name('front.contract.sign');
 Route::get('/estimate/{id}', ['uses' => 'Front\PublicUrlController@estimateView'])->name('front.estimate.show');
+Route::get('/scopeOfWork/{id}', ['uses' => 'Front\PublicUrlController@scopeOfWorkView'])->name('front.scopeOfWork.show');
 Route::post('/estimate/decline/{id}', ['uses' => 'Front\PublicUrlController@decline'])->name('front.estimate.decline');
 Route::get('/estimate/accept/{id}', ['uses' => 'Front\PublicUrlController@acceptModal'])->name('front.estimate.accept');
 Route::post('/estimate/accept/{id}', ['uses' => 'Front\PublicUrlController@accept'])->name('front.accept-estimate');
@@ -293,9 +294,16 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('/finance-dashboard/proposal', 'AdminDashboardController@financeDashboardProposal')->name('financeDashboardProposal');
                 Route::get('/hr-dashboard', 'AdminDashboardController@hrDashboard')->name('hrDashboard');
                 Route::get('/project-dashboard', 'AdminDashboardController@projectDashboard')->name('projectDashboard');
+                Route::get('/scopeOfWork-dashboard', 'ManageScopeOfWorksController@index')->name('scopeOfWorkDashboard.index');
                 Route::get('/ticket-dashboard', 'AdminDashboardController@ticketDashboard')->name('ticketDashboard');
                 Route::post('/dashboard/widget/{dashboardType}', 'AdminDashboardController@widget')->name('dashboard.widget');
-
+// Scope Of Works routes
+                Route::get('scopeOfWork/download/{id}', ['uses' => 'ManageScopeOfWorksController@download'])->name('scopeOfWork.download');
+                Route::get('scopeOfWork/export/{startDate}/{endDate}/{status}', ['uses' => 'ManageScopeOfWorksController@export'])->name('scopeOfWork.export');
+                Route::get('scopeOfWork/duplicate-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@duplicateEstimate'])->name('scopeOfWork.duplicate-estimate');
+                Route::get('scopeOfWork/change-status/{id}', ['uses' => 'ManageScopeOfWorksController@changeStatus'])->name('scopeOfWork.change-status');
+                Route::post('scopeOfWork/send-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@sendEstimate'])->name('scopeOfWork.send-estimate');
+                Route::resource('scopeOfWork', 'ManageScopeOfWorksController');
 
                 Route::get('designations/quick-create', ['uses' => 'ManageDesignationController@quickCreate'])->name('designations.quick-create');
                 Route::post('designations/quick-store', ['uses' => 'ManageDesignationController@quickStore'])->name('designations.quick-store');
@@ -592,6 +600,16 @@ Route::group(['middleware' => 'auth'], function () {
 
                         Route::resource('project-ratings', 'ManageProjectRatingController');
                 });
+
+                // Scope Of Works routes
+                Route::get('scopeOfWork/download/{id}', ['uses' => 'ManageScopeOfWorksController@download'])->name('scopeOfWork.download');
+                Route::get('scopeOfWork/export/{startDate}/{endDate}/{status}', ['uses' => 'ManageScopeOfWorksController@export'])->name('scopeOfWork.export');
+                Route::get('scopeOfWork/duplicate-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@duplicateEstimate'])->name('scopeOfWork.duplicate-estimate');
+                Route::get('scopeOfWork/change-status/{id}', ['uses' => 'ManageScopeOfWorksController@changeStatus'])->name('scopeOfWork.change-status');
+                Route::post('scopeOfWork/send-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@sendEstimate'])->name('scopeOfWork.send-estimate');
+                Route::resource('scopeOfWork', 'ManageScopeOfWorksController');
+
+
 
                 Route::group(
                     ['prefix' => 'clients'],

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\AcceptEstimate;
+use App\AcceptScope;
 use App\Company;
 use App\Contract;
 use App\ContractSign;
@@ -29,6 +30,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Modules\Valuation\Entities\ValuationProperty;
 
 class PublicUrlController extends FrontBaseController
 {
@@ -99,7 +101,7 @@ class PublicUrlController extends FrontBaseController
 
         // public url company session set.
         session(['company' => $company]);
-
+        $property = ValuationProperty::find($estimate->property_id);
 
        $data = [
            'info'=>[
@@ -147,9 +149,26 @@ class PublicUrlController extends FrontBaseController
         return Reply::dataOnly(['status' => 'success']);
     }
 
+    public function scopeOfWorkDecline(Request $request, $id)
+    {
+        $estimate = ScopeOfWork::find($id);
+        $estimate->status = 'declined';
+        $estimate->save();
+
+        return Reply::dataOnly(['status' => 'success']);
+    }
+
     public function acceptModal(Request $request, $id)
     {
         $estimate = Estimate::findOrFail($id);
+        $company = Company::find($estimate->company_id);
+        App::setLocale(isset($company->locale) ? $company->locale : 'en');
+        return view('accept-estimate', ['id' => $id]);
+    }
+
+    public function acceptModalScopeOfWork(Request $request, $id)
+    {
+        $estimate = ScopeOfWork::findOrFail($id);
         $company = Company::find($estimate->company_id);
         App::setLocale(isset($company->locale) ? $company->locale : 'en');
         return view('accept-estimate', ['id' => $id]);
@@ -227,6 +246,44 @@ class PublicUrlController extends FrontBaseController
 
         DB::commit();
         return Reply::redirect(route('front.invoice', md5($invoice->id)), 'Estimate successfully accepted.');
+    }
+
+    public function acceptScopeOfWork(EstimateAcceptRequest $request, $id)
+    {
+        DB::beginTransaction();
+
+        $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();
+        //        dd($estimate);
+
+        if (!$estimate) {
+            return Reply::error('you are not authorized to access this.');
+        }
+        $project_id = $estimate->project_id;
+        $accept = new AcceptScope();
+        $accept->full_name = $request->first_name . ' ' . $request->last_name;
+        $accept->estimate_id = $estimate->id;
+        $accept->email = $request->email;
+
+        $image = $request->signature;  // your base64 encoded
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $imageName = str_random(32) . '.' . 'jpg';
+
+        if (!\File::exists(public_path('user-uploads/' . 'scope/accept'))) {
+            $result = \File::makeDirectory(public_path('user-uploads/scope/accept'), 0775, true);
+        }
+
+        \File::put(public_path() . '/user-uploads/scope/accept/' . $imageName, base64_decode($image));
+
+        $accept->signature = $imageName;
+        $accept->save();
+
+        $estimate->status = 'accepted';
+        $estimate->save();
+
+        //log search
+        DB::commit();
+        return Reply::redirect(route('admin.milestones.show', $project_id) , 'Scope successfully accepted.');
     }
 
     public function logSearchEntry($searchableId, $title, $route, $type)
@@ -389,10 +446,65 @@ class PublicUrlController extends FrontBaseController
             'fileName' => $filename
         ];
     }
+    public function scopeOfWorkDomPdfObjectForDownload($id)
+    {
+        $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();
+        $company = Company::find($estimate->company_id);
+        $settings = $company;
+        $property = ValuationProperty::find($estimate->property_id);
+
+        $data = [
+            'info'=>[
+                'Valuer' => '--',
+                'Client' => '--',
+                'Intended User' => '--',
+                'Currency' => '--',
+                'Purpose Of Valuation' => '--',
+                'Basis Of Valuation' => '--',
+                'Valuation Date' => '--',
+            ],
+            'property'=>[
+                'Type' => '--',
+                'Classification' => '--',
+                'Address' => '--',
+            ],
+            'product'=>[
+                'Tittle' => '--',
+                'Category' => '--',
+                'Sub Category' => '--',
+                'Price' => '--',
+            ]
+        ];
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
+            'allData' => $data,
+            'estimate' => $estimate,
+            'settings' => $settings,
+            'company' => $settings,
+            'global' => $settings,
+            'companyName' => $settings->company_name
+        ]);
+        $filename = 'scope-' . $estimate->id;
+
+        return [
+            'pdf' => $pdf,
+            'fileName' => $filename
+        ];
+    }
 
     public function estimateDownload($id)
     {
         $pdfOption = $this->estimateDomPdfObjectForDownload($id);
+        $pdf = $pdfOption['pdf'];
+        $filename = $pdfOption['fileName'];
+
+        return $pdf->download($filename . '.pdf');
+    }
+
+    public function scopeOfWorkDownload($id)
+    {
+        $pdfOption = $this->scopeOfWorkDomPdfObjectForDownload($id);
         $pdf = $pdfOption['pdf'];
         $filename = $pdfOption['fileName'];
 

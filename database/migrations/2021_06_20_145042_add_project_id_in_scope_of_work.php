@@ -14,7 +14,7 @@ class AddProjectIdInScopeOfWork extends Migration
     public function up()
     {
         Schema::table('scope_of_works', function (Blueprint $table) {
-//            $table->unsignedBigInteger('project_id')->after('client_id');
+            $table->unsignedBigInteger('project_id')->after('client_id');
 //            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade')->onUpdate('cascade');
         });
     }

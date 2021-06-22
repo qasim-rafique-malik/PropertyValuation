@@ -368,66 +368,69 @@
         </div>
 
     </div>
-    <table border="0" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th class="no">#</th>
-                <th class="desc">@lang("modules.invoices.item")</th>
-                <th class="qty">@lang("modules.invoices.qty")</th>
-                <th class="qty">@lang("modules.invoices.unitPrice") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
-                <th class="unit">@lang("modules.invoices.price") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php $count = 0; ?>
-            @foreach($estimate->items as $item)
-                @if($item->type == 'item')
-                    <tr style="page-break-inside: avoid;">
-                        <td class="no">{{ ++$count }}</td>
-                        <td class="desc"><h3>{{ ucfirst($item->item_name) }}</h3>
-                            @if(!is_null($item->item_summary))
-                                <p class="item-summary">{{ $item->item_summary }}</p>
-                            @endif
-                        </td>
-                        <td class="qty"><h3>{{ $item->quantity }}</h3></td>
-                        <td class="qty"><h3>{{ number_format((float)$item->unit_price, 2, '.', '') }}</h3></td>
-                        <td class="unit">{{ number_format((float)$item->amount, 2, '.', '') }}</td>
+    <div class="col-xs-12">
+        <div class="table-responsive m-t-40" style="clear: both;">
+            <h3 class="text-left"> <b>Info</b></h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-left col-xs-6">Tittle</th>
+                    <th class="text-left col-xs-6">Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($allData['info'] as $key => $value)
+                    <tr>
+                        <td class="text-left col-xs-6">{!! $key !!} </td>
+                        <td class="text-left col-xs-6"> {!! $value  !!} </td>
                     </tr>
-                @endif
-            @endforeach
-            <tr style="page-break-inside: avoid;" class="subtotal">
-                <td class="no">&nbsp;</td>
-                <td class="qty">&nbsp;</td>
-                <td class="qty">&nbsp;</td>
-                <td class="desc">@lang("modules.invoices.subTotal")</td>
-                <td class="unit">{{ number_format((float)$estimate->sub_total, 2, '.', '') }}</td>
-            </tr>
-            @if($discount != 0 && $discount != '')
-                <tr style="page-break-inside: avoid;" class="discount">
-                    <td class="no">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="desc">@lang("modules.invoices.discount")</td>
-                    <td class="unit">-{{ number_format((float)$discount, 2, '.', '') }}</td>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="table-responsive m-t-40" style="clear: both;">
+            <h3 class="text-left"> <b>Property</b></h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-left col-xs-6">Tittle</th>
+                    <th class="text-left col-xs-6">Value</th>
                 </tr>
-            @endif
-            @foreach($taxes as $key=>$tax)
-                <tr style="page-break-inside: avoid;" class="tax">
-                    <td class="no">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="desc">{{ strtoupper($key) }}</td>
-                    <td class="unit">{{ number_format((float)$tax, 2, '.', '') }}</td>
+                </thead>
+                <tbody>
+                @foreach($allData['property'] as $key => $value)
+                    <tr>
+                        <td class="text-left col-xs-6">{!! $key !!} </td>
+                        <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="table-responsive m-t-40" style="clear: both;">
+            <h3 class="text-left"> <b>Product</b></h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-left col-xs-6">Tittle</th>
+                    <th class="text-left col-xs-6">Value</th>
                 </tr>
-            @endforeach
-            </tbody>
-            <tfoot>
-            <tr dontbreak="true">
-                <td colspan="4">@lang("modules.invoices.total")</td>
-                <td style="text-align: center">{{ number_format((float)$estimate->total, 2, '.', '') }}</td>
-            </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                @foreach($allData['product'] as $key => $value)
+                    <tr>
+                        <td class="text-left col-xs-6">{!! $key !!} </td>
+                        <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
         <p>&nbsp;</p>
         <hr>
         <p id="notes">

@@ -129,7 +129,7 @@
                             @elseif($estimate->status == 'accepted')
                                 <a class="btn btn-success pull-right m-r-10"><i class="fa fa-check"></i> @lang('app.signed')</a>
                             @endif
-                            <a href="{{ route("front.estimateDownload", md5($estimate->id)) }}" class="btn btn-default pull-right m-r-10"><i class="fa fa-file-pdf-o"></i> @lang('app.download')</a>
+                            <a href="{{ route("front.scopeOfWorkDownload", md5($estimate->id)) }}" class="btn btn-default pull-right m-r-10"><i class="fa fa-file-pdf-o"></i> @lang('app.download')</a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -180,32 +180,62 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="table-responsive m-t-40" style="clear: both;">
+                                                <h3 class="text-left"> <b>Info</b></h3>
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th class="text-center">#</th>
-                                                        <th>@lang("modules.invoices.item")</th>
-                                                        <th class="text-right">@lang("modules.invoices.qty")</th>
-                                                        <th class="text-right">@lang("modules.invoices.unitPrice")</th>
-                                                        <th class="text-right">@lang("modules.invoices.price")</th>
+                                                        <th class="text-left col-xs-6">Tittle</th>
+                                                        <th class="text-left col-xs-6">Value</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <?php $count = 0; ?>
-                                                    @foreach($estimate->items as $item)
-                                                        @if($item->type == 'item')
+                                                    @foreach($allData['info'] as $key => $value)
                                                             <tr>
-                                                                <td class="text-center">{{ ++$count }}</td>
-                                                                <td>{{ ucfirst($item->item_name) }}
-                                                                    @if(!is_null($item->item_summary))
-                                                                        <p class="font-12">{{ $item->item_summary }}</p>
-                                                                    @endif
-                                                                </td>
-                                                                <td class="text-right">{{ $item->quantity }}</td>
-                                                                <td class="text-right"> {!! htmlentities($estimate->currency->currency_symbol)  !!}{{ $item->unit_price }} </td>
-                                                                <td class="text-right"> {!! htmlentities($estimate->currency->currency_symbol)  !!}{{ $item->amount }} </td>
+                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
                                                             </tr>
-                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive m-t-40" style="clear: both;">
+                                                <h3 class="text-left"> <b>Property</b></h3>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="text-left col-xs-6">Tittle</th>
+                                                        <th class="text-left col-xs-6">Value</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($allData['property'] as $key => $value)
+                                                            <tr>
+                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                                                            </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive m-t-40" style="clear: both;">
+                                                <h3 class="text-left"> <b>Product</b></h3>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="text-left col-xs-6">Tittle</th>
+                                                        <th class="text-left col-xs-6">Value</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($allData['product'] as $key => $value)
+                                                            <tr>
+                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                                                            </tr>
                                                     @endforeach
                                                     </tbody>
                                                 </table>
@@ -291,7 +321,7 @@
     function decline() {
         $.easyAjax({
             type:'POST',
-            url:'{{route('front.estimate.decline', $estimate->id)}}',
+            url:'{{route('front.scopeOfWork.decline', $estimate->id)}}',
             container:'#estimates',
             data: {_token: '{{ csrf_token() }}'},
             success: function(response){
@@ -304,7 +334,7 @@
 
     //Accept estimate
     function accept() {
-        var url = '{{ route('front.estimate.accept', $estimate->id) }}';
+        var url = '{{ route('front.scopeOfWork.accept', $estimate->id) }}';
         $.ajaxModal('#estimateAccept', url);
     }
 </script>

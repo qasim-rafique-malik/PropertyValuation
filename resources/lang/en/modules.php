@@ -245,7 +245,7 @@ return array(
     'projectSummary' => 'Project Summary',
     'note' => 'Note',
     'updateTitle' => 'Update Project Details',
-    'projectCategory' => 'Project Category',
+    'projectCategory' => 'Project Basis of Valuation',
     'clientFeedback' => 'Client Feedback',
     'projectCompletionStatus' => 'Project Completion Status',
     'overview' => 'Overview',

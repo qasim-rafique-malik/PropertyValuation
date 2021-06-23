@@ -6,6 +6,7 @@ use App\Observers\ProjectObserver;
 use App\Scopes\CompanyScope;
 use App\Traits\CustomFieldsTrait;
 use Carbon\Carbon;
+use Zoha\Metable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Log;
 class Project extends BaseModel
 {
     use CustomFieldsTrait; use SoftDeletes;
+    use Metable;
+    protected $metaTable = 'projects_meta';
 
     protected $dates = ['start_date', 'deadline'];
 

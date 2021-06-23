@@ -77,6 +77,11 @@ class ManageProjectsController extends AdminBaseController
         $this->projectBudgetTotal = Project::sum('project_budget');
         $this->categories = ProjectCategory::all();
 
+        $project =  Project::find(1);
+        $updatePropertyMeta["project_meta"]=json_encode($this->allEmployees);
+
+        $project->setMeta($updatePropertyMeta);
+
         $this->projectEarningTotal = Payment::join('projects', 'projects.id', '=', 'payments.project_id')
             ->where('payments.status', 'complete')
             ->whereNotNull('projects.project_budget')
@@ -113,7 +118,16 @@ class ManageProjectsController extends AdminBaseController
 
         $propertyObj = new ValuationProperty();
         $this->properties = $propertyObj->getAllForCompany();
-
+        $approaches['marketApproach'] ='Market Approach' ;
+        $approaches['incomeApproach'] = 'Income Approach';
+        $approaches['costApproach'] = 'Cost Approach' ;
+        $this->approaches = $approaches;
+        $selectMethods['comparisonMethod'] ='The Comparison Method' ;
+        $selectMethods['discountedCashFlowMethod'] = 'The Discounted Cash Flow Method';
+        $selectMethods['costMethod'] = 'The Cost Method' ;
+        $selectMethods['profitsMethod'] = 'The Profits Method' ;
+        $selectMethods['residualMethod'] = 'The Residual Method' ;
+        $this->selectMethods = $selectMethods;
         $project = new Project();
         $this->upload = can_upload();
         $this->fields = $project->getCustomFieldGroupsWithFields()->fields;
@@ -179,6 +193,14 @@ class ManageProjectsController extends AdminBaseController
         $project->property_id = (isset($request->projectPropertyId) && $request->projectPropertyId != '' )?$request->projectPropertyId:'';
 
         $project->save();
+
+        $metaData['approaches']=$request->approaches;
+        $metaData['methods']=$request->methods;
+        $metaData['contact_name']=$request->contact_name;
+        $metaData['contact_phone']=$request->contact_phone;
+        $metaData['appointment_day']=$request->appointment_day;
+        $project->setMeta($metaData);
+
 
         if ($request->template_id) {
             $template = ProjectTemplate::findOrFail($request->template_id);
@@ -428,6 +450,22 @@ class ManageProjectsController extends AdminBaseController
         $this->fields = $this->project->getCustomFieldGroupsWithFields()->fields;
         $this->currencies = Currency::all();
         $propertyObj = new ValuationProperty();
+        $approaches['marketApproach'] ='Market Approach' ;
+        $approaches['incomeApproach'] = 'Income Approach';
+        $approaches['costApproach'] = 'Cost Approach' ;
+        $this->approaches = $approaches;
+        $selectMethods['comparisonMethod'] ='The Comparison Method' ;
+        $selectMethods['discountedCashFlowMethod'] = 'The Discounted Cash Flow Method';
+        $selectMethods['costMethod'] = 'The Cost Method' ;
+        $selectMethods['profitsMethod'] = 'The Profits Method' ;
+        $selectMethods['residualMethod'] = 'The Residual Method' ;
+        $projectMeta = Project::findOrFail($id);
+        $this->approaches_value = $projectMeta->getMeta('approaches');
+        $this->methods_value = $projectMeta->getMeta('methods');
+        $this->contact_name = $projectMeta->getMeta('contact_name');
+        $this->contact_phone = $projectMeta->getMeta('contact_phone');
+        $this->appointment_day = $projectMeta->getMeta('appointment_day');
+        $this->selectMethods = $selectMethods;
         $this->properties = $propertyObj->getAllForCompany();
         return view('admin.projects.edit', $this->data);
     }

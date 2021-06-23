@@ -27,6 +27,7 @@ return [
 
         'custom'  => [
             'valuation_property_meta',
+            'projects_meta',
             // example : 'posts_meta' , 'users_meta'
 
         ],

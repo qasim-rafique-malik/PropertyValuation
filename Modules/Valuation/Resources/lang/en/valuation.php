@@ -104,6 +104,15 @@ $measurementUnit['measurementTitle']='Measurement Unit';
 $measurementUnit['Title']='Measurement Unit Setting';
 $valuationLang['measurement']=$measurementUnit;
 
+$generalSettings=array();
+$generalSettings['Title']="General Setting";
+$generalSettings['createFeature']="Create Setting";
+$generalSettings['totalFeture']="Total Settings";
+$generalSettings['name']="Setting Name";
+$generalSettings['category']="Category";
+
+$valuationLang['generalSetting']=$generalSettings;
+
 $propertyFeatures=array();
 $propertyFeatures['Title']="Property Type Feature Setting";
 $propertyFeatures['createFeature']="Create Feature";

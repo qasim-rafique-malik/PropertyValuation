@@ -78,7 +78,39 @@
                                 </div>
                                 
                             </div>
-                            
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="control-label">Select Approaches</label>
+                                        <select class="selectpicker form-control" name="approaches" id="approaches"
+                                                data-style="form-control">
+
+                                            @forelse($approaches as $key => $value)
+                                                <option value="{{$key}}" @if($key==$approaches_value)'selected':'' @endif> {{ ucwords($value) }}</option>
+                                            @empty
+                                                <option value=""><a href="javascript:void(0)"
+                                                                    role="menuitem">@lang('messages.noRecordFound')</a>
+                                                </option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Select Methods</label>
+                                        <select class="selectpicker form-control" name="approaches" id="approaches"
+                                                data-style="form-control">
+                                            @forelse($selectMethods as $key => $value)
+                                                <option value="{{$key}}" @if($key==$methods_value)'selected':'' @endif> {{ ucwords($value) }}</option>
+                                            @empty
+                                                <option value=""><a href="javascript:void(0)"
+                                                                    role="menuitem">@lang('messages.noRecordFound')</a>
+                                                </option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
 
                                 <div class="col-md-4">
@@ -175,7 +207,21 @@
                                    value="{{ $project->completion_percent }}">
 
 
-
+                            <h3 class="box-title m-b-10">Contact person</h3>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="required">Contact name</label>
+                                        <input type="text" name="contact_name" id="contact_name" value=" {{ isset($contact_name)?$contact_name: '' }}" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="required">Contact Phone</label>
+                                        <input type="tel" name="contact_phone" id="contact_phone" value=" {{ isset($contact_phone)?$contact_phone: '' }}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
                             <h3 class="box-title m-b-10">@lang('modules.projects.clientInfo')</h3>
                             <div class="row">
                                 <div class="col-md-4 ">
@@ -287,6 +333,12 @@
 
                         
                             <div class="row">
+                                <div class="col-xs-12 col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="">Valuation Date</label>
+                                        <input type="datetime-local" value=" {{ isset($appointment_day)?$appointment_day: '' }}" name="appointment_day" id="appointment_day" class="form-control">
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">@lang('app.project') @lang('app.status')</label>

@@ -71,7 +71,14 @@ Route::prefix('valuation')->group(function() {
             Route::get('/feature/addEditView/{id?}','Admin\Settings\FeatureController@addEditView')->name('valuation.admin.settings.feature.addEditView');
             Route::post('/feature/saveUpdateData/{id?}','Admin\Settings\FeatureController@saveUpdateData')->name('valuation.admin.settings.feature.saveUpdateData');
             Route::delete('/feature/destroy/{id?}','Admin\Settings\FeatureController@destroy')->name('valuation.admin.settings.feature.destroy');
-            
+
+             //General settings
+            Route::get('/general','Admin\Settings\GeneralController@index')->name('valuation.admin.settings.general');
+            Route::get('/general/data','Admin\Settings\GeneralController@data')->name('valuation.admin.settings.general.data');
+            Route::get('/general/addEditView/{id?}','Admin\Settings\GeneralController@addEditView')->name('valuation.admin.settings.general.addEditView');
+            Route::post('/general/saveUpdateData/{id?}','Admin\Settings\GeneralController@saveUpdateData')->name('valuation.admin.settings.general.saveUpdateData');
+            Route::delete('/general/destroy/{id?}','Admin\Settings\GeneralController@destroy')->name('valuation.admin.settings.general.destroy');
+
             //Property Feature Category
             Route::get('/category','Admin\Settings\FeatureCategoryController@index')->name('valuation.admin.settings.category');
             Route::get('/category/addEditView/{id?}','Admin\Settings\FeatureCategoryController@addEditView')->name('valuation.admin.settings.category.addEditView');

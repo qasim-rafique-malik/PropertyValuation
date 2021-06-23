@@ -30,95 +30,10 @@
                     </div>
 
 
-                    <div class="tab-content" id="myTabContent3">
+                    <div class="tab-content" id="myTabContent31">
                         <!---OtherInfoRelationships -->
-                        <div class="tab-pane fade in active " id="OtherInfoRelationships"
-                             role="tabpanel">
-<!--                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Valuation requests</label>
-                                            <input type="text" name="valuationRequests" id="valuationRequests" value="{{isset($valuationRequests)?$valuationRequests:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Valuation appointments</label>
-                                            <input type="text" name="valuationAppointments" id="valuationAppointments" value="{{isset($valuationAppointments)?$valuationAppointments:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Valuation requested by</label>
-                                            <input type="text" name="valuationRequestedBy" id="valuationRequestedBy" value="{{isset($valuationRequestedBy)?$valuationRequestedBy:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Valuation requested for</label>
-                                            <input type="text" name="valuationRequestedFor" id="valuationRequestedFor" value="{{isset($valuationRequestedFor)?$valuationRequestedFor:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Structure</label>
-                                            <input type="text" name="structure" id="structure" value="{{isset($structure)?$structure:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Facility</label>
-                                            <input type="text" name="facility" id="facility" value="{{isset($facility)?$facility:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">History</label>
-                                            <input type="text" name="history" id="history" value="{{isset($history)?$history:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Owner</label>
-                                            <input type="text" name="owner" id="owner" value="{{isset($owner)?$owner:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Contact Person</label>
-                                            <input type="text" name="contactPerson" id="contactPerson" value="{{isset($contactPerson)?$contactPerson:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
+                        <div class="tab-pane fade in active " id="OtherInfoRelationships" role="tabpanel">
 
-                                </div>
-                            </div>-->
                         </div>
                         <!---OtherInfoRelationships -->
 

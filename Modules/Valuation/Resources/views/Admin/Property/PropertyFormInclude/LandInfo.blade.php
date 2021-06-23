@@ -33,16 +33,16 @@
                         <div class="tab-pane fade  in active" id="LandInfoMeasurements">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Land size</label>
-                                            <input type="text" name="landSize" id="landSize"
+                                            <input type="text" onblur="calculationSizeOther(this.value)" name="landSize" id="landSize"
                                                    value="{{isset($landSize)?$landSize:''}}"
                                                    class="form-control"
-                                                   autocomplete="nope">
+                                                   autocomplete="nope" placeholder="Enter Land size in {{$defaultMeasurementUnit}}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Sizes in Meter sq</label>
                                             <input type="text" name="sizeMeterSQ" readonly="" id="sizeMeterSQ"
@@ -51,19 +51,7 @@
                                                    autocomplete="nope">
                                         </div>
                                     </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Municipality cutting</label>
-                                            <input type="text" name="municipalityCutting" id="municipalityCutting"
-                                                   value="{{isset($municipalityCutting)?$municipalityCutting:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Sizes in sq feet)</label>
                                             <input type="text" name="sizeSQFeet" readonly="" id="sizeSQFeet"
@@ -72,12 +60,60 @@
                                                    autocomplete="nope">
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Municipality cutting</label>
+                                            <input type="text" name="municipalityCutting" id="municipalityCutting"
+                                                   value="{{isset($municipalityCutting)?$municipalityCutting:''}}"
+                                                   class="form-control"
+                                                   autocomplete="nope">
+                                        </div>
+                                    </div>
+                                      @if(isset($LandShape) && !empty($LandShape))
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">{{$LandShape[0]->title}}</label>
+                                            <select name="landInfoLandShape" class="form-control">
+                                                <option value="">--select One--</option>
+                                                @foreach($LandShape[0]->weightageCategoryItems as $shape)
+                                                <option value="{{$shape->id}}">{{$shape->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                    @endif
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Structure Type</label>
+                                            <input type="text" name="land_structure_type" class="form-control" id="land_structure_type" value="">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label class="control-label">Dimension</label>
+                                        <div class="pb-10">
+                                            <button class="btn btn-primary" id="LandInfoDimensionAddBtn">Add New Row</button>
+                                        </div>
+                                        <table id="LandInfoDimensionTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                        <thead>
+                                                <tr class="fw-bold fs-6 text-gray-800">
+                                                        <th>Label</th>
+                                                        <th>Value</th>
+                                                        
+                                                </tr>
+                                        </thead>
+                                        <tfoot>
+                                            
+                                        </tfoot>
+                                    </table>
+<!--                                        <label class="control-label">Dimension</label>
                                         <div id="repeater">
-                                            <!-- Repeater Heading -->
+                                             Repeater Heading 
                                             <div class="repeater-heading">
                                                 <button type="button"
                                                         class="btn btn-primary pt-5 pull-right repeater-add-btn">
@@ -85,12 +121,12 @@
                                                 </button>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <!-- Repeater Items -->
+                                             Repeater Items 
 
                                             @if(isset($dimensions) && !empty($dimensions))
                                                 @foreach($dimensions as $dimensionIn)
                                                     <div class="items" data-group="dimensions">
-                                                        <!-- Repeater Content -->
+                                                         Repeater Content 
                                                         <div class="item-content">
                                                             <div class="form-group">
                                                                 <label for="inputEmail"
@@ -110,7 +146,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <!-- Repeater Remove Btn -->
+                                                         Repeater Remove Btn 
                                                         <div class="pull-right repeater-remove-btn">
                                                             <button class="btn btn-danger remove-btn">
                                                                 Remove
@@ -122,7 +158,7 @@
 
                                             @else
                                                 <div class="items" data-group="dimensions">
-                                                    <!-- Repeater Content -->
+                                                     Repeater Content 
                                                     <div class="item-content">
                                                         <div class="form-group">
                                                             <label for="inputEmail"
@@ -136,13 +172,12 @@
                                                             <label for="inputEmail"
                                                                    class="col-lg-2 control-label">Value</label>
                                                             <div class="col-lg-10">
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Value" data-name="value">
+                                                                <input type="text" class="form-control" placeholder="Value" data-name="value">
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <!-- Repeater Remove Btn -->
+                                                     Repeater Remove Btn 
                                                     <div class="pull-right repeater-remove-btn">
                                                         <button class="btn btn-danger remove-btn">
                                                             Remove
@@ -152,7 +187,7 @@
                                                 </div>
                                             @endif
 
-                                        </div>
+                                        </div>-->
                                     </div>
 
                                 </div>
@@ -314,6 +349,20 @@
             });
             map.setCenter(vMarker.position);
             vMarker.setMap(map);
+        }
+        function calculationSizeOther(landSize)
+        {
+            var defaultUnite='{{$defaultMeasurementUnit}}';
+            if(defaultUnite=='meter')
+            {
+                $('#sizeMeterSQ').val(landSize);
+                $('#sizeSQFeet').val(landSize*3.28084);
+            }
+            else if(defaultUnite=='feet')
+            {
+                $('#sizeMeterSQ').val(landSize/3.28084);
+                $('#sizeSQFeet').val(landSize);
+            }
         }
     </script>
 @endpush

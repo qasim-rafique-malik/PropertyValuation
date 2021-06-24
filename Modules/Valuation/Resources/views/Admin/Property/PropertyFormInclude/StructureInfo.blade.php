@@ -30,14 +30,18 @@
                                                   aria-controls="StructureInfoPrimaryInfo"
                                                   aria-expanded="false">Primary info</a>
                             </li>
-                            <li><a href="#StructureInfoFeatures"
+                            <li><a href="#PropertyInfoFeatures"
+                                   class="nav-link nav-item" data-toggle="tab"
+                                   aria-controls="PropertyInfoFeatures"
+                                   aria-expanded="false">Features</a></li>
+<!--                            <li><a href="#StructureInfoFeatures"
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="StructureInfoFeatures"
-                                   aria-expanded="false">Features</a></li>
-                            <li><a href="#StructureInfoAddOns"
+                                   aria-expanded="false">Features</a></li>-->
+<!--                            <li><a href="#StructureInfoAddOns"
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="StructureInfoAddOns"
-                                   aria-expanded="false">Addons</a></li>
+                                   aria-expanded="false">Addons</a></li>-->
                             <li><a href="#StructureInfoPropertyCharacteristics"
                                    class="nav-link nav-item" data-toggle="tab"
                                    aria-controls="StructureInfoPropertyCharacteristics"
@@ -47,6 +51,13 @@
                                    aria-controls="StructureInfoUnitListTab"
                                    aria-expanded="false">
                                            Unit List
+                                       </a>
+                                   </li>
+                                   <li>
+                                       <a href="#StructureInfoFincialInfoTab" class="nav-link nav-item" data-toggle="tab"
+                                   aria-controls="StructureInfoFincialInfoTab"
+                                   aria-expanded="false">
+                                          Financial Info
                                        </a>
                                    </li>
                         </ul>
@@ -189,7 +200,7 @@
                         </div>
                         <!---StructureInfoPrimaryInfo -->
 
-                        <!---StructureInfoFeatures -->
+<!--                        -StructureInfoFeatures 
                         <div class="tab-pane fade" id="StructureInfoFeatures">
                             <div class="form-body">
                                 <div class="row">
@@ -276,10 +287,78 @@
                                 </div>
                             </div>
                         </div>
-                        <!---StructureInfoFeatures -->
+                        -StructureInfoFeatures -->
+                         <!---PropertyInfoFeatures -->
+                        <div class="tab-pane fade" id="PropertyInfoFeatures">
+                            <div class="form-body">
+                                @if(isset($Amenities) && !empty($Amenities))
+                                <fieldset>
+                                    <legend>{{$Amenities[0]->title}}</legend>
+                                <div class="row">
+                                    @foreach($Amenities[0]->weightageCategoryItems as $amenitiesObj)
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-info">
+                                            <input type="checkbox" name="aminatie[]" value="{{$amenitiesObj->id}}">
+                                            <label for="check-view">{{$amenitiesObj->title}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                   
+                                </div>
+                                 </fieldset>
+                                 @endif
+                                @php
+                                $featureCount= 0;
+                                @endphp
+                                @foreach ($featureCategorList as $featureCategorListIn)
+                                <div class="row">
+                                            <fieldset>
+                                                <legend>{{$featureCategorListIn->category_name}}</legend>
+                                                <div class="row">
+                                                    @foreach ($featureCategorListIn->featureItems as $featureKey => $featureItemsIn)
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                                <div class="checkbox checkbox-info  col-md-10">
+                                                                    <input id="{{$featureItemsIn->id}}"
+                                                                           onchange="checkFeature({{$featureItemsIn->id}})"
+                                                                           name="feature[{{$featureCount}}][id]" value="{{$featureItemsIn->id}}"
+                                                                           type="checkbox">
+                                                                    <label for="client_view_task">{{$featureItemsIn->feature_name}}</label>
+                                                                    <span id="feature-{{$featureItemsIn->id}}" style="display:none;" class="ml-20">
+                                                                       @if(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="select" )
+                                                                            <select name="feature[{{$featureCount}}][value]" class="form-control">
 
+                                                                           @php
+                                                                            $arr = json_decode($featureItemsIn->sub_fields,true);
+                                                                            foreach($arr as $field){
+                                                                                echo '<option value="'.$field['name'].'">'.$field['name'].'</option>';
+                                                                            }
+                                                                            @endphp
+                                                                                </select>
+                                                                        @elseif(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="textarea" )
+                                                                            <textarea name=feature[{{$featureCount}}][value]" class="form-control"></textarea>
+                                                                           @else
+                                                                            <input type="text" name="feature[{{$featureCount}}][value]" class="form-control">
+                                                                           @endif
+                                                                    </span>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                        @php
+                                                            $featureCount++;
+                                                        @endphp
+                                                    @endforeach
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    @endforeach
+                                </div>
+                        </div>
+                        <!---PropertyInfoFeatures -->
                         <!---StructureInfoAddOns -->
-                        <div class="tab-pane fade" id="StructureInfoAddOns">
+<!--                        <div class="tab-pane fade" id="StructureInfoAddOns">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -354,7 +433,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!---StructureInfoAddOns -->
 
                         <!---StructureInfoPropertyCharacteristics -->
@@ -450,6 +529,12 @@
                             </div>
                         </div>
                         <!-- StructureInfoPropertyUnitList end -->
+                        
+                        <!-- StructureInfoFincialInfoTab -->
+<!--                        <div class="tab-pane fade" id="StructureInfoFincialInfoTab">-->
+                        @include('valuation::Admin.Property.PropertyFormInclude.StructureFincialInfo')
+<!--                        </div>-->
+                        <!-- StructureInfoFincialInfoTab -->
                     </div>
 
                 </div>

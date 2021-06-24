@@ -18,7 +18,7 @@
     }
 </style>
 @endpush
-<div class="tab-pane fade" id="FinancialInfo">
+<div class="tab-pane fade" id="StructureInfoFincialInfoTab">
     <div class="inner-panel-Main-div">
         <div class="panel panel-inverse">
             <div class="panel-wrapper collapse in" aria-expanded="true">
@@ -26,54 +26,54 @@
                     <div class="tabbable">
                         <ul class="nav nav-tabs wizard">
                             <li class="active"><a class="nav-link nav-item"
-                                                  href="#FinancialInfoAcquisitionCost"
+                                                  href="#FinancialInfoAcquisitionCostStructure"
                                                   data-toggle="tab"
-                                                  aria-controls="FinancialInfoAcquisitionCost"
+                                                  aria-controls="FinancialInfoAcquisitionCostStructure"
                                                   aria-expanded="false">Acquisition Cost</a>
                             </li>
-                            <li><a href="#FinancialInfoBuiltUpCost"
+                            <li><a href="#FinancialInfoBuiltUpCostStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoBuiltUpCost"
+                                   aria-controls="FinancialInfoBuiltUpCostStructure"
                                    aria-expanded="false">Built-up cost</a></li>
-                            <li><a href="#FinancialInfoAddOnCosts"
+                            <li><a href="#FinancialInfoAddOnCostsStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoAddOnCosts"
+                                   aria-controls="FinancialInfoAddOnCostsStructure"
                                    aria-expanded="false">Add-on costs</a></li>
                             <li>
-                                <a href="#FinancialInfoContracts"
+                                <a href="#FinancialInfoContractsStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoContracts"
+                                   aria-controls="FinancialInfoContractsStructure"
                                    aria-expanded="false">Contracts</a>
                             </li>
                             <li>
-                                <a href="#FinancialInfoCollections"
+                                <a href="#FinancialInfoCollectionsStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoCollections"
+                                   aria-controls="FinancialInfoCollectionsStructure"
                                    aria-expanded="false">Collections</a>
                             </li>
-                            <li><a href="#FinancialInfoIncome"
+                            <li><a href="#FinancialInfoIncomeStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoIncome"
+                                   aria-controls="FinancialInfoIncomeStructure"
                                    aria-expanded="false">Income</a></li>
-                            <li><a href="#FinancialInfoValue"
+                            <li><a href="#FinancialInfoValueStructure"
                                    class="nav-link nav-item" data-toggle="tab"
-                                   aria-controls="FinancialInfoValue"
+                                   aria-controls="FinancialInfoValueStructure"
                                    aria-expanded="false">Value</a></li>
                         </ul>
 
                     </div>
 
 
-                    <div class="tab-content" id="myTabContent3">
-                        <!---FinancialInfoAcquisitionCost -->
-                        <div class="tab-pane fade in active " id="FinancialInfoAcquisitionCost"
+                    <div class="tab-content" id="myTabContent2122">
+                        <!---FinancialInfoAcquisitionCostStructure -->
+                        <div class="tab-pane fade in active " id="FinancialInfoAcquisitionCostStructure"
                              role="tabpanel">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrow">Add New Row</button>
+                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrowStructure">Add New Row</button>
                                     </div>
-                                    <table id="kt_datatable_example_1" class="table table-striped table-row-bordered gy-5 gs-7">
+                                    <table id="kt_datatable_example_1Structure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
                                                 <tr class="fw-bold fs-6 text-gray-800">
                                                         <th>Date</th>
@@ -139,16 +139,16 @@
 
                             </div>
                         </div>
-                        <!---FinancialInfoAcquisitionCost -->
+                        <!---FinancialInfoAcquisitionCostStructure -->
 
-                        <!---FinancialInfoAcquisitionCost -->
-                        <div class="tab-pane fade" id="FinancialInfoBuiltUpCost">
+                        <!---FinancialInfoAcquisitionCostStructure -->
+                        <div class="tab-pane fade" id="FinancialInfoBuiltUpCostStructure">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoBuiltUpCostAddBtn">Add New Row</button>
+                                        <button class="btn btn-primary" id="FinancialInfoBuiltUpCostAddBtnStructure">Add New Row</button>
                                     </div>
-                                    <table id="BuildUpCostTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                    <table id="BuildUpCostTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
                                                 <tr class="fw-bold fs-6 text-gray-800">
                                                         <th>Date</th>
@@ -183,16 +183,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!---FinancialInfoAcquisitionCost -->
+                        <!---FinancialInfoAcquisitionCostStructure -->
 
-                        <!---FinancialInfoAddOnCosts -->
-                        <div class="tab-pane fade" id="FinancialInfoAddOnCosts">
+                        <!---FinancialInfoAddOnCostsStructure -->
+                        <div class="tab-pane fade" id="FinancialInfoAddOnCostsStructure">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtn">Add New Row</button>
+                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnStructure">Add New Row</button>
                                     </div>
-                                    <table id="AddOnCostTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                    <table id="AddOnCostTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
                                                 <tr class="fw-bold fs-6 text-gray-800">
                                                         <th>Date</th>
@@ -308,32 +308,32 @@
                                 </div>
                             </div>
                         </div>
-                        <!---FinancialInfoAddOnCosts -->
+                        <!---FinancialInfoAddOnCostsStructure -->
                         
-                        <!--FinancialInfoContracts-->
-                        <div class="tab-pane fade" id="FinancialInfoContracts">
+                        <!--FinancialInfoContractsStructure-->
+                        <div class="tab-pane fade" id="FinancialInfoContractsStructure">
                             <div class="form-body">
                                 
                             </div>
                         </div>
-                        <!--FinancialInfoCollections-->
+                        <!--FinancialInfoCollectionsStructure-->
                         
-                        <!--FinancialInfoContracts-->
-                        <div class="tab-pane fade" id="FinancialInfoCollections">
+                        <!--FinancialInfoContractsStructure-->
+                        <div class="tab-pane fade" id="FinancialInfoCollectionsStructure">
                             <div class="form-body">
                                 
                             </div>
                         </div>
-                        <!--FinancialInfoCollections-->
+                        <!--FinancialInfoCollectionsStructure-->
                         
-                        <!---FinancialInfoIncome -->
-                        <div class="tab-pane fade" id="FinancialInfoIncome">
+                        <!---FinancialInfoIncomeStructure -->
+                        <div class="tab-pane fade" id="FinancialInfoIncomeStructure">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Rental income</label>
-                                            <input type="number" name="rentalIncome" id="rentalIncome" value="{{isset($rentalIncome)?$rentalIncome:0.00}}"
+                                            <input type="number" name="rentalIncomeStructure" id="rentalIncomeStructure" value="{{isset($rentalIncome)?$rentalIncome:0.00}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
@@ -341,9 +341,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoIncomeAddBtn">Add New Row</button>
+                                        <button class="btn btn-primary" id="FinancialInfoIncomeAddBtnStructure">Add New Row</button>
                                     </div>
-                                    <table id="IncomeTable" class="table table-striped table-row-bordered gy-5 gs-7">
+                                    <table id="IncomeTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
                                                 <tr class="fw-bold fs-6 text-gray-800">
                                                         <th>Date</th>
@@ -362,10 +362,10 @@
                                             $addonTotal=$addonTotal+$financialAddonCostObj['price'];
                                             @endphp
                                                 <tr>
-                                                    <th><input type="hidden" name="addon_cost_Date[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
-                                                        <th> <input type="hidden" name="addon_transection_type[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
-                                                        <th> <input type="hidden" name="addon_description[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
-                                                        <th> <input type="hidden" name="addonCurrencyCode[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="addonPrice[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="income_date_structure_info[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
+                                                        <th> <input type="hidden" name="type_structure_info[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
+                                                        <th> <input type="hidden" name="income_description_structure_info[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
+                                                        <th> <input type="hidden" name="incomeCurrencyCode_structure_info[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="incomePrice_structure_info[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 <tr>
@@ -375,33 +375,34 @@
                                                 @endif
                                         </tfoot>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
-                        <!---FinancialInfoIncome -->
+                        <!---FinancialInfoIncomeStructure -->
 
-                        <!---FinancialInfoValue -->
-                        <div class="tab-pane fade" id="FinancialInfoValue">
+                        <!---FinancialInfoValueStructure -->
+                        <div class="tab-pane fade" id="FinancialInfoValueStructure">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Estimated value</label>
-                                            <input type="number" name="estimatedValue" id="estimatedValue" value="{{isset($estimatedValue)?$estimatedValue:0.00}}"
+                                            <input type="number" name="estimatedValueStructure" id="estimatedValueStructure" value="{{isset($estimatedValue)?$estimatedValue:0.00}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
                                     </div>
-                                     <div class="col-md-4">
+                                    <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Residual Value</label>
-                                            <input type="text" name="residual_value_for_fincial_info" class="form-control priceField" value="">
+                                            <input type="text" name="residual_value_for_Structure" class="form-control priceField" value="">
                                          </div>
                                     </div>
                                      <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Depicted Value</label>
-                                            <input type="text" name="depicted_value_for_fincial_info" class="form-control priceField" value="">
+                                            <input type="text" name="depicted_value_for_Structure" class="form-control priceField" value="">
                                          </div>
                                     </div>
                                 </div>
@@ -409,19 +410,19 @@
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Cost Of Construction</label>
-                                            <input type="text" name="cost_construction_for_fincial_info" class="form-control priceField" value="">
+                                            <input type="text" name="cost_construction_for_Structure" class="form-control priceField" value="">
                                          </div>
                                     </div>
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Income Base Value</label>
-                                            <input type="text" name="incomebasevalue_for_fincial_info" class="form-control priceField" value="">
+                                            <input type="text" name="incomebasevalue_for_Structure" class="form-control priceField" value="">
                                          </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!---FinancialInfoValue -->
+                        <!---FinancialInfoValueStructure -->
                     </div>
 
                 </div>
@@ -458,63 +459,63 @@
 //     trcountr=parseInt(trcountr-1);
 //     $('#acqFincialCostCount').val(trcountr);
 //});
-var t = $("#kt_datatable_example_1").DataTable();
-var counter = 1;
+var tStructure = $("#kt_datatable_example_1Structure").DataTable();
+var counterStructure = 1;
 
-$("#kt_datatable_example_1_addrow").on("click", function() {
-    t.row.add([
+$("#kt_datatable_example_1_addrowStructure").on("click", function() {
+    tStructure.row.add([
         '<input type="date" name="aqu_Date[]" class="form-control">',
         '<select name="aqu_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
         '<textarea name="aqu_description[]" class="form-control"></textarea>',
         '<input type="text" readonly="" class="form-control currency" name="currencyCode[]" value="{{$currencyCode}}"><input type="number" name="acqlandPrice[]" class="price form-control">'
     ]).draw(false);
 
-    counter++;
+    counterStructure++;
 });
 
 //Buildup cost
-var BuildUpCostTable = $("#BuildUpCostTable").DataTable();
-var BuildUpCounter = 1;
-$("#FinancialInfoBuiltUpCostAddBtn").on("click", function() {
-    BuildUpCostTable.row.add([
+var BuildUpCostTableStructure = $("#BuildUpCostTableStructure").DataTable();
+var BuildUpCounterStructure = 1;
+$("#FinancialInfoBuiltUpCostAddBtnStructure").on("click", function() {
+    BuildUpCostTableStructure.row.add([
         '<input type="date" name="build_up_Date[]" class="form-control">',
         '<select name="buildup_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
         '<textarea name="buildup_description[]" class="form-control"></textarea>',
         '<input type="text" readonly="" class="form-control currency" name="buildupCurrencyCode[]" value="{{$currencyCode}}"><input type="number" name="buildupPrice[]" class="price form-control">'
     ]).draw(false);
-    BuildUpCounter++;
+    BuildUpCounterStructure++;
 });
 
 //AddOn cost
-var AddOnCostTable = $("#AddOnCostTable").DataTable();
-var AddOnCounter = 1;
-$("#FinancialInfoAddOnCostAddBtn").on("click", function() {
-    AddOnCostTable.row.add([
+var AddOnCostTableStructure = $("#AddOnCostTableStructure").DataTable();
+var AddOnCounterStructure = 1;
+$("#FinancialInfoAddOnCostAddBtnStructure").on("click", function() {
+    AddOnCostTableStructure.row.add([
         '<input type="date" name="addon_cost_Date[]" class="form-control">',
         '<select name="addon_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
         '<textarea name="addon_description[]" class="form-control"></textarea>',
         '<input type="text" readonly="" class="form-control currency" name="addonCurrencyCode[]" value="{{$currencyCode}}"><input type="number" name="addonPrice[]" class="price form-control">'
     ]).draw(false);
-    AddOnCounter++;
+    AddOnCounterStructure++;
 });
-//income
-var IncomeTable = $("#IncomeTable").DataTable();
-var IncomeCounter = 1;
-$("#FinancialInfoIncomeAddBtn").on("click", function() {
-    IncomeTable.row.add([
-        '<input type="date" name="addon_cost_Date[]" class="form-control">',
-        '<select name="addon_transection_type[]" class="form-control transectionType"><option value="land">Land</option></select>',
-        '<textarea name="addon_description[]" class="form-control"></textarea>',
-        '<input type="text" readonly="" class="form-control currency" name="addonCurrencyCode[]" value="{{$currencyCode}}"><input type="number" name="addonPrice[]" class="price form-control">'
+//Income
+var IncomeTableStructure = $("#IncomeTableStructure").DataTable();
+var IncomeCounterStructure = 1;
+$("#FinancialInfoIncomeAddBtnStructure").on("click", function() {
+    IncomeTableStructure.row.add([
+        '<input type="date" name="income_date_structure_info[]" class="form-control">',
+        '<select name="type_structure_info[]" class="form-control transectionType"><option value="land">Land</option></select>',
+        '<textarea name="income_description_structure_info[]" class="form-control"></textarea>',
+        '<input type="text" readonly="" class="form-control currency" name="incomeCurrencyCode_structure_info[]" value="{{$currencyCode}}"><input type="number" name="incomePrice_structure_info[]" class="price form-control">'
     ]).draw(false);
-    IncomeCounter++;
+    IncomeCounterStructure++;
 });
 
 // Automatically add a first row of data
-$("#kt_datatable_example_1_addrow").click();
-$("#FinancialInfoBuiltUpCostAddBtn").click();
-$("#FinancialInfoAddOnCostAddBtn").click();
-$("#FinancialInfoIncomeAddBtn").click();
+$("#kt_datatable_example_1_addrowStructure").click();
+$("#FinancialInfoBuiltUpCostAddBtnStructure").click();
+$("#FinancialInfoAddOnCostAddBtnStructure").click();
+$("#FinancialInfoIncomeAddBtnStructure").click();
 $(".transectionType").select2({
     formatNoMatches: function () {
         return "{{ __('messages.noRecordFound') }}";

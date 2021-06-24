@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/custom-select/custom-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/datatables-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/prismjs-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/style-bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/plugins-bundle.css') }}">
     <style>
         .inner-panel-padding {
             padding: 10px !important;
@@ -94,8 +98,12 @@
                                        aria-controls="StructureInfo" aria-expanded="false">Structure info</a></li>
                                 <li><a href="#OtherInfo" class="nav-link nav-item" data-toggle="tab"
                                        aria-controls="OtherInfo" aria-expanded="false">Other info</a></li>
-                                <li><a href="#FinancialInfo" class="nav-link nav-item" data-toggle="tab"
-                                       aria-controls="FinancialInfo" aria-expanded="false">Financial Info</a></li>
+                                <li><a href="#UnitInfo" class="nav-link nav-item" data-toggle="tab"
+                                       aria-controls="UnitInfo" aria-expanded="false">Unit info</a></li>
+<!--                                <li><a href="#FinancialInfo" class="nav-link nav-item" data-toggle="tab"
+                                       aria-controls="FinancialInfo" aria-expanded="false">Financial Info</a></li>-->
+                                <li><a href="#ObservationInfo" class="nav-link nav-item" data-toggle="tab"
+                                       aria-controls="ObservationInfo" aria-expanded="false">Observation</a></li>
 
                             </ul>
 
@@ -106,7 +114,8 @@
                             @include('valuation::Admin.Property.PropertyFormInclude.PropertyInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.StructureInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.OtherInfo')
-                            @include('valuation::Admin.Property.PropertyFormInclude.FinancialInfo')
+                            @include('valuation::Admin.Property.PropertyFormInclude.UnitInfo')
+                            @include('valuation::Admin.Property.PropertyFormInclude.ObservationInfo')
                         </div>
 
                         <div class="row">

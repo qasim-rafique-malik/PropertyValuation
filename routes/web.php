@@ -563,6 +563,8 @@ Route::group(['middleware' => 'auth'], function () {
                     ['prefix' => 'projects'],
                     function () {
                         Route::post('project-members/save-group', ['uses' => 'ManageProjectMembersController@storeGroup'])->name('project-members.storeGroup');
+                        Route::post('project-members/save-intended-user', ['uses' => 'ManageProjectMembersController@storeIntendedUser'])->name('project-members.intendedUser');
+                        Route::post('project-members/destroy-intended-user', ['uses' => 'ManageProjectMembersController@destroyIntendedUser'])->name('project-members.destroyIntendedUser');
                         Route::resource('project-members', 'ManageProjectMembersController');
 
                         Route::post('tasks/sort', ['uses' => 'ManageTasksController@sort'])->name('tasks.sort');

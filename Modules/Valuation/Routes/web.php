@@ -60,7 +60,14 @@ Route::prefix('valuation')->group(function() {
             Route::get('/block/addEditView/{id?}', 'Admin\Settings\BlockController@addEditView')->name('valuation.admin.settings.block.addEditView');
             Route::post('/block/saveUpdateData/{id?}', 'Admin\Settings\BlockController@saveUpdateData')->name('valuation.admin.settings.block.saveUpdateData');
             Route::delete('/block/destroy/{id?}', 'Admin\Settings\BlockController@destroy')->name('valuation.admin.settings.block.destroy');
-            
+
+            Route::get('/intendedUser', 'Admin\Settings\IntendedUserController@index')->name('valuation.admin.settings.intendedUser');
+            Route::get('/intendedUser/data', 'Admin\Settings\IntendedUserController@data')->name('valuation.admin.settings.intendedUser.data');
+            Route::get('/intendedUser/getAjaxData', 'Admin\Settings\IntendedUserController@getAjaxData')->name('valuation.admin.settings.intendedUser.getAjaxData');
+            Route::get('/intendedUser/addEditView/{id?}', 'Admin\Settings\IntendedUserController@addEditView')->name('valuation.admin.settings.intendedUser.addEditView');
+            Route::post('/intendedUser/saveUpdateData/{id?}', 'Admin\Settings\IntendedUserController@saveUpdateData')->name('valuation.admin.settings.intendedUser.saveUpdateData');
+            Route::delete('/intendedUser/destroy/{id?}', 'Admin\Settings\IntendedUserController@destroy')->name('valuation.admin.settings.intendedUser.destroy');
+
             //Land measuremnt Unit
             Route::get('/Measurement/addEditView/{id?}', 'Admin\Settings\MeasurementController@addEditView')->name('valuation.admin.settings.Measurement.addEditView');
             Route::post('/Measurement/saveUpdateData/{id?}', 'Admin\Settings\MeasurementController@saveUpdateData')->name('valuation.admin.settings.Measurement.saveUpdateData');

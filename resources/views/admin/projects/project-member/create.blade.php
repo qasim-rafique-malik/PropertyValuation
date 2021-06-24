@@ -78,7 +78,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                 {{--   <div class="col-md-6">
                                         <div class="panel panel-inverse">
 
                                             <div class="panel-heading">@lang('app.add') @lang('app.team')</div>
@@ -111,8 +111,43 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>--}}
+                                    <div class="col-md-6">
+                                        <div class="panel panel-inverse">
+                                            <div class="panel-heading">@lang('modules.projects.addIntendedUser')</div>
+
+                                            <div class="panel-wrapper collapse in">
+                                                <div class="panel-body">
+                                                    {!! Form::open(['id'=>'createIntendedUsers','class'=>'ajax-form','method'=>'POST']) !!}
+
+                                                    <div class="form-body">
+
+                                                        {!! Form::hidden('project_id', $project->id) !!}
+
+                                                        <div class="form-group" id="iuser_id">
+                                                            <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                                                    data-placeholder="@lang('modules.messages.chooseMember')" name="user_id[]">
+                                                                @foreach($intendedUsers as $emp)
+                                                                    <option value="{{ $emp->id }}">{{ ucwords($emp->title) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="form-actions">
+                                                            <button type="submit" id="save-iuser" class="btn btn-success"><i
+                                                                        class="fa fa-check"></i> @lang('app.save')
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+                                <h3>@lang('modules.projects.memberTitle')</h3>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="panel panel-default">
@@ -180,6 +215,44 @@
                                     </div>
 
                                 </div>
+                                <h3>@lang('modules.projects.intendedUser')</h3>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-wrapper collapse in">
+                                                <div class="panel-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>@lang('app.name')</th>
+                                                                <th class="text-right">@lang('app.action')</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @forelse($projectIntendedUsers as $member)
+                                                            <tr>
+                                                                <td>
+                                                                      {{ ucwords($member->title) }}
+                                                                </td>
+                                                                <td class="text-right">
+                                                                    <a href="javascript:;" data-project-id="{{$project->id}}" data-intended-id="{{ $member->id }}" class="btn btn-sm btn-danger btn-outline delete-intended-members"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td>
+                                                                    @lang('messages.noMemberAddedToProject')
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </section>
@@ -225,7 +298,7 @@
             }
         })
     });
-
+/*
 //    add group members
 $('#save-group').click(function () {
     $.easyAjax({
@@ -233,6 +306,21 @@ $('#save-group').click(function () {
         container: '#saveGroup',
         type: "POST",
         data: $('#saveGroup').serialize(),
+        success: function (response) {
+            if (response.status == "success") {
+                $.unblockUI();
+                window.location.reload();
+            }
+        }
+    })
+});*/
+//    add group members
+$('#save-iuser').click(function () {
+    $.easyAjax({
+        url: '{{route('admin.project-members.intendedUser')}}',
+        container: '#createIntendedUsers',
+        type: "POST",
+        data: $('#createIntendedUsers').serialize(),
         success: function (response) {
             if (response.status == "success") {
                 $.unblockUI();
@@ -278,6 +366,43 @@ $('body').on('click', '.delete-members', function(){
                 type: 'POST',
                 url: url,
                 data: {'_token': token, '_method': 'DELETE'},
+                success: function (response) {
+                    if (response.status == "success") {
+                        $.unblockUI();
+//                                    swal("Deleted!", response.message, "success");
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    });
+});
+
+$('body').on('click', '.delete-intended-members', function(){
+    var id = $(this).data('intended-id');
+    var projectId = $(this).data('project-id');
+    swal({
+        title: "@lang('messages.sweetAlertTitle')",
+        text: "@lang('messages.confirmation.projectTemplate')",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "@lang('messages.deleteConfirmation')",
+        cancelButtonText: "@lang('messages.confirmNoArchive')",
+        closeOnConfirm: true,
+        closeOnCancel: true
+    }, function(isConfirm){
+        if (isConfirm) {
+
+            var url = "{{ route('admin.project-members.destroyIntendedUser',':id') }}";
+            url = url.replace(':id', id);
+
+            var token = "{{ csrf_token() }}";
+
+            $.easyAjax({
+                type: 'POST',
+                url: url,
+                data: {'_token': token, '_method': 'POST','id':id,'project':projectId},
                 success: function (response) {
                     if (response.status == "success") {
                         $.unblockUI();

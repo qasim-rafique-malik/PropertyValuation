@@ -13,6 +13,8 @@ use App\ProjectMember;
 use App\Team;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Modules\Valuation\Entities\ValuationIntendedUser;
 
 class ManageProjectMembersController extends AdminBaseController
 {
@@ -75,6 +77,7 @@ class ManageProjectMembersController extends AdminBaseController
     public function show($id)
     {
         $this->project = Project::findOrFail($id);
+
         $this->employees = User::doesntHave('member', 'and', function ($query) use ($id) {
             $query->where('project_id', $id);
         })
@@ -85,7 +88,12 @@ class ManageProjectMembersController extends AdminBaseController
             ->groupBy('users.id')
             ->distinct('users.id')
             ->get();
+        $meta = $this->project->getMeta('intendedUsers', array());
         $this->groups = Team::all();
+        $this->intendedUsers = DB::table('valuation_intended_users')
+            ->whereNotIn('id', $meta)->select('id','title')->get();
+        $this->projectIntendedUsers = DB::table('valuation_intended_users')
+                                        ->whereIn('id', $meta)->select('id','title')->get();
 
         return view('admin.projects.project-member.create', $this->data);
     }
@@ -136,6 +144,27 @@ class ManageProjectMembersController extends AdminBaseController
         $projectMember->delete();
 
         return Reply::success(__('messages.memberRemovedFromProject'));
+    }
+            public function destroyIntendedUser(Request $request)
+    {
+
+        $project = Project::findOrFail($request->project);
+       $dataArray = $project->getMeta('intendedUsers','null' , 'array');
+        $pos = array_search($request->id, $dataArray);
+                unset($dataArray[$pos]);
+                $metaData['intendedUsers']=$dataArray;
+                $project->setMeta($metaData);
+
+        return Reply::success(__('messages.memberRemovedFromProject'));
+    }
+
+    public function storeIntendedUser(Request $request){
+
+        $project = Project::find($request->project_id);
+        $metaData['intendedUsers'] = $request->user_id;
+        $project->setMeta($metaData);
+        return Reply::success(__('messages.intendedUsersAddedSuccessfully'));
+
     }
 
     public function storeGroup(SaveGroupMembers $request)

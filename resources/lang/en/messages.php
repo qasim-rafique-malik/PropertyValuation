@@ -16,6 +16,7 @@ return array(
   'timerStoppedSuccessfully' => 'Timer stopped successfully.',
   'taskCreatedSuccessfully' => 'Task created successfully.',
   'membersAddedSuccessfully' => 'Members added successfully.',
+  'intendedUsersAddedSuccessfully' => 'Intended Users added successfully.',
   'taskUpdatedSuccessfully' => 'Task updated successfully.',
   'taskDeletedSuccessfully' => 'Task deleted successfully.',
   'clientUploadedAFileToTheProject' => '(Client) uploaded a file to the project.',

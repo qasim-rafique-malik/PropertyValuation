@@ -2,7 +2,7 @@
 
 return [
     'name' => 'RestAPI',
-    'verification_required' => true,
+    'verification_required' => false,
     'envato_item_id' => 26204850,
     'parent_envato_id' => 23263417,
     'script_name' => 'worksuite-saas-rest-api',

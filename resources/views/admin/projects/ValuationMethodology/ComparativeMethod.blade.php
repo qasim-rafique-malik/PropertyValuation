@@ -91,7 +91,9 @@
                             </section>
 
                         </div><!-- /content -->
+
                     @else
+                        <input type="hidden" name="projectId" value="{{$projectId}}">
                         <div class="content-wrap">
                             <section id="section-line-2" class="show">
                                 <div class="white-box">
@@ -195,11 +197,21 @@
                                 </div>
 
                             </section>
-
+                            <hr/>
+                            <section id="section-line-2" class="show">
+                                <div class="white-box">
+                                    <div class="row" id="comparisionResponse">
+                                        table will come here
+                                    </div>
+                                </div>
+                            </section>
                         </div><!-- /content -->
                     @endif
+
                 </div><!-- /tabs -->
             </section>
+
+
         </div>
 
 
@@ -304,7 +316,9 @@
                 success: function (response) {
                     if (response.status == "success") {
                         $.unblockUI();
-                        console.log(response)
+                        let comparisionResponseHtml = response.comparisionResponseHtml;
+                        $('#comparisionResponse').html(comparisionResponseHtml);
+                        console.log(response);
                     }
                 }
             })

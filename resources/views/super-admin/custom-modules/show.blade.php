@@ -63,13 +63,13 @@
 <script src="//envato.froid.works/plugins/froiden-helper/helper.js"></script>
 <script>
     function validateCode() {
-        $.easyAjax({
+        /*$.easyAjax({
             type: 'POST',
             url: "{{ route('super-admin.custom-modules.verify-purchase') }}",
             data: $("#verify-form").serialize(),
             container: "#verify-form",
             messagePosition: 'inline'
-        });
+        });*/
         return false;
     }
 </script>

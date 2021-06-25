@@ -13,7 +13,7 @@ class AddRefIdInValuationPropertyTable extends Migration
      */
     public function up()
     {
-         if (!Schema::hasTable('valuation_properties')) 
+         if (Schema::hasTable('valuation_properties'))
          {
            if (!Schema::hasColumn('valuation_properties', 'ref_id'))
             {

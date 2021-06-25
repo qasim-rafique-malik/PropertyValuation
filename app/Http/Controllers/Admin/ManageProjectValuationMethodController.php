@@ -25,36 +25,7 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $this->pageTitle = 'app.menu.projects';
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreProjectMembers $request)
-    {
-
-    }
 
     /**
      * Display the specified resource.
@@ -128,7 +99,24 @@ class ManageProjectValuationMethodController extends AdminBaseController
             return Reply::error('comparable property 3 id should be greater then 0');
         }
 
-        $propertyBaseInfo = ValuationProperty::findOrFail($propertyIdBase);
+
+
+        $propertyType = 'appointment';
+        $valuationMethod = 'comparision';
+
+        switch ($valuationMethod){
+            case 'comparision':
+                $comparisionMethodRes = $this->comparisionMethod($request);
+                $returnArray['comparisionResponseHtml'] = $comparisionMethodRes;
+                $returnArray['status'] = 'success';
+                echo json_encode($returnArray); exit;
+                echo json_encode($comparisionMethodRes); exit;
+
+                break;
+            default :
+
+                break;
+        }
 
         /*$weightage = array();
         $weightage['bedrooms']['name'] = 'bedrooms';
@@ -163,12 +151,14 @@ class ManageProjectValuationMethodController extends AdminBaseController
 
         $propertyBaseInfo->Weightage = $weightage;*/
 
+        $propertyBaseInfo = ValuationProperty::findOrFail($propertyIdBase);
+
         $propertyBaseInfo->bedrooms = 2;
         $propertyBaseInfo->bathrooms = 3;
         $propertyBaseInfo->finishingQuality = 6.25;
         $propertyBaseInfo->maintenance = 0;
         $propertyBaseInfo->floorLevel = 3;
-        $propertyBaseInfo->amenities = 3;
+        $propertyBaseInfo->amenities = 8;
 
         $propertyInfoOne = ValuationProperty::findOrFail($propertyIdOne);
         $propertyInfoOne->bedrooms = 2;
@@ -176,7 +166,7 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $propertyInfoOne->finishingQuality = 6.25;
         $propertyInfoOne->maintenance = 0;
         $propertyInfoOne->floorLevel = 3;
-        $propertyInfoOne->amenities = 3;
+        $propertyInfoOne->amenities = 8;
 
         $propertyInfoTwo = ValuationProperty::findOrFail($propertyIdTwo);
         $propertyInfoTwo->bedrooms = 2;
@@ -184,15 +174,15 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $propertyInfoTwo->finishingQuality = 6.25;
         $propertyInfoTwo->maintenance = 0;
         $propertyInfoTwo->floorLevel = 3;
-        $propertyInfoTwo->amenities = 3;
+        $propertyInfoTwo->amenities = 8;
 
         $propertyInfoThree = ValuationProperty::findOrFail($propertyIdThree);
         $propertyInfoThree->bedrooms = 3;
         $propertyInfoThree->bathrooms = 3;
         $propertyInfoThree->finishingQuality = 6.25;
-        $propertyInfoThree->maintenance = -1.25;
+        $propertyInfoThree->maintenance = 0;
         $propertyInfoThree->floorLevel = 3;
-        $propertyInfoThree->amenities = 3;
+        $propertyInfoThree->amenities = 8;
 
 
         //compare Processing start
@@ -205,11 +195,11 @@ class ManageProjectValuationMethodController extends AdminBaseController
 
         $baseMinusProOne = $baseBedrooms-$bedroomsPropertyInfoOne;
         $propertyInfoOne->baseMinusProOne = $baseMinusProOne;
-        $propertyInfoOne->bedComparison = $baseMinusProOne/$maxBedrooms;
+        $propertyInfoOne->bedComparison = ($baseMinusProOne/$maxBedrooms)*100;
 
         $baseMinusProTwo = $baseBedrooms-$bedroomsPropertyInfoTwo;
         $propertyInfoTwo->baseMinusProTwo = $baseMinusProTwo;
-        $propertyInfoTwo->bedComparison = $baseMinusProTwo/$maxBedrooms;
+        $propertyInfoTwo->bedComparison = ($baseMinusProTwo/$maxBedrooms)*100;
 
         $baseMinusProThree = $baseBedrooms-$bedroomsPropertyInfoThree;
         $propertyInfoThree->baseMinusProThree = $baseMinusProThree;
@@ -224,17 +214,15 @@ class ManageProjectValuationMethodController extends AdminBaseController
 
         $bathBaseMinusProOne = $baseBathroom-$bathroomsPropertyInfoOne;
         $propertyInfoOne->bathBaseMinusProOne = $bathBaseMinusProOne;
-        $propertyInfoOne->bathComparison = $bathBaseMinusProOne/$maxBathrooms;
+        $propertyInfoOne->bathComparison = ($bathBaseMinusProOne/$maxBathrooms)*100;
 
         $bathBaseMinusProTwo = $baseBathroom-$bathroomsPropertyInfoTwo;
         $propertyInfoTwo->bathBaseMinusProTwo = $bathBaseMinusProTwo;
-        $propertyInfoTwo->bathComparison = $bathBaseMinusProTwo/$maxBathrooms;
-
+        $propertyInfoTwo->bathComparison = ($bathBaseMinusProTwo/$maxBathrooms)*100;
 
         $bathBaseMinusProThree = $baseBathroom-$bathroomsPropertyInfoThree;
         $propertyInfoThree->bathBaseMinusProThree = $bathBaseMinusProThree;
-        $propertyInfoThree->bathComparison = $bathBaseMinusProThree/$maxBathrooms;
-
+        $propertyInfoThree->bathComparison = ($bathBaseMinusProThree/$maxBathrooms)*100;
 
         //Finishing Quality
         $finishingQualityBase = $propertyBaseInfo->finishingQuality;
@@ -246,13 +234,11 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $finishingQualityPropertyInfoThree = $propertyInfoThree->finishingQuality;
         $maintenancePropertyInfoThree = $propertyInfoThree->maintenance;
 
-
         $finishingQualityCalBase = $finishingQualityBase + $maintenanceBase;
 
         $finishingQualityCalProOne = $finishingQualityPropertyInfoOne+$maintenancePropertyInfoOne;
         $propertyInfoOne->finishingQualityCal = $finishingQualityCalProOne;
         $propertyInfoOne->finishingQualityComparison = ($finishingQualityCalBase-$finishingQualityCalProOne)/100;
-
 
         $finishingQualityCalProTwo = $finishingQualityPropertyInfoTwo+$maintenancePropertyInfoTwo;
         $propertyInfoTwo->finishingQualityCal = $finishingQualityCalProTwo;
@@ -262,8 +248,16 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $propertyInfoThree->finishingQualityCal = $finishingQualityCalProThree;
         $propertyInfoThree->finishingQualityComparison = ($finishingQualityCalBase-$finishingQualityCalProThree)/100;
 
+        // Building Amenities and Facilities
+        $amenitiesBase = $propertyBaseInfo->amenities;
+        $amenitiesPropertyInfoOne = $propertyInfoOne->amenities;
+        $amenitiesPropertyInfoTwo = $propertyInfoTwo->amenities;
+        $amenitiesPropertyInfoThree = $propertyInfoThree->amenities;
+        $amenitiesMax = 8;
 
-
+        $propertyInfoOne->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoOne)/$amenitiesMax;
+        $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoTwo)/$amenitiesMax;
+        $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoThree)/$amenitiesMax;
 
 
         $propertyInfo = array();
@@ -273,11 +267,190 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $propertyInfo['propertyInfoThree'] = $propertyInfoThree;
 
         echo "<pre>"; print_r($propertyInfo); exit;
+
         $returnArray['propertyInfo'] = $propertyInfo;
         $returnArray['status'] = 'success';
         echo json_encode($returnArray); exit;
     }
 
+    
+
+
+    public function comparisionMethod(Request $request)
+    {
+
+        return view('admin.projects.ValuationMethodology.CompareMethodResponse', $this->data)->render();;
+
+        echo "<pre>"; print_r('comparisionMethod'); exit;
+        $propertyIdBase = isset($request->basePropertyId)?$request->basePropertyId:0;
+        if($propertyIdBase <= 0){
+            return Reply::error('Base property id should be greater then 0');
+        }
+
+        $propertyIdOne = isset($request->comparePropertyOne)?$request->comparePropertyOne:0;
+        if($propertyIdOne <= 0){
+            return Reply::error('comparable property 1 id should be greater then 0');
+        }
+
+        $propertyIdTwo = isset($request->comparePropertyTwo)?$request->comparePropertyTwo:0;
+        if($propertyIdTwo <= 0){
+            return Reply::error('comparable property 2 id should be greater then 0');
+        }
+
+        $propertyIdThree = isset($request->comparePropertyThree)?$request->comparePropertyThree:0;
+        if($propertyIdThree <= 0){
+            return Reply::error('comparable property 3 id should be greater then 0');
+        }
+
+        $propertyBaseInfo = ValuationProperty::findOrFail($propertyIdBase);
+
+        $propertyBaseInfo->bedrooms = 2;
+        $propertyBaseInfo->bathrooms = 3;
+        $propertyBaseInfo->finishingQuality = 6.25;
+        $propertyBaseInfo->maintenance = 0;
+        $propertyBaseInfo->floorLevel = 3;
+        $propertyBaseInfo->amenities = 8;
+
+        $propertyInfoOne = ValuationProperty::findOrFail($propertyIdOne);
+        $propertyInfoOne->bedrooms = 2;
+        $propertyInfoOne->bathrooms = 3;
+        $propertyInfoOne->finishingQuality = 6.25;
+        $propertyInfoOne->maintenance = 0;
+        $propertyInfoOne->floorLevel = 3;
+        $propertyInfoOne->amenities = 8;
+
+        $propertyInfoTwo = ValuationProperty::findOrFail($propertyIdTwo);
+        $propertyInfoTwo->bedrooms = 2;
+        $propertyInfoTwo->bathrooms = 3;
+        $propertyInfoTwo->finishingQuality = 6.25;
+        $propertyInfoTwo->maintenance = 0;
+        $propertyInfoTwo->floorLevel = 3;
+        $propertyInfoTwo->amenities = 8;
+
+        $propertyInfoThree = ValuationProperty::findOrFail($propertyIdThree);
+        $propertyInfoThree->bedrooms = 3;
+        $propertyInfoThree->bathrooms = 3;
+        $propertyInfoThree->finishingQuality = 6.25;
+        $propertyInfoThree->maintenance = 0;
+        $propertyInfoThree->floorLevel = 3;
+        $propertyInfoThree->amenities = 8;
+
+
+        //compare Processing start
+        //bedrooms comparison
+        $baseBedrooms = $propertyBaseInfo->bedrooms;
+        $bedroomsPropertyInfoOne = $propertyInfoOne->bedrooms;
+        $bedroomsPropertyInfoTwo = $propertyInfoTwo->bedrooms;
+        $bedroomsPropertyInfoThree = $propertyInfoThree->bedrooms;
+        $maxBedrooms = '8';
+
+        $baseMinusProOne = $baseBedrooms-$bedroomsPropertyInfoOne;
+        $propertyInfoOne->baseMinusProOne = $baseMinusProOne;
+        $propertyInfoOne->bedComparison = ($baseMinusProOne/$maxBedrooms)*100;
+
+        $baseMinusProTwo = $baseBedrooms-$bedroomsPropertyInfoTwo;
+        $propertyInfoTwo->baseMinusProTwo = $baseMinusProTwo;
+        $propertyInfoTwo->bedComparison = ($baseMinusProTwo/$maxBedrooms)*100;
+
+        $baseMinusProThree = $baseBedrooms-$bedroomsPropertyInfoThree;
+        $propertyInfoThree->baseMinusProThree = $baseMinusProThree;
+        $propertyInfoThree->bedComparison = ($baseMinusProThree/$maxBedrooms)*100;
+
+        // bathroom comparison
+        $baseBathroom = $propertyBaseInfo->bathrooms;
+        $bathroomsPropertyInfoOne = $propertyInfoOne->bathrooms;
+        $bathroomsPropertyInfoTwo = $propertyInfoTwo->bathrooms;
+        $bathroomsPropertyInfoThree = $propertyInfoThree->bathrooms;
+        $maxBathrooms = '8';
+
+        $bathBaseMinusProOne = $baseBathroom-$bathroomsPropertyInfoOne;
+        $propertyInfoOne->bathBaseMinusProOne = $bathBaseMinusProOne;
+        $propertyInfoOne->bathComparison = ($bathBaseMinusProOne/$maxBathrooms)*100;
+
+        $bathBaseMinusProTwo = $baseBathroom-$bathroomsPropertyInfoTwo;
+        $propertyInfoTwo->bathBaseMinusProTwo = $bathBaseMinusProTwo;
+        $propertyInfoTwo->bathComparison = ($bathBaseMinusProTwo/$maxBathrooms)*100;
+
+        $bathBaseMinusProThree = $baseBathroom-$bathroomsPropertyInfoThree;
+        $propertyInfoThree->bathBaseMinusProThree = $bathBaseMinusProThree;
+        $propertyInfoThree->bathComparison = ($bathBaseMinusProThree/$maxBathrooms)*100;
+
+        //Finishing Quality
+        $finishingQualityBase = $propertyBaseInfo->finishingQuality;
+        $maintenanceBase = $propertyBaseInfo->maintenance;
+        $finishingQualityPropertyInfoOne = $propertyInfoOne->finishingQuality;
+        $maintenancePropertyInfoOne = $propertyInfoOne->maintenance;
+        $finishingQualityPropertyInfoTwo = $propertyInfoTwo->finishingQuality;
+        $maintenancePropertyInfoTwo = $propertyInfoTwo->maintenance;
+        $finishingQualityPropertyInfoThree = $propertyInfoThree->finishingQuality;
+        $maintenancePropertyInfoThree = $propertyInfoThree->maintenance;
+
+        $finishingQualityCalBase = $finishingQualityBase + $maintenanceBase;
+
+        $finishingQualityCalProOne = $finishingQualityPropertyInfoOne+$maintenancePropertyInfoOne;
+        $propertyInfoOne->finishingQualityCal = $finishingQualityCalProOne;
+        $propertyInfoOne->finishingQualityComparison = ($finishingQualityCalBase-$finishingQualityCalProOne)/100;
+
+        $finishingQualityCalProTwo = $finishingQualityPropertyInfoTwo+$maintenancePropertyInfoTwo;
+        $propertyInfoTwo->finishingQualityCal = $finishingQualityCalProTwo;
+        $propertyInfoTwo->finishingQualityComparison = ($finishingQualityCalBase-$finishingQualityCalProTwo)/100;
+
+        $finishingQualityCalProThree = $finishingQualityPropertyInfoThree + $maintenancePropertyInfoThree;
+        $propertyInfoThree->finishingQualityCal = $finishingQualityCalProThree;
+        $propertyInfoThree->finishingQualityComparison = ($finishingQualityCalBase-$finishingQualityCalProThree)/100;
+
+        // Building Amenities and Facilities
+        $amenitiesBase = $propertyBaseInfo->amenities;
+        $amenitiesPropertyInfoOne = $propertyInfoOne->amenities;
+        $amenitiesPropertyInfoTwo = $propertyInfoTwo->amenities;
+        $amenitiesPropertyInfoThree = $propertyInfoThree->amenities;
+        $amenitiesMax = 8;
+
+        $propertyInfoOne->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoOne)/$amenitiesMax;
+        $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoTwo)/$amenitiesMax;
+        $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoThree)/$amenitiesMax;
+
+
+        $propertyInfo = array();
+        $propertyInfo['propertyBaseInfo'] = $propertyBaseInfo;
+        $propertyInfo['propertyInfoOne'] = $propertyInfoOne;
+        $propertyInfo['propertyInfoTwo'] = $propertyInfoTwo;
+        $propertyInfo['propertyInfoThree'] = $propertyInfoThree;
+
+        echo "<pre>"; print_r($propertyInfo); exit;
+
+        $returnArray['propertyInfo'] = $propertyInfo;
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////// not in use
     /**
      * Show the form for editing the specified resource.
      *
@@ -356,5 +529,36 @@ class ManageProjectValuationMethodController extends AdminBaseController
         }
 
         return Reply::success(__('messages.membersAddedSuccessfully'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreProjectMembers $request)
+    {
+
     }
 }

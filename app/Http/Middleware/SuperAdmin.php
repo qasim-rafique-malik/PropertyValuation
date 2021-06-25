@@ -25,7 +25,7 @@ class SuperAdmin
         $setting = GlobalSetting::first();
 
         if($exists && is_null($setting->purchase_code) &&  (strpos(request()->getHost(), '.test') === false) ){
-            return Redirect::route('verify-purchase');
+            //return Redirect::route('verify-purchase');
         }
 
         if (!Auth::check() || $user->super_admin == '0'){

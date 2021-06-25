@@ -88,7 +88,7 @@ class ManageProjectMembersController extends AdminBaseController
             ->groupBy('users.id')
             ->distinct('users.id')
             ->get();
-        $meta = $this->project->getMeta('intendedUsers');
+        $meta = $this->project->getMeta('intendedUsers', array());
         $this->groups = Team::all();
         $this->intendedUsers = DB::table('valuation_intended_users')
             ->whereNotIn('id', $meta)->select('id','title')->get();

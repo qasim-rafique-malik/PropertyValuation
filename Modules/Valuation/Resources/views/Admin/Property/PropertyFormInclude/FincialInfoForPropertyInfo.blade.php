@@ -67,13 +67,13 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            @if(isset($financialAcquisitionCost) && !empty($financialAcquisitionCost))
-                                             @foreach($financialAcquisitionCost as $acquisitionCost)
+                                            @if(isset($AcquisitionCostPropertyInfo) && !empty($AcquisitionCostPropertyInfo))
+                                             @foreach($AcquisitionCostPropertyInfo as $acquisitionCostPropertyInfoObj)
                                                 <tr>
-                                                    <th><input type="hidden" name="aqu_Date_properyInfoTab[]" value="{{$acquisitionCost['date']}}"> {{$acquisitionCost['date']}}</th>
-                                                    <th><input type="hidden" name="aqu_transection_type_properyInfoTab[]" value="{{$acquisitionCost['trnsectionType']}}">{{$acquisitionCost['trnsectionType']}}</th>
-                                                    <th><input type="hidden" name="aqu_description_properyInfoTab[]" value="{{$acquisitionCost['description']}}">{{$acquisitionCost['description']}}</th>
-                                                    <th><input type="hidden" name="currencyCode_properyInfoTab[]" value="{{$acquisitionCost['currencyCode']}}"><input type="hidden" name="acqlandPrice[]" value="{{$acquisitionCost['price']}}">{{$acquisitionCost['currencyCode'].' '.$acquisitionCost['price']}}</th>
+                                                    <th><input type="hidden" name="aqu_Date_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['date']}}"> {{$acquisitionCostPropertyInfoObj['date']}}</th>
+                                                    <th><input type="hidden" name="aqu_transection_type_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['trnsectionType']}}">{{$acquisitionCostPropertyInfoObj['trnsectionType']}}</th>
+                                                    <th><input type="hidden" name="aqu_description_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['description']}}">{{$acquisitionCostPropertyInfoObj['description']}}</th>
+                                                    <th><input type="hidden" name="currencyCode_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['currencyCode']}}"><input type="hidden" name="acqlandPrice[]" value="{{$acquisitionCostPropertyInfoObj['price']}}">{{$acquisitionCostPropertyInfoObj['currencyCode'].' '.$acquisitionCostPropertyInfoObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
@@ -103,25 +103,15 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            @if(isset($financialAddonCost) && !empty($financialAddonCost))
-                                            @php 
-                                            $addonTotal=0;
-                                            @endphp
-                                             @foreach($financialAddonCost as $financialAddonCostObj)
-                                            @php
-                                            $addonTotal=$addonTotal+$financialAddonCostObj['price'];
-                                            @endphp
+                                            @if(isset($PropertyInfoAddOnCost) && !empty($PropertyInfoAddOnCost))
+                                             @foreach($PropertyInfoAddOnCost as $PropertyInfoAddOnCostObj)
                                                 <tr>
-                                                    <th><input type="hidden" name="addon_cost_Date_property_info[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
-                                                        <th> <input type="hidden" name="addon_transection_type_property_info[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
-                                                        <th> <input type="hidden" name="addon_description_property_info[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
-                                                        <th> <input type="hidden" name="addonCurrencyCode_property_info[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="addonPrice_property_info[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="addon_cost_Date_property_info[]" value="{{$PropertyInfoAddOnCostObj['date']}}"> {{$PropertyInfoAddOnCostObj['date']}}</th>
+                                                        <th> <input type="hidden" name="addon_transection_type_property_info[]" value="{{$PropertyInfoAddOnCostObj['trnsectionType']}}">{{$PropertyInfoAddOnCostObj['trnsectionType']}}</th>
+                                                        <th> <input type="hidden" name="addon_description_property_info[]" value="{{$PropertyInfoAddOnCostObj['description']}}">{{$PropertyInfoAddOnCostObj['description']}}</th>
+                                                        <th> <input type="hidden" name="addonCurrencyCode_property_info[]" value="{{$PropertyInfoAddOnCostObj['currencyCode']}}"><input type="hidden" name="addonPrice_property_info[]" value="{{$PropertyInfoAddOnCostObj['price']}}">{{$PropertyInfoAddOnCostObj['currencyCode'].' '.$PropertyInfoAddOnCostObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
-                                                <tr>
-                                                    <th colspan="3"><b>Total</b></th>
-                                                    <th><b>{{$currencyCode.' '.$addonTotal}}</b></th>
-                                                </tr>
                                                 @endif
                                         </tfoot>
                                     </table>
@@ -160,25 +150,15 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            @if(isset($financialAddonCost) && !empty($financialAddonCost))
-                                            @php 
-                                            $addonTotal=0;
-                                            @endphp
-                                             @foreach($financialAddonCost as $financialAddonCostObj)
-                                            @php
-                                            $addonTotal=$addonTotal+$financialAddonCostObj['price'];
-                                            @endphp
+                                            @if(isset($PropertyInfoIncome) && !empty($PropertyInfoIncome))
+                                             @foreach($PropertyInfoIncome as $PropertyInfoIncomeObj)
                                                 <tr>
-                                                    <th><input type="hidden" name="income_date_property_info[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
-                                                        <th> <input type="hidden" name="type_property_info[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
-                                                        <th> <input type="hidden" name="income_description_property_info[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
-                                                        <th> <input type="hidden" name="incomeCurrencyCode__property_info[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="incomePrice_property_info[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="income_date_property_info[]" value="{{$PropertyInfoIncomeObj['date']}}"> {{$PropertyInfoIncomeObj['date']}}</th>
+                                                        <th> <input type="hidden" name="type_property_info[]" value="{{$PropertyInfoIncomeObj['trnsectionType']}}">{{$PropertyInfoIncomeObj['trnsectionType']}}</th>
+                                                        <th> <input type="hidden" name="income_description_property_info[]" value="{{$PropertyInfoIncomeObj['description']}}">{{$PropertyInfoIncomeObj['description']}}</th>
+                                                        <th> <input type="hidden" name="incomeCurrencyCode__property_info[]" value="{{$PropertyInfoIncomeObj['currencyCode']}}"><input type="hidden" name="incomePrice_property_info[]" value="{{$PropertyInfoIncomeObj['price']}}">{{$PropertyInfoIncomeObj['currencyCode'].' '.$PropertyInfoIncomeObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
-                                                <tr>
-                                                    <th colspan="3"><b>Total</b></th>
-                                                    <th><b>{{$currencyCode.' '.$addonTotal}}</b></th>
-                                                </tr>
                                                 @endif
                                         </tfoot>
                                     </table>

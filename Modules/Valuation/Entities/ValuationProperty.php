@@ -74,4 +74,43 @@ class ValuationProperty extends ValuationBaseModel
 
     protected $metaTable = 'valuation_property_meta';
     protected $fillable = array();
+    public static $array = array();
+    public function __construct()
+    {
+        parent::__construct();
+        $array[self::UnitInfoAcquisitionCost] = self::UnitInfoAcquisitionCost;
+        $array[self::UnitType] = self::UnitType;
+        $array[self::UnitInfoView] = self::UnitInfoView;
+        $array[self::UnitInfoCondition] = self::UnitInfoCondition;
+        $array[self::UnitInfoStyling] = self::UnitInfoStyling;
+        $array[self::UnitInfoStatus] = self::UnitInfoStatus;
+        $array[self::UnitInfoInteriorStatus] = self::UnitInfoInteriorStatus;
+        $array[self::RentalIncomeUnitInfo] = self::RentalIncomeUnitInfo;
+        $array[self::EstimatedValueUnitInfo] = self::EstimatedValueUnitInfo;
+        $array[self::ResidualValueUnitInfo] = self::ResidualValueUnitInfo;
+        $array[self::DepictedValueUnitInfo] = self::DepictedValueUnitInfo;
+        $array[self::CostOfConstructionValueUnitInfo] = self::CostOfConstructionValueUnitInfo;
+        $array[self::IncomeBaseValueUnitInfo] = self::IncomeBaseValueUnitInfo;
+        $array[self::UnitInfoAddOnCost] = self::UnitInfoAddOnCost;
+        $array[self::UnitInfoIncome] = self::UnitInfoIncome;
+        $array[self::FloorlevelText] = self::FloorlevelText;
+        $array[self::NoOfBedroomText] = self::NoOfBedroomText;
+        $array[self::NoOfBathoomsText] = self::NoOfBathoomsText;
+        $array[self::FinishingQualityText] = self::FinishingQualityText;
+        $array[self::MaintenanceText] = self::MaintenanceText;
+    
+    }
+   
+//    public function getAllUnit($propertyId)
+//    {
+//         return $this->join('valuation_property_xrefs', 'valuation_property_xrefs.property_id', '=','valuation_properties.id')
+//              ->select('valuation_properties.*')
+//             ->where('valuation_property_xrefs.property_id','=',$propertyId)
+//              ->get();
+//    }
+//    public function unitItem()
+//    {
+//        
+//        return $this->belongsTo(ValuationPropertyXref::class, 'property_id');
+//    }
 }

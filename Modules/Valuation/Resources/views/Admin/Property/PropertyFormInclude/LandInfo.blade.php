@@ -108,7 +108,14 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            
+                                            @if(isset($dimensions) && !empty($dimensions))
+                                            @foreach($dimensions as $dimObj)
+                                            <tr>
+                                                <td><input type="hidden" name="label[]" value="{{$dimObj['label']}}">{{$dimObj['label']}}</td>
+                                                <td><input type="hidden" name="value[]" value="{{$dimObj['value']}}">{{$dimObj['value']}}</td>
+                                            </tr>
+                                            @endforeach
+                                            @endIf
                                         </tfoot>
                                     </table>
 <!--                                        <label class="control-label">Dimension</label>

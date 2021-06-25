@@ -112,9 +112,11 @@ Route::prefix('valuation')->group(function() {
             Route::get('/data', 'Admin\Properties\PropertyController@data')->name('valuation.admin.property.data');
             Route::get('/addEditView/{id?}', 'Admin\Properties\PropertyController@addEditView')->name('valuation.admin.property.addEditView');
             Route::post('/saveUpdateData/{id?}', 'Admin\Properties\PropertyController@saveUpdateData')->name('valuation.admin.property.saveUpdateData');
+            Route::post('/saveUnit/{id?}', 'Admin\Properties\PropertyController@saveUnit')->name('valuation.admin.property.saveUnit');
             Route::delete('/destroy/{id?}', 'Admin\Properties\PropertyController@destroy')->name('valuation.admin.property.destroy');
             Route::get('/newCreateView', 'Admin\Properties\PropertyController@newCreateView')->name('valuation.admin.property.newCreateView');
             Route::get('/property-detail/{id?}', 'Admin\Properties\PropertyController@propertyDetail')->name('valuation.admin.property.property-detail');
+            Route::get('/getUnit/{id?}','Admin\Properties\PropertyController@getUnit')->name('valuation.admin.property.getUnit');
 
             //Property Type routes
             Route::get('/type', 'Admin\Properties\TypeController@index')->name('valuation.admin.property.type');

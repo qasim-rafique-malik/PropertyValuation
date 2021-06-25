@@ -98,8 +98,8 @@
                                        aria-controls="StructureInfo" aria-expanded="false">Structure info</a></li>
                                 <li><a href="#OtherInfo" class="nav-link nav-item" data-toggle="tab"
                                        aria-controls="OtherInfo" aria-expanded="false">Other info</a></li>
-                                <li><a href="#UnitInfo" class="nav-link nav-item" data-toggle="tab"
-                                       aria-controls="UnitInfo" aria-expanded="false">Unit info</a></li>
+                                       <li><a href="#UnitInfo" class="nav-link nav-item" data-toggle="tab"
+                                       aria-controls="UnitInfo" aria-expanded="false">Units info</a></li>
 <!--                                <li><a href="#FinancialInfo" class="nav-link nav-item" data-toggle="tab"
                                        aria-controls="FinancialInfo" aria-expanded="false">Financial Info</a></li>-->
                                 <li><a href="#ObservationInfo" class="nav-link nav-item" data-toggle="tab"
@@ -113,8 +113,10 @@
                         <div class="tab-content" id="myTabContent">
                             @include('valuation::Admin.Property.PropertyFormInclude.PropertyInfo')
                             @include('valuation::Admin.Property.PropertyFormInclude.StructureInfo')
+                            
                             @include('valuation::Admin.Property.PropertyFormInclude.OtherInfo')
-                            @include('valuation::Admin.Property.PropertyFormInclude.UnitInfo')
+                            @include('valuation::Admin.Property.PropertyFormInclude.unitRefInfo')
+                           
                             @include('valuation::Admin.Property.PropertyFormInclude.ObservationInfo')
                         </div>
 
@@ -224,5 +226,16 @@
                 data: $('#saveUpdateProperty').serialize()
             })
         });
+//        function loadUnitFromXref()
+//        {
+//           $.ajax({
+//               url:'{{route($getUnitRoute, $id)}}',
+//               type:'get',
+//               success:function(response)
+//                {
+//                    console.log(response);
+//                }
+//           })
+//        }
     </script>
 @endpush

@@ -525,6 +525,7 @@
                                          @endif
                                           </tfoot>
                                        </table>
+                                    <button onclick="saveUnit()" type="button" class="btn btn-primary">Save Units</button>
                                 </div>
                             </div>
                         </div>
@@ -559,5 +560,26 @@ $("#StructureInfoUnitListAddBtn").on("click", function() {
 });
 // Automatically add a first row of data
 $("#StructureInfoUnitListAddBtn").click();
+function saveUnit()
+{
+     var unitStructureType=$("input[name='structureUnitType[]']").map(function(){return $(this).val();}).get();
+     var unitStructureUnitId=$("input[name='structureUnitId[]']").map(function(){return $(this).val();}).get();
+     var structureUnitDescription=$("input[name='structureUnitDescription[]']").map(function(){return $(this).val();}).get();
+     var token=$('input[name="_token"]').val();
+     if(unitStructureType!='' && unitStructureUnitId!='' )
+     {
+         $.easyAjax({
+                url: '{{route($saveUnitRoute, $id)}}',
+                type: "POST",
+                redirect: true,
+                file: false,
+                data: {_token: token,unitStructureType:unitStructureType,unitStructureUnitId:unitStructureUnitId,structureUnitDescription:structureUnitDescription,propertyIdOld:{{$id}}}
+            })
+     }
+     else
+     {
+         alert("Please fill the Fields ");
+     }
+}
 </script>
 @endpush

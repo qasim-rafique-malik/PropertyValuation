@@ -164,8 +164,8 @@
         var table;
         $(function () {
             loadTable();
-            $(".data-section").removeClass('col-md-9');
-            $(".data-section").addClass('col-md-12');
+            /*$(".data-section").removeClass('col-md-9');
+            $(".data-section").addClass('col-md-12');*/
 
             $('body').on('click', '.sa-params', function () {
                 var id = $(this).attr('id');

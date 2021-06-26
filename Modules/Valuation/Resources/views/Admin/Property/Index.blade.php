@@ -49,64 +49,24 @@
 
         <div class="col-xs-12">
             <div class="form-group">
-                <h5 >@lang('app.client')</h5>
+                <h5 >Type</h5>
                 <select class="form-control select2" name="client" id="client" data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
+                    <option value="all">All</option>
                    
                 </select>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <h5>@lang('app.category')</h5>
+                <h5>City</h5>
                 <select class="form-control select2" name="category_id" id="category_id"
                         data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
+                    <option value="all">All</option>
                    
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <h5>@lang('modules.productCategory.subCategory')</h5>
-                <select class="form-control select2" name="sub_category_id" id="sub_category_id"
-                        data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
-                    
                 </select>
             </div>
         </div>
 
-        <div class="col-md-12">
-            <div class="form-group">
-                <h5>@lang('modules.logTimeSetting.project')</h5>
-                <select class="form-control select2" name="project_id" id="project_id"
-                        data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
-                    
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <h5>@lang('modules.contracts.contractType')</h5>
-                <select class="form-control select2" name="contract_type_id" id="contract_type_id"
-                        data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
-                   
-                </select>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <h5>@lang('modules.stripeCustomerAddress.country')</h5>
-                <select class="form-control select2" name="country_id" id="country_id"
-                        data-style="form-control">
-                    <option value="all">@lang('modules.client.all')</option>
-                    
-                </select>
-            </div>
-        </div>
         <div class="col-xs-12">
             <div class="form-group p-t-10">
                 <button type="button" id="apply-filters" class="btn btn-success col-md-6"><i class="fa fa-check"></i> @lang('app.apply')</button>

@@ -55,7 +55,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrowPropertyInfo">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="kt_datatable_example_1_addrowPropertyInfo">Add New Row</button>
                                     </div>
                                     <table id="kt_datatable_example_1PropertyInfo" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -66,18 +66,18 @@
                                                         <th>Price/Cost</th>
                                                 </tr>
                                         </thead>
-                                        <tfoot>
+                                        <tbody>
                                             @if(isset($AcquisitionCostPropertyInfo) && !empty($AcquisitionCostPropertyInfo))
                                              @foreach($AcquisitionCostPropertyInfo as $acquisitionCostPropertyInfoObj)
                                                 <tr>
                                                     <th><input type="hidden" name="aqu_Date_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['date']}}"> {{$acquisitionCostPropertyInfoObj['date']}}</th>
                                                     <th><input type="hidden" name="aqu_transection_type_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['trnsectionType']}}">{{$acquisitionCostPropertyInfoObj['trnsectionType']}}</th>
                                                     <th><input type="hidden" name="aqu_description_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['description']}}">{{$acquisitionCostPropertyInfoObj['description']}}</th>
-                                                    <th><input type="hidden" name="currencyCode_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['currencyCode']}}"><input type="hidden" name="acqlandPrice[]" value="{{$acquisitionCostPropertyInfoObj['price']}}">{{$acquisitionCostPropertyInfoObj['currencyCode'].' '.$acquisitionCostPropertyInfoObj['price']}}</th>
+                                                    <th><input type="hidden" name="currencyCode_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['currencyCode']}}"><input type="hidden" name="acqlandPrice_properyInfoTab[]" value="{{$acquisitionCostPropertyInfoObj['price']}}">{{$acquisitionCostPropertyInfoObj['currencyCode'].' '.$acquisitionCostPropertyInfoObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
-                                        </tfoot>
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -91,7 +91,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnPropertyInfo">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnPropertyInfo">Add New Row</button>
                                     </div>
                                     <table id="AddOnCostTablePropertyInfo" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -102,7 +102,7 @@
                                                         <th>Price/Cost</th>
                                                 </tr>
                                         </thead>
-                                        <tfoot>
+                                        <tbody>
                                             @if(isset($PropertyInfoAddOnCost) && !empty($PropertyInfoAddOnCost))
                                              @foreach($PropertyInfoAddOnCost as $PropertyInfoAddOnCostObj)
                                                 <tr>
@@ -113,7 +113,7 @@
                                                 </tr>
                                                 @endforeach
                                                 @endif
-                                        </tfoot>
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -130,7 +130,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Rental income</label>
-                                            <input type="number" name="rentalIncomePropertyInfo" id="rentalIncomePropertyInfo" value="{{isset($rentalIncome)?$rentalIncome:0.00}}"
+                                            <input type="number" name="rentalIncomePropertyInfo" id="rentalIncomePropertyInfo" value="{{isset($RentalIncomePropertyInfoMeta)?$RentalIncomePropertyInfoMeta[0]:'0'}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoIncomeAddBtnPropertyInfo">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="FinancialInfoIncomeAddBtnPropertyInfo">Add New Row</button>
                                     </div>
                                     <table id="IncomeTablePropertyInfo" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -149,18 +149,18 @@
                                                         <th>Price/Cost</th>
                                                 </tr>
                                         </thead>
-                                        <tfoot>
+                                        <tbody>
                                             @if(isset($PropertyInfoIncome) && !empty($PropertyInfoIncome))
                                              @foreach($PropertyInfoIncome as $PropertyInfoIncomeObj)
                                                 <tr>
                                                     <th><input type="hidden" name="income_date_property_info[]" value="{{$PropertyInfoIncomeObj['date']}}"> {{$PropertyInfoIncomeObj['date']}}</th>
                                                         <th> <input type="hidden" name="type_property_info[]" value="{{$PropertyInfoIncomeObj['trnsectionType']}}">{{$PropertyInfoIncomeObj['trnsectionType']}}</th>
                                                         <th> <input type="hidden" name="income_description_property_info[]" value="{{$PropertyInfoIncomeObj['description']}}">{{$PropertyInfoIncomeObj['description']}}</th>
-                                                        <th> <input type="hidden" name="incomeCurrencyCode__property_info[]" value="{{$PropertyInfoIncomeObj['currencyCode']}}"><input type="hidden" name="incomePrice_property_info[]" value="{{$PropertyInfoIncomeObj['price']}}">{{$PropertyInfoIncomeObj['currencyCode'].' '.$PropertyInfoIncomeObj['price']}}</th>
+                                                        <th> <input type="hidden" name="incomeCurrencyCode_property_info[]" value="{{$PropertyInfoIncomeObj['currencyCode']}}"><input type="hidden" name="incomePrice_property_info[]" value="{{$PropertyInfoIncomeObj['price']}}">{{$PropertyInfoIncomeObj['currencyCode'].' '.$PropertyInfoIncomeObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
                                                 @endif
-                                        </tfoot>
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -175,7 +175,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Estimated value</label>
-                                            <input type="number" name="estimatedValuePropertyInfo" id="estimatedValuePropertyInfo" value="{{isset($estimatedValue)?$estimatedValue:0.00}}"
+                                            <input type="number" name="estimatedValuePropertyInfo" id="estimatedValuePropertyInfo" value="{{isset($EstimatedValuePropertyInfoMeta)?$EstimatedValuePropertyInfoMeta[0]:'0'}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
@@ -183,13 +183,13 @@
                                      <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Residual Value</label>
-                                            <input type="text" name="residual_value_for_property_info" class="form-control priceField" value="">
+                                            <input type="text" name="residual_value_for_property_info" class="form-control priceField" value="{{isset($ResidualValueForPropertyInfoMeta)?$ResidualValueForPropertyInfoMeta[0]:'0'}}">
                                          </div>
                                     </div>
                                      <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Depicted Value</label>
-                                            <input type="text" name="depicted_value_for_property_info" class="form-control priceField" value="">
+                                            <input type="text" name="depicted_value_for_property_info" class="form-control priceField" value="{{isset($DepictedValueForPropertyInfoMeta)?$DepictedValueForPropertyInfoMeta[0]:'0'}}">
                                          </div>
                                     </div>
                                 </div>
@@ -197,13 +197,13 @@
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Cost Of Construction</label>
-                                            <input type="text" name="cost_construction_for_property_info" class="form-control priceField" value="">
+                                            <input type="text" name="cost_construction_for_property_info" class="form-control priceField" value="{{isset($CostOfConstructionValueForPropertyInfoMeta)?$CostOfConstructionValueForPropertyInfoMeta[0]:'0'}}">
                                          </div>
                                     </div>
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Income Base Value</label>
-                                            <input type="text" name="incomebasevalue_for_property_info" class="form-control priceField" value="">
+                                            <input type="text" name="incomebasevalue_for_property_info" class="form-control priceField" value="{{isset($IncomeBaseValueForPropertyInfoMeta)?$IncomeBaseValueForPropertyInfoMeta[0]:'0'}}">
                                          </div>
                                     </div>
                                 </div>
@@ -264,9 +264,9 @@ $("#FinancialInfoIncomeAddBtnPropertyInfo").on("click", function() {
 });
 
 // Automatically add a first row of data
-$("#kt_datatable_example_1_addrowPropertyInfo").click();
-$("#FinancialInfoAddOnCostAddBtnPropertyInfo").click();
-$("#FinancialInfoIncomeAddBtnPropertyInfo").click();
+//$("#kt_datatable_example_1_addrowPropertyInfo").click();
+//$("#FinancialInfoAddOnCostAddBtnPropertyInfo").click();
+//$("#FinancialInfoIncomeAddBtnPropertyInfo").click();
 $(".transectionType").select2({
     formatNoMatches: function () {
         return "{{ __('messages.noRecordFound') }}";

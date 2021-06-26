@@ -71,7 +71,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrowStructure">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="kt_datatable_example_1_addrowStructure">Add New Row</button>
                                     </div>
                                     <table id="kt_datatable_example_1Structure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -146,7 +146,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoBuiltUpCostAddBtnStructure">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="FinancialInfoBuiltUpCostAddBtnStructure">Add New Row</button>
                                     </div>
                                     <table id="BuildUpCostTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -190,7 +190,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnStructure">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnStructure">Add New Row</button>
                                     </div>
                                     <table id="AddOnCostTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -341,7 +341,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoIncomeAddBtnStructure">Add New Row</button>
+                                        <button  type="button" class="btn btn-primary" id="FinancialInfoIncomeAddBtnStructure">Add New Row</button>
                                     </div>
                                     <table id="IncomeTableStructure" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -353,25 +353,17 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            @if(isset($financialAddonCost) && !empty($financialAddonCost))
-                                            @php 
-                                            $addonTotal=0;
-                                            @endphp
-                                             @foreach($financialAddonCost as $financialAddonCostObj)
-                                            @php
-                                            $addonTotal=$addonTotal+$financialAddonCostObj['price'];
-                                            @endphp
+                                            @if(isset($StructureInfoIncome) && !empty($StructureInfoIncome))
+                                            
+                                             @foreach($StructureInfoIncome as $StructureInfoIncomeObj)
+                                            
                                                 <tr>
-                                                    <th><input type="hidden" name="income_date_structure_info[]" value="{{$financialAddonCostObj['date']}}"> {{$financialAddonCostObj['date']}}</th>
-                                                        <th> <input type="hidden" name="type_structure_info[]" value="{{$financialAddonCostObj['trnsectionType']}}">{{$financialAddonCostObj['trnsectionType']}}</th>
-                                                        <th> <input type="hidden" name="income_description_structure_info[]" value="{{$financialAddonCostObj['description']}}">{{$financialAddonCostObj['description']}}</th>
-                                                        <th> <input type="hidden" name="incomeCurrencyCode_structure_info[]" value="{{$financialAddonCostObj['currencyCode']}}"><input type="hidden" name="incomePrice_structure_info[]" value="{{$financialAddonCostObj['price']}}">{{$financialAddonCostObj['currencyCode'].' '.$financialAddonCostObj['price']}}</th>
+                                                    <th><input type="hidden" name="income_date_structure_info[]" value="{{$StructureInfoIncomeObj['date']}}"> {{$StructureInfoIncomeObj['date']}}</th>
+                                                        <th> <input type="hidden" name="type_structure_info[]" value="{{$StructureInfoIncomeObj['trnsectionType']}}">{{$StructureInfoIncomeObj['trnsectionType']}}</th>
+                                                        <th> <input type="hidden" name="income_description_structure_info[]" value="{{$StructureInfoIncomeObj['description']}}">{{$StructureInfoIncomeObj['description']}}</th>
+                                                        <th> <input type="hidden" name="incomeCurrencyCode_structure_info[]" value="{{$StructureInfoIncomeObj['currencyCode']}}"><input type="hidden" name="incomePrice_structure_info[]" value="{{$StructureInfoIncomeObj['price']}}">{{$StructureInfoIncomeObj['currencyCode'].' '.$StructureInfoIncomeObj['price']}}</th>
                                                 </tr>
                                                 @endforeach
-                                                <tr>
-                                                    <th colspan="3"><b>Total</b></th>
-                                                    <th><b>{{$currencyCode.' '.$addonTotal}}</b></th>
-                                                </tr>
                                                 @endif
                                         </tfoot>
                                     </table>

@@ -43,7 +43,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="AddNewEnvirement">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="AddNewEnvirement">Add New Row</button>
                                     </div>
                                     <table id="enviromentTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -79,7 +79,7 @@
                             <div class="form-body">
                                 <div class="row">
                                    <div class="pb-10">
-                                        <button class="btn btn-primary" id="AddNewAssumptionBtn">Add New Row</button>
+                                        <button  type="button" class="btn btn-primary" id="AddNewAssumptionBtn">Add New Row</button>
                                     </div>
                                     <table id="assumptionTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -114,7 +114,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="AddNewRelventBtn">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="AddNewRelventBtn">Add New Row</button>
                                     </div>
                                     <table id="relventTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -148,7 +148,7 @@
                         <div class="tab-pane fade" id="PlanningPotentialTab">
                             <div class="form-body">
                                  <div class="pb-10">
-                                        <button class="btn btn-primary" id="AddNewPlanningBtn">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="AddNewPlanningBtn">Add New Row</button>
                                     </div>
                                     <table id="planningTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>

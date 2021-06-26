@@ -50,6 +50,7 @@ class ValuationProperty extends ValuationBaseModel
     const IncomeBaseValueForPropertyInfo='IncomeBaseValueForPropertyInfo';
     const AcquisitionCostStructureInfo='AcquisitionCostStructureInfo';
     const RentalIncomeStructure='RentalIncomeStructure';
+    const RentalIncomePropertyInfo='RentalIncomePropertyInfo';
     const EstimatedValueStructure='EstimatedValueStructure';
     const ResidualValueForStructure='ResidualValueForStructure';
     const DepictedValueForStructure='DepictedValueForStructure';
@@ -66,6 +67,7 @@ class ValuationProperty extends ValuationBaseModel
     const UnitInfoInteriorStatus='UnitInfoInteriorStatus';
     const RentalIncomeUnitInfo='RentalIncomeUnitInfo';
     const EstimatedValueUnitInfo='EstimatedValueUnitInfo';
+    const EstimatedValuePropertyInfo='EstimatedValuePropertyInfo';
     const ResidualValueUnitInfo='ResidualValueUnitInfo';
     const DepictedValueUnitInfo='DepictedValueUnitInfo';
     const CostOfConstructionValueUnitInfo='CostOfConstructionValueUnitInfo';

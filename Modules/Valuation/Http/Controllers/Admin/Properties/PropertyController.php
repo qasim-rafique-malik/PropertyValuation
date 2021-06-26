@@ -284,13 +284,18 @@ class PropertyController extends ValuationAdminBaseController
         $this->propertyTitle = isset($propertyData->title) ? $propertyData->title : '';
         $this->locality = isset($propertyData->locality) ? $propertyData->locality : '';
         $this->road = isset($propertyData->road) ? $propertyData->road : '';
-        $this->coordinates = isset($propertyData->coordinates) ? $propertyData->coordinates : '';
+//        $this->coordinates = isset($propertyData->coordinates) ? $propertyData->coordinates : '';
+        $this->latitude=isset($propertyData->latitude) ? $propertyData->latitude : '0';
+        $this->longitude=isset($propertyData->longitude) ? $propertyData->longitude : '0';
         $this->plotNum = isset($propertyData->plot_num) ? $propertyData->plot_num : 0;
         $this->landSize = isset($propertyData->land_size) ? $propertyData->land_size : '';
+        $this->municipalityCutting = isset($propertyData->municipalityCutting) ? $propertyData->municipalityCutting : '';
+        $this->landStructureType = isset($propertyData->land_structure_type) ? $propertyData->land_structure_type : '';
         $this->sizeMeterSQ = isset($propertyData->sizes_in_meter_sq) ? $propertyData->sizes_in_meter_sq : 0;
         $this->sizeSQFeet = isset($propertyData->sizes_in_sq_feet) ? $propertyData->sizes_in_sq_feet : 0;
         $this->buildupSizes = isset($propertyData->buildup_sizes) ? $propertyData->buildup_sizes : 0;
         $this->frontElivation = isset($propertyData->front_elivation) ? $propertyData->front_elivation : 0;
+        $this->depth = isset($propertyData->depth) ? $propertyData->depth : '';
         $this->commonArea = isset($propertyData->common_area) ? $propertyData->common_area : 0;
         $this->entranceNum = isset($propertyData->entrance_num) ? $propertyData->entrance_num : 0;
         $this->BLDGNum = isset($propertyData->bldg_num) ? $propertyData->bldg_num : 0;
@@ -311,7 +316,7 @@ class PropertyController extends ValuationAdminBaseController
         $this->rentalIncome = isset($propertyData->rental_income) ? $propertyData->rental_income : 0;
         $this->estimatedValue = isset($propertyData->estimated_value) ? $propertyData->estimated_value : 0;
         $this->status = isset($propertyData->status) ? $propertyData->status : 'Draft';
-        $this->dimensions = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
+        $this->dimensionsMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
         $this->addOnCosts = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AddOnCostMetaKey , array()))->toArray():array();
         $this->financialAcquisitionCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialAcquisitionCost , array()))->toArray():array();
         $this->financialBuildUpCost = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::FinancialBuildUpCost , array()))->toArray():array();
@@ -347,6 +352,34 @@ class PropertyController extends ValuationAdminBaseController
         $this->DepictedValueForPropertyInfo = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DepictedValueForPropertyInfo , array()))->toArray():array();
         $this->CostOfConstructionValueForPropertyInfo = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::CostOfConstructionValueForPropertyInfo , array()))->toArray():array();
         $this->IncomeBaseValueForPropertyInfo = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::IncomeBaseValueForPropertyInfo , array()))->toArray():array();
+        $this->landClassficationMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::LandClassificationTypeText , array()))->toArray():array();
+        $this->AccessibilityMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AccessibilityText , array()))->toArray():array();
+        $this->AccessibilityTypeMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AccessibilityTypeText , array()))->toArray():array();
+        $this->NoOfAccessRoadMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::NoOfAccessRoadsText , array()))->toArray():array();
+        $this->AccessRoadTypeMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AccessRoadTypeText , array()))->toArray():array();
+        $this->RecencyTransectionMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::RecencyTransectionText , array()))->toArray():array();
+        $this->LocationClassificationMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::LocationClassificationText , array()))->toArray():array();
+        $this->RentalIncomePropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::RentalIncomePropertyInfo, array()))->toArray():array();
+        $this->EstimatedValuePropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::EstimatedValuePropertyInfo, array()))->toArray():array();
+        $this->ResidualValueForPropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::ResidualValueForPropertyInfo, array()))->toArray():array();
+        $this->DepictedValueForPropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DepictedValueForPropertyInfo, array()))->toArray():array();
+        $this->CostOfConstructionValueForPropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::CostOfConstructionValueForPropertyInfo, array()))->toArray():array();
+        $this->IncomeBaseValueForPropertyInfoMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::IncomeBaseValueForPropertyInfo, array()))->toArray():array();
+        $this->landShapeMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::LandshapeText, array()))->toArray():array();
+        $this->PropertyFeatureMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::PropertyFeatureMetaKey, array()))->toArray():array();
+        $this->AmenitiesMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::AmenitiesText, array()))->toArray():array();
+        $this->SalePurchaseHistoryMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::SalePurchaseHistory, array()))->toArray():array();
+        $this->RentalIncomeHistoryMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::RentalIncomeHistory, array()))->toArray():array();
+        $this->ValuationsMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::Valuations, array()))->toArray():array();
+        
+        $this->surroundingFront = isset($propertyData->neighbour_front) ? $propertyData->neighbour_front : '';
+        $this->surroundingBack = isset($propertyData->neighbour_back) ? $propertyData->neighbour_back : '';
+        $this->surroundingLeft = isset($propertyData->left_side) ? $propertyData->left_side : '';
+        $this->surroundingRight = isset($propertyData->right_side) ? $propertyData->right_side : '';
+        $this->surroundingAdjacent = isset($propertyData->neighbour_adjacent) ? $propertyData->neighbour_adjacent : '';
+        $this->propertyInfo = isset($propertyData->propertyInfo) ? $propertyData->propertyInfo : '';
+        $this->description = isset($propertyData->description) ? $propertyData->description : '';
+       
         
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -371,7 +404,7 @@ class PropertyController extends ValuationAdminBaseController
         
         $property->neighbour_front = isset($request->front) ? $request->front : '';
         $property->neighbour_back = isset($request->back) ? $request->back : '';
-        $property->left_side = isset($request->left_side) ? $request->left_side : '';
+        $property->left_side = isset($request->leftSide) ? $request->leftSide : '';
         $property->right_side = isset($request->rightSide) ? $request->rightSide : '';
         $property->neighbour_adjacent = isset($request->adjacent) ? $request->adjacent : '';
         
@@ -546,6 +579,15 @@ class PropertyController extends ValuationAdminBaseController
         $valuations = isset($request->valuations) ? $request->valuations : '';
         $valuationsArray=array();
         $valuationsArray[]=$valuations;
+        
+        $rentalIncomePropertyInfo = isset($request->rentalIncomePropertyInfo) ? $request->rentalIncomePropertyInfo : '';
+        $rentalIncomePropertyInfoArray=array();
+        $rentalIncomePropertyInfoArray[]=$rentalIncomePropertyInfo;
+        
+        $estimatedValuePropertyInfo = isset($request->estimatedValuePropertyInfo) ? $request->estimatedValuePropertyInfo : '';
+        $estimatedValuePropertyInfoArray=array();
+        $estimatedValuePropertyInfoArray[]=$estimatedValuePropertyInfo;
+        
         $ValuationPropertyXref=new ValuationPropertyXref();
         if(isset($request->id) && $request->id>0)
         {
@@ -554,6 +596,8 @@ class PropertyController extends ValuationAdminBaseController
            {
                foreach($getAllUnit as $unitObj)
                {
+                   if(!empty($unitObj->unit_id) && $unitObj->unit_id >0)
+                   {
                    $propertyObj = ValuationProperty::find($unitObj->unit_id);
                    $key=$unitObj->unit_id;
                    $unitTypeName='unitType-'.$key;
@@ -737,12 +781,15 @@ class PropertyController extends ValuationAdminBaseController
                     $updatePropertyMetaUnit[ValuationProperty::UnitInfoAddOnCost.'-'.$key] = $addonTransectionDataUnitInfo;
                     $updatePropertyMetaUnit[ValuationProperty::UnitInfoIncome.'-'.$key] = $incomeJsonDataUnitInfo;
                     
+                    $logUnit=array('propertyInfo'=>$propertyObj,'meta'=>$updatePropertyMetaUnit);
+                    $updatePropertyMetaUnit[ValuationProperty::PropertyLog]=json_encode($logUnit);
                     $propertyObj->setMeta($updatePropertyMetaUnit);
                     
-                    $log=array('propertyInfo'=>$propertyObj,'meta'=>$updatePropertyMetaUnit);
-                    $logArray();
-                    $logArray[ValuationProperty::PropertyLog]=json_encode($log);
-                    $propertyObj->setMeta($logArray);
+                    
+//                    $logArrayUnit();
+//                    
+//                    $propertyObj->setMeta($logArrayUnit);
+                   }
                }
            }
 
@@ -840,7 +887,7 @@ class PropertyController extends ValuationAdminBaseController
             {
                 if(!empty($addOn_cost_Date_property_info[$key]) && !empty($addoncost_transection_type_property_info[$key]) && !empty($addoncost_description_property_info[$key]) && !empty($addoncostPrice_property_info[$key]))
                 {
-                   $addonCostDataArray_property_info[]=array('date'=>$addOn_cost_Date_property_info[$key],'trnsectionType'=>$addoncost_transection_type_property_info[$key],'description'=>$addoncost_description_property_info[$key],'price'=>$addoncostPrice[$key],'currencyCode'=>$addonCurrencyCode_property_info[$key]); 
+                   $addonCostDataArray_property_info[]=array('date'=>$addOn_cost_Date_property_info[$key],'trnsectionType'=>$addoncost_transection_type_property_info[$key],'description'=>$addoncost_description_property_info[$key],'price'=>$addoncostPrice_property_info[$key],'currencyCode'=>$addonCurrencyCode_property_info[$key]); 
                 }
                 
             } 
@@ -1017,15 +1064,15 @@ class PropertyController extends ValuationAdminBaseController
         $updatePropertyMeta[ValuationProperty::DimensionsMetaKey] = $dimisisionJsonData;
 //        $updatePropertyMeta[ValuationProperty::AddOnCostMetaKey] = $addOnCostsEncode;
         $updatePropertyMeta[ValuationProperty::FinancialAcquisitionCost] = $acqtransectionData;
-        $updatePropertyMeta[ValuationProperty::UnitInfoAcquisitionCost] = $acqtransection_unit_infoData;
+//        $updatePropertyMeta[ValuationProperty::UnitInfoAcquisitionCost] = $acqtransection_unit_infoData;
         $updatePropertyMeta[ValuationProperty::AcquisitionCostPropertyInfo] = $acqtransectionData_properyInfoTab;
         $updatePropertyMeta[ValuationProperty::FinancialBuildUpCost] = $buildUpTransectionData;
         $updatePropertyMeta[ValuationProperty::FinancialAddOnCost] = $addonTransectionData;
         $updatePropertyMeta[ValuationProperty::PropertyInfoAddOnCost] = $addonTransectionData_property_info;
-        $updatePropertyMeta[ValuationProperty::UnitInfoAddOnCost] = $addonTransectionData_unit_info;
+//        $updatePropertyMeta[ValuationProperty::UnitInfoAddOnCost] = $addonTransectionData_unit_info;
         $updatePropertyMeta[ValuationProperty::PropertyInfoIncome] = $incomejsonData_property_info;
         $updatePropertyMeta[ValuationProperty::StructureInfoIncome] = $incomejsonData_structure_info;
-        $updatePropertyMeta[ValuationProperty::UnitInfoIncome] = $incomejsonData_Unit_info;
+//        $updatePropertyMeta[ValuationProperty::UnitInfoIncome] = $incomejsonData_Unit_info;
         $updatePropertyMeta[ValuationProperty::StructureUnit] = $structureUnitJsonData;
         $updatePropertyMeta[ValuationProperty::OwnerShip] = $ownerShipJsonData;
         $updatePropertyMeta[ValuationProperty::PropertyFeatureMetaKey] = $propertyFeatureEncode;
@@ -1038,7 +1085,7 @@ class PropertyController extends ValuationAdminBaseController
         $updatePropertyMeta[ValuationProperty::AccessibilityTypeText] = json_encode($landInfoAccessibilityTypeWeightageArray);
         $updatePropertyMeta[ValuationProperty::NoOfAccessRoadsText] = json_encode($landInfoRoadAccessWeightageArray);
         $updatePropertyMeta[ValuationProperty::AccessRoadTypeText] = json_encode($landRoadAccessTypeWeightageArray);
-        $updatePropertyMeta[ValuationProperty::RecencyTransectionText] = json_encode($landInfoRecencyWeightage);
+        $updatePropertyMeta[ValuationProperty::RecencyTransectionText] = json_encode($landInfoRecencyWeightageArray);
         $updatePropertyMeta[ValuationProperty::LocationClassificationText] = json_encode($addressLocationClassificationWeightageArray);
         $updatePropertyMeta[ValuationProperty::ResidualValueForPropertyInfo] = json_encode($residual_value_for_property_infoWeightageArray);
         $updatePropertyMeta[ValuationProperty::DepictedValueForPropertyInfo] = json_encode($depicted_value_for_property_infoWeightageArray);
@@ -1062,25 +1109,28 @@ class PropertyController extends ValuationAdminBaseController
         $updatePropertyMeta[ValuationProperty::MaintenanceText] = json_encode($unitInfoMaintenanceWeightageArray);
         $updatePropertyMeta[ValuationProperty::FloorlevelText] = json_encode($unitInfoFloorLevelWeightageArray);
         $updatePropertyMeta[ValuationProperty::ViewText] = json_encode($unitInfoViewWeightageArray);
+        $updatePropertyMeta[ValuationProperty::RentalIncomePropertyInfo] = json_encode($rentalIncomePropertyInfoArray);
+        $updatePropertyMeta[ValuationProperty::EstimatedValuePropertyInfo] = json_encode($estimatedValuePropertyInfoArray);
 //        $updatePropertyMeta[ValuationProperty::UnitInfoView] = json_encode($unitInfoViewWeightageArray);
-        $updatePropertyMeta[ValuationProperty::UnitInfoCondition] = json_encode($unitInfoConditionArray);
-        $updatePropertyMeta[ValuationProperty::UnitInfoStyling] = json_encode($unitInfoStylingArray);
-        $updatePropertyMeta[ValuationProperty::UnitInfoStatus] = json_encode($unitInfoStatusArray);
-        $updatePropertyMeta[ValuationProperty::UnitInfoInteriorStatus] = json_encode($unitInfoInteriorStatusArray);
-        $updatePropertyMeta[ValuationProperty::RentalIncomeUnitInfo] = json_encode($rentalIncomeUnitInfoArray);
-        $updatePropertyMeta[ValuationProperty::EstimatedValueUnitInfo] = json_encode($estimatedValueUnitInfoArray);
-        $updatePropertyMeta[ValuationProperty::ResidualValueUnitInfo] = json_encode($residual_value_for_UnitInfoArray);
-        $updatePropertyMeta[ValuationProperty::DepictedValueUnitInfo] = json_encode($depicted_value_for_UnitInfoArray);
-        $updatePropertyMeta[ValuationProperty::CostOfConstructionValueUnitInfo] = json_encode($cost_construction_for_UnitInfoArray);
-        $updatePropertyMeta[ValuationProperty::IncomeBaseValueUnitInfo] = json_encode($incomebasevalue_for_UnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::UnitInfoCondition] = json_encode($unitInfoConditionArray);
+//        $updatePropertyMeta[ValuationProperty::UnitInfoStyling] = json_encode($unitInfoStylingArray);
+//        $updatePropertyMeta[ValuationProperty::UnitInfoStatus] = json_encode($unitInfoStatusArray);
+//        $updatePropertyMeta[ValuationProperty::UnitInfoInteriorStatus] = json_encode($unitInfoInteriorStatusArray);
+//        $updatePropertyMeta[ValuationProperty::RentalIncomeUnitInfo] = json_encode($rentalIncomeUnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::EstimatedValueUnitInfo] = json_encode($estimatedValueUnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::ResidualValueUnitInfo] = json_encode($residual_value_for_UnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::DepictedValueUnitInfo] = json_encode($depicted_value_for_UnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::CostOfConstructionValueUnitInfo] = json_encode($cost_construction_for_UnitInfoArray);
+//        $updatePropertyMeta[ValuationProperty::IncomeBaseValueUnitInfo] = json_encode($incomebasevalue_for_UnitInfoArray);
         
-        
+        $log=array('propertyInfo'=>$property,'meta'=>$updatePropertyMeta);
+        $updatePropertyMeta[ValuationProperty::PropertyLog]=json_encode($log);
         $property->setMeta($updatePropertyMeta);
 		
-		$log=array('propertyInfo'=>$property,'meta'=>$updatePropertyMeta);
-		$logArray();
-		$logArray[ValuationProperty::PropertyLog]=json_encode($log);
-		$property->setMeta($logArray);
+		
+//		$logArray();
+//		
+//		$property->setMeta($logArray);
         
        if($request->id)
        {
@@ -1105,8 +1155,8 @@ class PropertyController extends ValuationAdminBaseController
         foreach ($features as $key => $feature){
             if(isset($feature['id'])) {
                 $featureData = ValuationPropertyFeature::find($feature['id']);
-                $data[$key] = $featureData->toArray();
-                $data[$key] ['value'] = $feature['value'];
+                $data[$feature['id']] = $featureData->toArray();
+                $data[$feature['id']] ['value'] = $feature['value'];
             }
         }
         return  json_encode($data);

@@ -299,7 +299,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <div class="checkbox checkbox-info">
-                                            <input type="checkbox" name="aminatie[]" value="{{$amenitiesObj->id}}">
+                                            <input type="checkbox" @if(isset($AmenitiesMeta) && !empty($AmenitiesMeta) && in_array($amenitiesObj->id,$AmenitiesMeta[0])) checked="checked" @endif name="aminatie[]" value="{{$amenitiesObj->id}}">
                                             <label for="check-view">{{$amenitiesObj->title}}</label>
                                             </div>
                                         </div>
@@ -318,29 +318,40 @@
                                                 <legend>{{$featureCategorListIn->category_name}}</legend>
                                                 <div class="row">
                                                     @foreach ($featureCategorListIn->featureItems as $featureKey => $featureItemsIn)
+                                                   
+                                                    @if(!empty($PropertyFeatureMeta))
+                                                        @if(array_key_exists($featureItemsIn->id,$PropertyFeatureMeta))
+                                                        @php
+                                                            $featureUpdate=$PropertyFeatureMeta[$featureItemsIn->id];
+                                                            $fectureId=$featureUpdate['id'];
+                                                             @endphp
+                                                            
+                                                        @endif
+                                                    @endif
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                                 <div class="checkbox checkbox-info  col-md-10">
-                                                                    <input id="{{$featureItemsIn->id}}"
+                                                                    <input id="{{$featureItemsIn->id}}"  @if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id) ) checked="checked"  @endif
                                                                            onchange="checkFeature({{$featureItemsIn->id}})"
                                                                            name="feature[{{$featureCount}}][id]" value="{{$featureItemsIn->id}}"
                                                                            type="checkbox">
                                                                     <label for="client_view_task">{{$featureItemsIn->feature_name}}</label>
-                                                                    <span id="feature-{{$featureItemsIn->id}}" style="display:none;" class="ml-20">
+                                                                    <span id="feature-{{$featureItemsIn->id}}" @if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id) ) @else style="display:none;" @endif  class="ml-20">
                                                                        @if(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="select" )
                                                                             <select name="feature[{{$featureCount}}][value]" class="form-control">
 
                                                                            @php
                                                                             $arr = json_decode($featureItemsIn->sub_fields,true);
-                                                                            foreach($arr as $field){
-                                                                                echo '<option value="'.$field['name'].'">'.$field['name'].'</option>';
-                                                                            }
                                                                             @endphp
+                                                                            @foreach($arr as $field)
+                                                                                <option @if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id && $featureUpdate['field_type']=="select" && $featureUpdate['value']==$field['name']) selected="selected" @endif value="{{$field['name']}}">{{$field['name']}}</option>
+                                                                            
+                                                                            @endforeach
                                                                                 </select>
                                                                         @elseif(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="textarea" )
-                                                                            <textarea name=feature[{{$featureCount}}][value]" class="form-control"></textarea>
+                                                                            <textarea name=feature[{{$featureCount}}][value]" class="form-control" @if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id && $featureUpdate['field_type']=='textarea') value="{{$featureUpdate['value']}}" @endif>@if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id && $featureUpdate['field_type']=='textarea') {{$featureUpdate['value']}} @endif</textarea>
                                                                            @else
-                                                                            <input type="text" name="feature[{{$featureCount}}][value]" class="form-control">
+                                                                            <input type="text" name="feature[{{$featureCount}}][value]" @if(isset($featureUpdate) && isset($fectureId) && $fectureId==$featureItemsIn->id && $featureUpdate['field_type']=='text') value="{{$featureUpdate['value']}}" @endif class="form-control">
                                                                            @endif
                                                                     </span>
                                                                 </div>
@@ -503,7 +514,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                           <button class="btn btn-primary" id="StructureInfoUnitListAddBtn">Add New Row</button>
+                                           <button type="button" class="btn btn-primary" id="StructureInfoUnitListAddBtn">Add New Row</button>
                                       </div>
                                    <table id="StructureInfoUnitListTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                            <thead>

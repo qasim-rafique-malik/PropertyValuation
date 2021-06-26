@@ -55,7 +55,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="kt_datatable_example_1_addrowUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="kt_datatable_example_1_addrowUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
                                     </div>
                                     <table id="kt_datatable_example_1UnitInfo-{{$objRef->unit_id}}" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -91,7 +91,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
+                                        <button  type="button" class="btn btn-primary" id="FinancialInfoAddOnCostAddBtnUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
                                     </div>
                                     <table id="AddOnCostTableUnitInfo-{{$objRef->unit_id}}" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="FinancialInfoIncomeAddBtnUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="FinancialInfoIncomeAddBtnUnitInfo-{{$objRef->unit_id}}">Add New Row</button>
                                     </div>
                                     <table id="IncomeTableUnitInfo-{{$objRef->unit_id}}" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -233,7 +233,8 @@
 <script src="{{ asset('plugins/metronic_plugin/js/prismjs-bundle.js') }}"></script>
 
 <script>
-let tUnitInfo = $("#kt_datatable_example_1UnitInfo-{{$objRef->unit_id}}").DataTable();
+    $(function() {
+    let tUnitInfo = $("#kt_datatable_example_1UnitInfo-{{$objRef->unit_id}}").DataTable();
 let counterUnitInfo = 1;
 
 $("#kt_datatable_example_1_addrowUnitInfo-{{$objRef->unit_id}}").on("click", function() {
@@ -266,12 +267,14 @@ let IncomeTableUnitInfo = $("#IncomeTableUnitInfo-{{$objRef->unit_id}}").DataTab
 let IncomeCounterUnitInfo = 1;
 $("#FinancialInfoIncomeAddBtnUnitInfo-{{$objRef->unit_id}}").on("click", function() {
     IncomeTableUnitInfo.row.add([
-        '<input type="date" name="income_date_structure_info[]" class="form-control">',
-        '<select name="type_structure_info[]" class="form-control transectionType"><option value="land">Land</option></select>',
-        '<textarea name="income_description_structure_info[]" class="form-control"></textarea>',
-        '<input type="text" readonly="" class="form-control currency" name="incomeCurrencyCode_structure_info[]" value="{{$currencyCode}}"><input type="number" name="incomePrice_structure_info[]" class="price form-control">'
+        '<input type="date" name="income_date_structure_info-{{$objRef->unit_id}}[]" class="form-control">',
+        '<select name="type_structure_info-{{$objRef->unit_id}}[]" class="form-control transectionType"><option value="land">Land</option></select>',
+        '<textarea name="income_description_structure_info-{{$objRef->unit_id}}[]" class="form-control"></textarea>',
+        '<input type="text" readonly="" class="form-control currency" name="incomeCurrencyCode_structure_info-{{$objRef->unit_id}}[]" value="{{$currencyCode}}"><input type="number" name="incomePrice_structure_info-{{$objRef->unit_id}}[]" class="price form-control">'
     ]).draw(false);
     IncomeCounterUnitInfo++;
+});
+
 });
 
 // Automatically add a first row of data

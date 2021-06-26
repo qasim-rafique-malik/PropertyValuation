@@ -79,7 +79,7 @@
                                             <select name="landInfoLandShape" class="form-control">
                                                 <option value="">--select One--</option>
                                                 @foreach($LandShape[0]->weightageCategoryItems as $shape)
-                                                <option value="{{$shape->id}}">{{$shape->title}}</option>
+                                                <option @if(isset($landShapeMeta) && !empty($landShapeMeta) && $landShapeMeta[0]==$shape->id) selected="selected" @endif value="{{$shape->id}}">{{$shape->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -89,7 +89,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Structure Type</label>
-                                            <input type="text" name="land_structure_type" class="form-control" id="land_structure_type" value="">
+                                            <input type="text" name="land_structure_type" class="form-control" id="land_structure_type" value="{{isset($landStructureType)?$landStructureType:'0'}}">
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                     <div class="col-md-12">
                                         <label class="control-label">Dimension</label>
                                         <div class="pb-10">
-                                            <button class="btn btn-primary" id="LandInfoDimensionAddBtn">Add New Row</button>
+                                            <button type="button" class="btn btn-primary" id="LandInfoDimensionAddBtn">Add New Row</button>
                                         </div>
                                         <table id="LandInfoDimensionTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -108,8 +108,8 @@
                                                 </tr>
                                         </thead>
                                         <tfoot>
-                                            @if(isset($dimensions) && !empty($dimensions))
-                                            @foreach($dimensions as $dimObj)
+                                            @if(isset($dimensionsMeta) && !empty($dimensionsMeta))
+                                            @foreach($dimensionsMeta as $dimObj)
                                             <tr>
                                                 <td><input type="hidden" name="label[]" value="{{$dimObj['label']}}">{{$dimObj['label']}}</td>
                                                 <td><input type="hidden" name="value[]" value="{{$dimObj['value']}}">{{$dimObj['value']}}</td>
@@ -118,83 +118,6 @@
                                             @endIf
                                         </tfoot>
                                     </table>
-<!--                                        <label class="control-label">Dimension</label>
-                                        <div id="repeater">
-                                             Repeater Heading 
-                                            <div class="repeater-heading">
-                                                <button type="button"
-                                                        class="btn btn-primary pt-5 pull-right repeater-add-btn">
-                                                    Add
-                                                </button>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             Repeater Items 
-
-                                            @if(isset($dimensions) && !empty($dimensions))
-                                                @foreach($dimensions as $dimensionIn)
-                                                    <div class="items" data-group="dimensions">
-                                                         Repeater Content 
-                                                        <div class="item-content">
-                                                            <div class="form-group">
-                                                                <label for="inputEmail"
-                                                                       class="col-lg-2 control-label">Label</label>
-                                                                <div class="col-lg-10">
-                                                                    <input type="text" class="form-control"
-                                                                           placeholder="Label" data-name="label" value="{{isset($dimensionIn['label'])?$dimensionIn['label']:''}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputEmail"
-                                                                       class="col-lg-2 control-label">Value</label>
-                                                                <div class="col-lg-10">
-                                                                    <input type="number" class="form-control"
-                                                                           placeholder="Value" data-name="value" value="{{isset($dimensionIn['value'])?$dimensionIn['value']:''}}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                         Repeater Remove Btn 
-                                                        <div class="pull-right repeater-remove-btn">
-                                                            <button class="btn btn-danger remove-btn">
-                                                                Remove
-                                                            </button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                @endforeach
-
-                                            @else
-                                                <div class="items" data-group="dimensions">
-                                                     Repeater Content 
-                                                    <div class="item-content">
-                                                        <div class="form-group">
-                                                            <label for="inputEmail"
-                                                                   class="col-lg-2 control-label">Label</label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Label" data-name="label">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputEmail"
-                                                                   class="col-lg-2 control-label">Value</label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control" placeholder="Value" data-name="value">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                     Repeater Remove Btn 
-                                                    <div class="pull-right repeater-remove-btn">
-                                                        <button class="btn btn-danger remove-btn">
-                                                            Remove
-                                                        </button>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            @endif
-
-                                        </div>-->
                                     </div>
 
                                 </div>

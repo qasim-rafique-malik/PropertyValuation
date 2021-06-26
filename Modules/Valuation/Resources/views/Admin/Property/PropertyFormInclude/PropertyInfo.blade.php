@@ -158,7 +158,7 @@
                                                     required>
                                                 <option value="">--</option>
                                                  @foreach($LandClassification[0]->weightageCategoryItems as $landClass)
-                                                <option value="{{$landClass->id}}">{{$landClass->title}}</option>
+                                                <option @if (isset($landClassficationMeta) && !empty($landClassficationMeta) && $landClassficationMeta[0]==$landClass->id) selected="selected" @endif value="{{$landClass->id}}">{{$landClass->title}}</option>
                                                 @endforeach
 <!--                                                @if(isset($classifications))
                                                     @foreach($classifications as $classification)
@@ -186,7 +186,7 @@
                                             <select class="form-control" name="landInfoAccessibility">
                                                 <option value="">--select One--</option>
                                                 @foreach($Accessibility[0]->weightageCategoryItems as $subCate)
-                                                <option value="{{$subCate->id}}">{{$subCate->title}}</option>
+                                                <option @if(isset($AccessibilityMeta) && !empty($AccessibilityMeta) && $AccessibilityMeta[0]==$subCate->id) selected="selected" @endif value="{{$subCate->id}}">{{$subCate->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -200,8 +200,8 @@
                                             <label class="control-label">{{$AccessibilityType[0]->title}}</label>
                                             <select class="form-control" name="landInfoAccessibilityType">
                                                 <option value="">--select One--</option>
-                                                @foreach($AccessibilityType[0]->weightageCategoryItems as $subCate)
-                                                <option value="{{$subCate->id}}">{{$subCate->title}}</option>
+                                                @foreach($AccessibilityType[0]->weightageCategoryItems as $assciblityTypeObj)
+                                                <option @if(isset($AccessibilityTypeMeta) && !empty($AccessibilityTypeMeta) && $AccessibilityTypeMeta[0]==$assciblityTypeObj->id) selected="selected" @endif value="{{$assciblityTypeObj->id}}">{{$assciblityTypeObj->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -215,7 +215,7 @@
                                             <select name="landInfoRoadAccess" class="form-control">
                                                 <option value="">--select One--</option>
                                                 @foreach($RoadAccessNo[0]->weightageCategoryItems as $roadNo)
-                                                <option value="{{$roadNo->id}}">{{$roadNo->title}}</option>
+                                                <option @if(isset($NoOfAccessRoadMeta) && !empty($NoOfAccessRoadMeta) && $NoOfAccessRoadMeta[0]==$roadNo->id) selected="selected" @endif value="{{$roadNo->id}}">{{$roadNo->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -232,7 +232,7 @@
                                             <select name="landRoadAccessType" class="form-control">
                                                 <option value="">--select One--</option>
                                                 @foreach($RoadAccessType[0]->weightageCategoryItems as $roadType)
-                                                <option value="{{$roadType->id}}">{{$roadType->title}}</option>
+                                                <option @if(isset($AccessRoadTypeMeta) && !empty($AccessRoadTypeMeta) && $AccessRoadTypeMeta[0]==$roadType->id) selected="selected" @endif value="{{$roadType->id}}">{{$roadType->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -247,7 +247,7 @@
                                             <select name="landInfoRecency" class="form-control">
                                                 <option value="">--select One--</option>
                                                 @foreach($RecencyTransection[0]->weightageCategoryItems as $rencecyTran)
-                                                <option value="{{$rencecyTran->id}}">{{$rencecyTran->title}}</option>
+                                                <option @if(isset($RecencyTransectionMeta) && !empty($RecencyTransectionMeta) && $RecencyTransectionMeta[0]==$rencecyTran->id) selected="selected" @endif value="{{$rencecyTran->id}}">{{$rencecyTran->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -270,7 +270,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Front View</label>
                                             <input type="text" name="front" id="front"
-                                                   value="{{isset($front)?$front:''}}"
+                                                   value="{{isset($surroundingFront)?$surroundingFront:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -278,7 +278,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Back View</label>
-                                            <input type="text" name="back" id="back" value="{{isset($back)?$back:''}}"
+                                            <input type="text" name="back" id="back" value="{{isset($surroundingBack)?$surroundingBack:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -289,7 +289,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Left side View</label>
                                             <input type="text" name="leftSide" id="leftSide"
-                                                   value="{{isset($leftSide)?$leftSide:''}}"
+                                                   value="{{isset($surroundingLeft)?$surroundingLeft:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -298,7 +298,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Right side View</label>
                                             <input type="text" name="rightSide" id="rightSide"
-                                                   value="{{isset($rightSide)?$rightSide:''}}"
+                                                   value="{{isset($surroundingRight)?$surroundingRight:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -309,7 +309,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Adjacent</label>
                                             <input type="text" name="adjacent" id="adjacent"
-                                                   value="{{isset($adjacent)?$adjacent:''}}"
+                                                   value="{{isset($surroundingAdjacent)?$surroundingAdjacent:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -358,14 +358,11 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Country </label>
-                                            <select name="country"
-                                                    id="country"
-                                                    class="form-control"
-                                                    required>
+                                            <select name="country" id="country" class="form-control" required>
                                                 <option value="">--</option>
                                                 @if(isset($countries))
                                                     @foreach($countries as $country)
-                                                        <option @if(isset($adminCountryId) && $adminCountryId == $country->id) selected="selected"
+                                                        <option @if(isset($adminCountryId) &&  !empty($adminCountryId) && $adminCountryId == $country->id) selected="selected"
                                                                 @endif value="{{ $country->id }}">
                                                             {{ $country->name }}
                                                         </option>
@@ -377,15 +374,11 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Governorate</label>
-                                            <select name="governorate"
-                                                    id="governorate"
-                                                    class="form-control"
-                                                    required>
+                                            <select name="governorate" id="governorate" class="form-control" required>
                                                 <option value="">--</option>
                                                 @if(isset($governorates))
                                                     @foreach($governorates as $governorate)
-                                                        <option @if(isset($governorateId) && $governorate->id == $governorateId) selected="selected"
-                                                                @endif value="{{ $governorate->id }}">
+                                                        <option @if(isset($governorateId) && !empty($governorateId) && $governorate->id == $governorateId) selected="selected"    @endif value="{{ $governorate->id }}">
                                                             {{ $governorate->name }}
                                                         </option>
                                                     @endforeach
@@ -490,7 +483,7 @@
                                             <select name="addressLocationClassification" class="form-control">
                                                 <option value="">--select One--</option>
                                                 @foreach($LocationClassification[0]->weightageCategoryItems as $locClassficationObj)
-                                                <option value="{{$locClassficationObj->id}}">{{$locClassficationObj->title}}</option>
+                                                <option @if(isset($LocationClassificationMeta) && !empty($LocationClassificationMeta) && $LocationClassificationMeta[0]==$locClassficationObj->id) selected="selected" @endif value="{{$locClassficationObj->id}}">{{$locClassficationObj->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -546,17 +539,9 @@
                                                         </div>
 
                                 </div>
-<!--                                                <div class="item-content">
-                                                    <div class="form-group">
-                                                        <label for="imageUpload" class="col-lg-2 control-label">Image</label>
-                                                        <div class="col-lg-10">
-                                                            <input type="file" class="form-control image" name='image' id="imageUpload" placeholder="Image" data-name="image">
-                                                        </div>
-                                                    </div>
-                                                </div>-->
                                                 <!-- Repeater Remove Btn -->
                                                 <div class="pull-right repeater-remove-btn">
-                                                    <button class="btn btn-danger remove-btn">
+                                                    <button type="button" class="btn btn-danger remove-btn">
                                                         Remove
                                                     </button>
                                                 </div>
@@ -567,287 +552,6 @@
                             </div>
                         </div>
                         <!-- Upload tab end -->
-                        
-<!--                        -LandInfoClassCategory 
-                        <div class="tab-pane fade" id="PropertyInfoClassCategory">
-                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Class</label>
-                                            <small class="pull-right cursor-pointer openModal addPropertyClass"
-                                                   data-toggle="modal" data-target="#addPropertyClass"
-                                                   data-whatever="Add Property Class">Add</small>
-                                            <select name="propertyClass"
-                                                    id="propertyClass"
-                                                    class="form-control propertyClass"
-                                                    required>
-                                                <option value="">--</option>
-                                                @if(isset($classes))
-                                                    @foreach($classes as $class)
-                                                        <option @if(isset($classId) && $class->id == $classId) selected="selected"
-                                                                @endif value="{{ $class->id }}">
-                                                            {{ $class->title }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Category</label>
-                                            <small class="pull-right cursor-pointer openModal addPropertyCategorization"
-                                                   data-toggle="modal" data-target="#addPropertyCategorization"
-                                                   data-whatever="Add Property Class">Add</small>
-                                            <select name="propertyCategorization"
-                                                    id="propertyCategorization"
-                                                    class="form-control"
-                                                    required>
-                                                <option value="">--</option>
-                                                @if(isset($categorizations))
-                                                    @foreach($categorizations as $categorization)
-                                                        <option @if(isset($categorizationId) && $categorization->id == $categorizationId) selected="selected"
-                                                                @endif  value="{{ $categorization->id }}">
-                                                            {{ $categorization->title }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Classification</label>
-                                            <small class="pull-right cursor-pointer openModal addPropertyClassification"
-                                                   data-toggle="modal" data-target="#addPropertyClassification"
-                                                   data-whatever="Add Property Class">Add</small>
-                                            <select name="propertyClassification"
-                                                    id="propertyClassification"
-                                                    class="form-control"
-                                                    required>
-                                                <option value="">--</option>
-                                                @if(isset($classifications))
-                                                    @foreach($classifications as $classification)
-                                                        <option @if(isset($classificationId) && $classification->id == $classificationId) selected="selected"
-                                                                @endif  value="{{ $classification->id }}">
-                                                            {{ $classification->title }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Type</label>
-                                            <small class="pull-right cursor-pointer openModal addPropertyType"
-                                                   data-toggle="modal" data-target="#addPropertyType"
-                                                   data-whatever="Add Property Class">Add</small>
-                                            <select name="propertyType"
-                                                    id="propertyType"
-                                                    class="form-control propertyType"
-                                                    required>
-                                                <option value="">--</option>
-                                                @if(isset($types))
-                                                    @foreach($types as $type)
-                                                        <option @if(isset($typeId) && $type->id == $typeId) selected="selected"
-                                                                @endif  value="{{ $type->id }}">
-                                                            {{ $type->title }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        -LandInfoClassCategory -->
-
-                        <!---LandInfoMeasurements -->
-<!--                        <div class="tab-pane fade" id="PropertyInfoMeasurements">
-                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Land size</label>
-                                            <input type="text" name="landSizePropertyInfo" id="landSizePropertyInfo"
-                                                   value="{{isset($landSize)?$landSize:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Sizes in Meter sq</label>
-                                            <input type="text" name="sizeMeterSQPropertyInfo" id="sizeMeterSQPropertyInfo"
-                                                   value="{{isset($sizeMeterSQ)?$sizeMeterSQ:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Municipality cutting</label>
-                                            <input type="text" name="municipalityCutting" id="municipalityCutting"
-                                                   value="{{isset($municipalityCutting)?$municipalityCutting:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Sizes in sq feet)</label>
-                                            <input type="text" name="sizeSQFeetPropertyInfo" id="sizeSQFeetPropertyInfo"
-                                                   value="{{isset($sizeSQFeet)?$sizeSQFeet:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label class="control-label">Dimension</label>
-                                        <div id="repeater">
-                                             Repeater Heading 
-                                            <div class="repeater-heading">
-                                                <button type="button"
-                                                        class="btn btn-primary pt-5 pull-right repeater-add-btn">
-                                                    Add
-                                                </button>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                             Repeater Items 
-
-                                            @if(isset($dimensions) && !empty($dimensions))
-                                                @foreach($dimensions as $dimensionIn)
-                                                    <div class="items" data-group="dimensions">
-                                                         Repeater Content 
-                                                        <div class="item-content">
-                                                            <div class="form-group">
-                                                                <label for="inputEmail"
-                                                                       class="col-lg-2 control-label">Label</label>
-                                                                <div class="col-lg-10">
-                                                                    <input type="text" class="form-control"
-                                                                           placeholder="Label" data-name="label" value="{{isset($dimensionIn['label'])?$dimensionIn['label']:''}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputEmail"
-                                                                       class="col-lg-2 control-label">Value</label>
-                                                                <div class="col-lg-10">
-                                                                    <input type="number" class="form-control"
-                                                                           placeholder="Value" data-name="value" value="{{isset($dimensionIn['value'])?$dimensionIn['value']:''}}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                         Repeater Remove Btn 
-                                                        <div class="pull-right repeater-remove-btn">
-                                                            <button class="btn btn-danger remove-btn">
-                                                                Remove
-                                                            </button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                @endforeach
-
-                                            @else
-                                                <div class="items" data-group="dimensions">
-                                                     Repeater Content 
-                                                    <div class="item-content">
-                                                        <div class="form-group">
-                                                            <label for="inputEmail"
-                                                                   class="col-lg-2 control-label">Label</label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Label" data-name="label">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputEmail"
-                                                                   class="col-lg-2 control-label">Value</label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Value" data-name="value">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                     Repeater Remove Btn 
-                                                    <div class="pull-right repeater-remove-btn">
-                                                        <button class="btn btn-danger remove-btn">
-                                                            Remove
-                                                        </button>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            @endif
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>-->
-                        <!---LandInfoMeasurements -->
-<!--                        -PropertyInfoFeatures 
-                        <div class="tab-pane fade" id="PropertyInfoFeatures">
-                            <div class="form-body">
-                                @php
-                                $featureCount= 0;
-                                @endphp
-                                @foreach ($featureCategorList as $featureCategorListIn)
-                                <div class="row">
-                                            <fieldset>
-                                                <legend>{{$featureCategorListIn->category_name}}</legend>
-                                                <div class="row">
-                                                    @foreach ($featureCategorListIn->featureItems as $featureKey => $featureItemsIn)
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                                <div class="checkbox checkbox-info  col-md-10">
-                                                                    <input id="{{$featureItemsIn->id}}"
-                                                                           onchange="checkFeature({{$featureItemsIn->id}})"
-                                                                           name="feature[{{$featureCount}}][id]" value="{{$featureItemsIn->id}}"
-                                                                           type="checkbox">
-                                                                    <label for="client_view_task">{{$featureItemsIn->feature_name}}</label>
-                                                                    <span id="feature-{{$featureItemsIn->id}}" style="display:none;" class="ml-20">
-                                                                       @if(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="select" )
-                                                                            <select name="feature[{{$featureCount}}][value]" class="form-control">
-
-                                                                           @php
-                                                                            $arr = json_decode($featureItemsIn->sub_fields,true);
-                                                                            foreach($arr as $field){
-                                                                                echo '<option value="'.$field['name'].'">'.$field['name'].'</option>';
-                                                                            }
-                                                                            @endphp
-                                                                                </select>
-                                                                        @elseif(isset($featureItemsIn->field_type) && $featureItemsIn->field_type=="textarea" )
-                                                                            <textarea name=feature[{{$featureCount}}][value]" class="form-control"></textarea>
-                                                                           @else
-                                                                            <input type="text" name="feature[{{$featureCount}}][value]" class="form-control">
-                                                                           @endif
-                                                                    </span>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                        @php
-                                                            $featureCount++;
-                                                        @endphp
-                                                    @endforeach
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    @endforeach
-                                </div>
-                        </div>
-                        -PropertyInfoFeatures -->
 
                         
                         @include('valuation::Admin.Property.PropertyFormInclude.FincialInfoForPropertyInfo')

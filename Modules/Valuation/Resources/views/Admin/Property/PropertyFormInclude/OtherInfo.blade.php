@@ -42,7 +42,7 @@
                             <div class="form-body">
                                 <div class="row">
                                     <div class="pb-10">
-                                        <button class="btn btn-primary" id="OtherInfoOwnershipAddBtn">Add New Row</button>
+                                        <button type="button" class="btn btn-primary" id="OtherInfoOwnershipAddBtn">Add New Row</button>
                                     </div>
                                      <table id="OtherInfoOwnershipTable" class="table table-striped table-row-bordered gy-5 gs-7">
                                         <thead>
@@ -120,7 +120,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Sale/purchase history</label>
-                                            <input type="text" name="salePurchaseHistory" id="salePurchaseHistory" value="{{isset($salePurchaseHistory)?$salePurchaseHistory:''}}"
+                                            <input type="text" name="salePurchaseHistory" id="salePurchaseHistory" value="{{isset($SalePurchaseHistoryMeta)?$SalePurchaseHistoryMeta[0]:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -128,7 +128,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Rental income history</label>
-                                            <input type="text" name="rentalIncomeHistory" id="rentalIncomeHistory" value="{{isset($rentalIncomeHistory)?$rentalIncomeHistory:''}}"
+                                            <input type="text" name="rentalIncomeHistory" id="rentalIncomeHistory" value="{{isset($RentalIncomeHistoryMeta)?$RentalIncomeHistoryMeta[0]:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>
@@ -138,7 +138,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Valuations</label>
-                                            <input type="text" name="valuations" id="valuations" value="{{isset($valuations)?$valuations:''}}"
+                                            <input type="text" name="valuations" id="valuations" value="{{isset($ValuationsMeta)?$ValuationsMeta[0]:''}}"
                                                    class="form-control"
                                                    autocomplete="nope">
                                         </div>

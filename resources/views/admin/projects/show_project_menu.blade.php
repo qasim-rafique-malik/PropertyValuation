@@ -26,7 +26,7 @@
                         <a href="{{ route('admin.projects.show', $project->id) }}"><i class="icon-grid"></i> <span>@lang('modules.projects.overview')</span></a>
                     </li>
                     <li class="valuationMethodology">
-                        <a href="{{ route('admin.valuation-method.show', $project->id) }}"><i class="icon-grid"></i> <span>Valuation Methodology</span></a>
+                        <a href="{{ route('admin.valuation-method.show', $project->id) }}"><i class="icon-grid"></i> <span>Methodology</span></a>
                     </li>
                     @if(in_array('employees',$modules))
                         <li class="projectMembers">

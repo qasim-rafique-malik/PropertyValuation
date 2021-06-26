@@ -123,7 +123,8 @@
                     @if(in_array('projects',$modules))
                         <li>
                             <a href="{{ route('admin.projectDashboard') }}" class="waves-effect">
-                                @lang('app.menu.projectDashboard')
+{{--                                @lang('app.menu.projectDashboard')--}}
+                                @lang('app.menu.valuationDashboard')
                             </a>
                         </li>
                     @endif
@@ -134,13 +135,13 @@
                             </a>
                         </li>
                     @endif
-                    @if(in_array('employees', $modules) || in_array('attendance', $modules) || in_array('holidays', $modules) || in_array('leaves', $modules))
+                 {{--   @if(in_array('employees', $modules) || in_array('attendance', $modules) || in_array('holidays', $modules) || in_array('leaves', $modules))
                         <li>
                             <a href="{{ route('admin.hrDashboard') }}" class="waves-effect">
                                 @lang('app.menu.hrDashboard')
                             </a>
                         </li>
-                    @endif
+                    @endif--}}
                     @if(in_array("tickets", $modules))                        <li>
                             <a href="{{ route('admin.ticketDashboard') }}" class="waves-effect">
                                 @lang('app.menu.ticketDashboard')
@@ -196,14 +197,24 @@
             @endif
 
             @if(in_array('projects', $modules) || in_array('tasks', $modules) || in_array('timelogs', $modules) || in_array('contracts', $modules))
-                <li><a href="{{ route('admin.task.index') }}" class="waves-effect"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> @lang('app.menu.work') <span class="fa arrow"></span> </span></a>
+                <li><a href="{{ route('admin.task.index') }}" class="waves-effect"><i class="icon-layers fa-fw"></i> <span class="hide-menu">
+{{--                            @lang('app.menu.work')--}}
+                            @lang('app.menu.vms')
+                            <span class="fa arrow"></span> </span></a>
                     <ul class="nav nav-second-level">
                         @if(in_array('contracts', $modules))
                             <li><a href="{{ route('admin.contracts.index') }}" class="waves-effect">@lang('app.menu.contracts')</a></li>
                         @endif
                         @if(in_array('projects',$modules))
-                            <li><a href="{{ route('admin.projects.index') }}" class="waves-effect">@lang('app.menu.projects') </a> </li>
+                            <li><a href="{{ route('admin.projects.index') }}" class="waves-effect">
+{{--                                    @lang('app.menu.projects')--}}
+                                    @lang('app.menu.valuations')
+                                </a> </li>
                         @endif
+                            <li><a href="{{ route('valuation.admin.property') }}" class="waves-effect">
+                                    {{--                                    @lang('app.menu.projects')--}}
+                                    @lang('app.menu.properties')
+                                </a> </li>
                         @if(in_array('tasks',$modules))
                             <li><a href="{{ route('admin.all-tasks.index') }}">@lang('app.menu.tasks')</a></li>
                             <li class="hidden-sm hidden-xs"><a href="{{ route('admin.taskboard.index') }}">@lang('modules.tasks.taskBoard')</a></li>
@@ -245,7 +256,10 @@
 
 
             @if(in_array("products", $modules))
-                <li><a href="{{ route('admin.products.index') }}" class="waves-effect"><i class="icon-basket fa-fw"></i> <span class="hide-menu">@lang('app.menu.products') </span></a> </li>
+                <li><a href="{{ route('admin.products.index') }}" class="waves-effect"><i class="icon-basket fa-fw"></i> <span class="hide-menu">
+{{--                            @lang('app.menu.products')--}}
+                            @lang('app.menu.services')
+                        </span></a> </li>
             @endif
 
             @if(in_array("tickets", $modules))

@@ -143,7 +143,7 @@ class ProjectsDataTable extends BaseDataTable
             ->addColumn('completion_export', function ($row) {
                 return $row->completion_percent . '% '. __('app.complete');
             })
-            ->rawColumns(['project_name', 'action', 'completion_percent', 'members', 'status', 'client_id'])
+            ->rawColumns(['project_name', 'action', 'completion_percent', 'client_id'])
             ->removeColumn('project_summary')
             ->removeColumn('notes')
             ->removeColumn('category_id')
@@ -242,13 +242,11 @@ class ProjectsDataTable extends BaseDataTable
             __('app.id') => ['data' => 'id', 'name' => 'id', 'visible' => false, 'exportable' => false],
             '#' => ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
             __('modules.projects.projectName') => ['data' => 'project_name', 'name' => 'project_name'],
-            __('modules.projects.members')  => ['data' => 'members', 'name' => 'members', 'exportable' => false],
             __('modules.projects.projectMembers')  => ['data' => 'name', 'name' => 'name', 'visible' => false],
             __('app.deadline') => ['data' => 'deadline', 'name' => 'deadline'],
             __('app.client') => ['data' => 'client_id', 'name' => 'client_id'],
             __('app.completions') => ['data' => 'completion_percent', 'name' => 'completion_percent', 'exportable' => false],
             __('app.completion') => ['data' => 'completion_export', 'name' => 'completion_export', 'visible' => false],
-            __('app.status') => ['data' => 'status', 'name' => 'status'],
             Column::computed('action', __('app.action'))
                 ->exportable(false)
                 ->printable(false)

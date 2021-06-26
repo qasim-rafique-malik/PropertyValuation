@@ -290,6 +290,7 @@
                                                    value="true"
                                                    type="checkbox">
                                             <label for="client_view_task">@lang('modules.projects.clientViewTask')</label>
+{{--                                            <label for="client_view_task">@lang('modules.projects.clientViewTask')</label>--}}
                                         </div>
                                     </div>
                                 </div>

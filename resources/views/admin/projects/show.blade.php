@@ -415,7 +415,7 @@
                                 <div class="row">
                                     <div class="col-xs-12" id="project-timeline">
                                         <div class="panel b-all border-radius">
-                                            <div class="panel-heading b-b">Project Date</div>
+                                            <div class="panel-heading b-b">Valuation Dates</div>
 
                                             <div class="panel-wrapper collapse in">
                                                 <div class="panel-body">

@@ -400,7 +400,7 @@ Route::group(['middleware' => 'auth'], function () {
                         Route::resource('employee-docs', 'EmployeeDocsController');
                     });
 
-                Route::post('projects/gantt-task-update/{id}', ['uses' => 'ManageProjectsController@updateTaskDuration'])->name('projects.gantt-task-update');
+                /*Route::post('projects/gantt-task-update/{id}', ['uses' => 'ManageProjectsController@updateTaskDuration'])->name('projects.gantt-task-update');
                 Route::get('projects/ajaxCreate/{columnId?}', ['uses' => 'ManageProjectsController@ajaxCreate'])->name('projects.ajaxCreate');
                 Route::get('projects/archive-data', ['uses' => 'ManageProjectsController@archiveData'])->name('projects.archive-data');
                 Route::get('projects/archive', ['uses' => 'ManageProjectsController@archive'])->name('projects.archive');
@@ -415,7 +415,31 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('projects/discussion/{projectId}', ['uses' => 'ManageProjectsController@discussion'])->name('projects.discussion');
                 Route::get('projects/template-data/{templateId}', ['uses' => 'ManageProjectsController@templateData'])->name('projects.template-data');
                 Route::get('projects/pinned-project', ['uses' => 'ManageProjectsController@pinnedItem'])->name('projects.pinned-project');
-                Route::resource('projects', 'ManageProjectsController');
+                Route::get('valuations/create', ['uses' => 'ManageProjectsController@create'])->name('projects.create');*/
+
+                Route::post('valuations/gantt-task-update/{id}', ['uses' => 'ManageProjectsController@updateTaskDuration'])->name('projects.gantt-task-update');
+                Route::get('valuations/ajaxCreate/{columnId?}', ['uses' => 'ManageProjectsController@ajaxCreate'])->name('projects.ajaxCreate');
+                Route::get('valuations/archive-data', ['uses' => 'ManageProjectsController@archiveData'])->name('projects.archive-data');
+                Route::get('valuations/archive', ['uses' => 'ManageProjectsController@archive'])->name('projects.archive');
+                Route::get('valuations/archive-restore/{id?}', ['uses' => 'ManageProjectsController@archiveRestore'])->name('projects.archive-restore');
+                Route::get('valuations/archive-delete/{id?}', ['uses' => 'ManageProjectsController@archiveDestroy'])->name('projects.archive-delete');
+                Route::get('valuations/export/{status?}/{clientID?}', ['uses' => 'ManageProjectsController@export'])->name('projects.export');
+                Route::get('valuations/ganttData/{projectId?}', ['uses' => 'ManageProjectsController@ganttData'])->name('projects.ganttData');
+                Route::get('valuations/gantt/{projectId?}', ['uses' => 'ManageProjectsController@gantt'])->name('projects.gantt');
+                Route::get('valuations/burndown/{projectId?}', ['uses' => 'ManageProjectsController@burndownChart'])->name('projects.burndown-chart');
+                Route::post('valuations/updateStatus/{id}', ['uses' => 'ManageProjectsController@updateStatus'])->name('projects.updateStatus');
+                Route::get('valuations/discussion-replies/{projectId}/{discussionId}', ['uses' => 'ManageProjectsController@discussionReplies'])->name('projects.discussionReplies');
+                Route::get('valuations/discussion/{projectId}', ['uses' => 'ManageProjectsController@discussion'])->name('projects.discussion');
+                Route::get('valuations/template-data/{templateId}', ['uses' => 'ManageProjectsController@templateData'])->name('projects.template-data');
+                Route::get('valuations/pinned-project', ['uses' => 'ManageProjectsController@pinnedItem'])->name('projects.pinned-project');
+                Route::get('valuations/create', ['uses' => 'ManageProjectsController@create'])->name('projects.create');
+                Route::get('valuations', ['uses' => 'ManageProjectsController@index'])->name('projects.index');
+                Route::post('valuations', ['uses' => 'ManageProjectsController@store'])->name('projects.store');
+                Route::delete('valuations/{id}', ['uses' => 'ManageProjectsController@destroy'])->name('projects.destroy');
+                Route::get('valuations/{id}/edit', ['uses' => 'ManageProjectsController@edit'])->name('projects.edit');
+                Route::get('valuations/{id}', ['uses' => 'ManageProjectsController@show'])->name('projects.show');
+                Route::put('valuations/{id}', ['uses' => 'ManageProjectsController@update'])->name('projects.update');
+//                Route::resource('projects', 'ManageProjectsController');
 
                 Route::get('project-template/data', ['uses' => 'ProjectTemplateController@data'])->name('project-template.data');
                 Route::get('project-template/detail/{id?}', ['uses' => 'ProjectTemplateController@taskDetail'])->name('project-template.detail');

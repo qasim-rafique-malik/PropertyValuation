@@ -58,8 +58,8 @@ $valuationLang['intendedUser']['createBlock'] = 'Create User';
 
 
 $property = array();
-$property['title'] = 'Property';
-$property['total'] = 'Total Property';
+$property['title'] = 'Properties';
+$property['total'] = 'Total Properties';
 $property['selectCity'] = 'Select City';
 $property['selectTypes'] = 'Select Type';
 $property['selectClassification'] = 'Select Classification';

@@ -73,7 +73,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-xs-12 col-md-5">
+                               {{-- <div class="col-xs-12 col-md-5">
                                     <div class="form-group">
                                         <div class="checkbox checkbox-info  col-md-10">
                                             <input id="client_view_task" onchange="checkTask()" name="client_view_task" value="true"
@@ -81,7 +81,7 @@
                                             <label for="client_view_task">@lang('modules.projects.clientViewTask')</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="col-xs-12 col-md-3" id="clientNotification">
                                     <div class="form-group">
                                         <div class="checkbox checkbox-info  col-md-10">

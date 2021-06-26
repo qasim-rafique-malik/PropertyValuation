@@ -129,7 +129,7 @@ class ProductsDataTable extends BaseDataTable
             Column::computed('#', __('#')),
             //'#' => ['data' => 'id', 'name' => 'id', 'visible' => true],
             __('app.name') => ['data' => 'name', 'name' => 'name'],
-            __('app.price') . '(' . __('app.inclusiveAllTaxes') . ')' => ['data' => 'price', 'name' => 'price'],
+            __('app.price') . '(' . __('app.inclusiveAllTaxes') . '.)' => ['data' => 'price', 'name' => 'price'],
             __('app.purchaseAllow') => ['data' => 'allow_purchase', 'name' => 'allow_purchase'],
             Column::computed('action', __('app.action'))
                 ->exportable(false)

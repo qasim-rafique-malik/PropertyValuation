@@ -23,7 +23,7 @@ return array(
   'fileUploadedSuccessfully' => 'File uploaded successfully.',
   'isAddedAsProjectMember' => 'is added as project member.',
   'memberRemovedFromProject' => 'Member removed from project successfully.',
-  'noProjectFound' => 'No Project Found.',
+  'noProjectFound' => 'No Valuation Found.',
   'noPaymentFound' => 'No payment found',
   'noInvoiceFound' => 'Seems like no invoice has been generated.',
   'noClientFound' => 'Seems like no client exists in the database. Please create the client first',

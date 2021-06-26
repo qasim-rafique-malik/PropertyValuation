@@ -237,7 +237,10 @@
                                 </div>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <span class="widget-title"> @lang('modules.dashboard.totalProjects')</span><br>
+                                <span class="widget-title">
+{{--                                    @lang('modules.dashboard.totalProjects')--}}
+                                    @lang('modules.dashboard.totalValuations')
+                                </span><br>
                                 <span class="counter">{{ $counts->totalProjects }}</span>
                             </div>
                         </div>

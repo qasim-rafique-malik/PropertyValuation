@@ -15,6 +15,8 @@
                             autocomplete="nope" name="ScopeOfWorkRestrictionsOnUse">{{isset($formData['ScopeOfWorkRestrictionsOnUse'])?$formData['ScopeOfWorkRestrictionsOnUse']:''}}</textarea>
             </div>
         </div>
+    </div>
+        <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label class="required" for="scopeOfWorkValuerValidTill">Scope of work valid till days</label>
@@ -22,7 +24,8 @@
                        value="{{isset($formData['scopeOfWorkValuerValidTill'])?$formData['scopeOfWorkValuerValidTill']:''}}" autocomplete="nope" name="scopeOfWorkValuerValidTill" />
             </div>
         </div>
-    </div>
+        </div>
+        </div>
 
 
 </div>

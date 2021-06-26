@@ -7,13 +7,13 @@
         <div class="col-lg-8 col-md-5 col-sm-6 col-xs-12">
             <h4 class="page-title"><i class="{{ $pageIcon }}"></i> {{ __($pageTitle) }}
                 <span class="text-info b-l p-l-10 m-l-5">{{ $blocksCount }}</span> <span
-                        class="font-12 text-muted m-l-5"> @lang('valuation::valuation.block.totalBlock')</span>
+                        class="font-12 text-muted m-l-5"> @lang('valuation::valuation.intendedUser.totalBlock')</span>
             </h4>
         </div>
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-4 col-sm-6 col-md-7 col-xs-12 text-right">
-            <a href="{{ route($addEditViewRoute) }}" class="btn btn-outline btn-success btn-sm">@lang('valuation::valuation.block.createBlock') <i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a href="{{ route($addEditViewRoute) }}" class="btn btn-outline btn-success btn-sm">@lang('valuation::valuation.intendedUser.createBlock') <i class="fa fa-plus" aria-hidden="true"></i></a>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.dashboard') }}">@lang('app.menu.home')</a></li>

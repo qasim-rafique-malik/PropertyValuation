@@ -1,3 +1,22 @@
+<div class="row">
+    @php
+        // check valuator
+           $isValuator = false;
+           foreach ($project->members as $employeesIn){
+               $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
+               foreach ($roles as $role){
+                   $roleName = $role->name ?? '';
+                   if($roleName == 'Valuater'){
+                       $isValuator = true;
+                       break;
+                   }
+               }
+           }
+           if($isValuator == false){
+          echo '<div class="alert alert-danger">Kindly select valuator!</div>';
+           }
+    @endphp
+</div>
 <div class="white-box">
     <div class="row">
         <div class="col-md-11 p-r-0">

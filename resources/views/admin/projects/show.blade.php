@@ -5,7 +5,9 @@
         <div class="col-lg-7 col-md-4 col-sm-4 col-xs-12">
             <h4 class="page-title"><i class="{{ $pageIcon }}"></i> @lang('app.project') #{{ $project->id }}
                 - {{ ucwords($project->project_name) }}</h4>
+
         </div>
+
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-5 col-sm-8 col-md-8 col-xs-12 text-right">
@@ -97,6 +99,7 @@
         </div>
         <!-- /.breadcrumb -->
     </div>
+
 @endsection
 @push('head-script')
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/icheck/skins/all.css') }}">
@@ -188,21 +191,21 @@
                                                         <div class="row project-top-stats">
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center">
                                                                 <span class="font-12 text-muted m-l-5"> Purpose of valuation {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div>Value</div>
+                                                                <div>{{$productCategory}}</div>
                                                             </div>
 
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center b-l">
                                                                 <span class="font-12 text-muted m-l-5"> Basis of Valuation {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div>Value</div>
+                                                                <div> {{$project->category->category_name}}</div>
                                                             </div>
 
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center b-l">
                                                                 <span class="font-12 text-muted m-l-5"> Approach {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div>Value</div>
+                                                                <div>{{$approaches_value}}</div>
                                                             </div>
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center b-l">
                                                                 <span class="font-12 text-muted m-l-5"> Method  {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div>Value</div>
+                                                                <div>{{$methods_value}}</div>
                                                             </div>
                                                         </div>
                                                     </div>

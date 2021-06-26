@@ -30,7 +30,7 @@ class IntendedUserController extends ValuationAdminBaseController
     {
         parent::__construct();
 
-        $this->pageTitle = 'valuation::valuation.block.title';
+        $this->pageTitle = 'valuation::valuation.intendedUser.homeTitle';
 
         $this->pageIcon = 'icon-speedometer';
     }
@@ -63,7 +63,7 @@ class IntendedUserController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
 
-        $this->title = 'valuation::valuation.block.createBlock';
+        $this->title = 'valuation::valuation.intendedUser.createBlock';
         $this->id = $id;
 
 

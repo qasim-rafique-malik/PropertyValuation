@@ -52,6 +52,9 @@ $block['selectGovernorate'] = 'Select Governorate';
 $block['selectCity'] = 'Select City';
 $valuationLang['block'] = $block;
 $valuationLang['intendedUser']['title'] = 'Title';
+$valuationLang['intendedUser']['homeTitle'] = 'Intended User';
+$valuationLang['intendedUser']['totalBlock'] = 'Total User';
+$valuationLang['intendedUser']['createBlock'] = 'Create User';
 
 
 $property = array();

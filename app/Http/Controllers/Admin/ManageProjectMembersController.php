@@ -161,8 +161,16 @@ class ManageProjectMembersController extends AdminBaseController
     public function storeIntendedUser(Request $request){
 
         $project = Project::find($request->project_id);
-        $metaData['intendedUsers'] = $request->user_id;
-        $project->setMeta($metaData);
+
+        if($project->getMeta('intendedUsers',null,array())){
+            $get = $project->getMeta('intendedUsers',null,'array');
+            $new = array_merge($request->user_id,$get);
+            $metaData['intendedUsers']  = $new;
+            $project->setMeta($metaData);
+        }else{
+            $metaData['intendedUsers'] = $request->user_id;
+            $project->setMeta($metaData);
+        }
         return Reply::success(__('messages.intendedUsersAddedSuccessfully'));
 
     }

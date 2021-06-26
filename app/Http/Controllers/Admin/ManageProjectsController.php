@@ -34,6 +34,7 @@ use App\Project;
 use App\ProjectMilestone;
 use App\TaskUser;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Valuation\Entities\ValuationProperty;
 use Yajra\DataTables\Facades\DataTables;
@@ -313,9 +314,9 @@ class ManageProjectsController extends AdminBaseController
     public function show($id)
     {
         $this->project = Project::findOrFail($id)->withCustomFields();
+//        dd($this->project->category);
         $this->fields = $this->project->getCustomFieldGroupsWithFields()->fields;
         $this->activeTimers = ProjectTimeLog::projectActiveTimers($this->project->id);
-
         if (is_null($this->project->deadline)) {
             $this->daysLeft = 0;
         } else {
@@ -330,7 +331,8 @@ class ManageProjectsController extends AdminBaseController
             $this->daysLeftPercent = ($this->daysLeftFromStartDate == 0 ? "0" : (($this->daysLeft / $this->daysLeftFromStartDate) * 100));
         }
 
-
+        $this->approaches_value = $this->project->getMeta('approaches');
+        $this->methods_value = $this->project->getMeta('methods');
         $this->dayPassed = '--';
         if(isset($this->project->start_date) && !empty($this->project->start_date)){
             $now = Carbon::now();

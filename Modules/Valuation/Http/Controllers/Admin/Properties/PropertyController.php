@@ -617,6 +617,7 @@ class PropertyController extends ValuationAdminBaseController
                    $residual_value_for_UnitInfoName='residual_value_for_UnitInfo-'.$key;
                    $cost_construction_for_UnitInfoName='cost_construction_for_UnitInfo-'.$key;
                    $incomebasevalue_for_UnitInfoName='incomebasevalue_for_UnitInfo-'.$key;
+                   $unitInfofloorName='unitInfofloor-'.$key;
                    
                    $unitType = isset($request->$unitTypeName) ? $request->$unitTypeName : '';
                     $unitTypeArray=array();
@@ -685,6 +686,10 @@ class PropertyController extends ValuationAdminBaseController
                     $incomebasevalue_for_UnitInfo = isset($request->$incomebasevalue_for_UnitInfoName) ? $request->$incomebasevalue_for_UnitInfoName : '';
                     $incomebasevalue_for_UnitInfoArray=array();
                     $incomebasevalue_for_UnitInfoArray[]=$incomebasevalue_for_UnitInfo;
+                    
+                    $unitInfofloor = isset($request->$unitInfofloorName) ? $request->$unitInfofloorName : '';
+                    $unitInfofloorArray=array();
+                    $unitInfofloorArray[]=$unitInfofloor;
 
                     //UnitInfoAcquisitionCost
                     $aquDateUnitInfoName='aqu_Date_unit_info-'.$key;
@@ -771,6 +776,7 @@ class PropertyController extends ValuationAdminBaseController
                     $updatePropertyMetaUnit[ValuationProperty::UnitInfoStyling.'-'.$key] = json_encode($unitInfoStylingArray);
                     $updatePropertyMetaUnit[ValuationProperty::UnitInfoStatus.'-'.$key] = json_encode($unitInfoStatusArray);
                     $updatePropertyMetaUnit[ValuationProperty::UnitInfoInteriorStatus.'-'.$key] = json_encode($unitInfoInteriorStatusArray);
+                    $updatePropertyMetaUnit[ValuationProperty::UnitInfoFloor.'-'.$key] = json_encode($unitInfofloorArray);
                     $updatePropertyMetaUnit[ValuationProperty::RentalIncomeUnitInfo.'-'.$key] = json_encode($rentalIncomeUnitInfoArray);
                     $updatePropertyMetaUnit[ValuationProperty::DepictedValueUnitInfo.'-'.$key] = json_encode($depicted_value_for_UnitInfoArray);
                     $updatePropertyMetaUnit[ValuationProperty::EstimatedValueUnitInfo.'-'.$key] = json_encode($estimatedValueUnitInfoArray);
@@ -1186,10 +1192,16 @@ class PropertyController extends ValuationAdminBaseController
     public function data()
     {
         $propertyObj = new ValuationProperty();
-
         $properties = $propertyObj->getAllForCompany();
 
         return DataTables::of($properties)
+            ->addIndexColumn()
+             ->editColumn(
+                'id',
+                function ($row) {
+                   return $row->id; 
+                }
+            )
             ->addColumn('action', function ($row) {
 
                 $action = '<div class="btn-group dropdown m-r-10">
@@ -1211,7 +1223,26 @@ class PropertyController extends ValuationAdminBaseController
                     return ucfirst($row->title);
                 }
             )
-            ->addIndexColumn()
+            ->editColumn(
+                'type',
+                function ($row) {
+                    if($row->type_id>0)
+                    {
+                        $typeProperty=ValuationPropertyType::find($row->type_id);
+                        return isset($typeProperty)?ucfirst($typeProperty->title):'';
+                    }
+                }
+            )
+           ->editColumn(
+                'city',
+                function ($row) {
+                    if($row->city_id>0)
+                    {
+                        $cityProperty=ValuationCity::find($row->city_id);
+                        return isset($cityProperty)?ucfirst($cityProperty->name):'';
+                    }
+                }
+            )
             ->rawColumns(array('title', 'action'))
             ->make(true);
     }

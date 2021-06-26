@@ -68,6 +68,9 @@ $property['createProperty'] = 'Create Property';
 $property['editProperty'] = 'Edit Property';
 $property['detailProperty'] = 'Detail';
 $property['propertyBackBtn'] = 'Back';
+$property['sr'] = 'Sr';
+$property['propertyType'] = 'Type';
+$property['propertyCity'] = 'City';
 $valuationLang['property'] = $property;
 
 $type = array();

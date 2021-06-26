@@ -14,20 +14,20 @@
     <tr>
         <td>1</td>
         <td>Property Price</td>
-        <td>BHD</td>
+        <td>{{$currency}}</td>
         <td></td>
-        <td>Comparable 1 Price</td>
-        <td>Comparable 2 Price</td>
-        <td>Comparable 3 Price</td>
+        <td>{{$propertyInfoOne->estimated_value}}</td>
+        <td>{{$propertyInfoTwo->estimated_value}}</td>
+        <td>{{$propertyInfoThree->estimated_value}}</td>
     </tr>
     <tr>
         <td>2</td>
         <td>Apartment Size in SQM as per IPMS-1</td>
-        <td>40%</td>
+        <td>{{$sizeWeightagePerText}}</td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>176.4</td>
+                    <td>{{$propertyBaseInfo->aptSizeIPMS}}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -40,52 +40,52 @@
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>176.4</td>
+                    <td>{{$propertyInfoOne->aptSizeIPMS}}</td>
                 </tr>
                 <tr>
-                    <td>0.00</td>
+                    <td>{{$propertyInfoOne->aptSizeIPMSCal}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="table table-striped">
-                <tr>
-                    <td>176.4</td>
-                </tr>
-                <tr>
-                    <td>0.00</td>
-                </tr>
-                <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->aptSizeIPMSComparison}}</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>270.00</td>
+                    <td>{{$propertyInfoTwo->aptSizeIPMS}}</td>
                 </tr>
                 <tr>
-                    <td>-93.60</td>
+                    <td>{{$propertyInfoTwo->aptSizeIPMSCal}}</td>
                 </tr>
                 <tr>
-                    <td>-53.06%</td>
+                    <td>{{$propertyInfoTwo->aptSizeIPMSComparison}}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="table table-striped">
+                <tr>
+                    <td>{{$propertyInfoThree->aptSizeIPMS}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->aptSizeIPMSCal}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->aptSizeIPMSComparison}}</td>
                 </tr>
             </table>
         </td>
     </tr>
 
     <tr>
-        <td>3</td>
+        <td></td>
         <td>No. of Bedrooms</td>
-        <td>20%</td>
+        <td>{{$bedroomsWeightagePerText}}</td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>2</td>
+                    <td>{{$propertyBaseInfo->bedrooms}}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -98,39 +98,39 @@
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>2</td>
+                    <td>{{$propertyInfoOne->bedrooms}}</td>
                 </tr>
                 <tr>
-                    <td>0</td>
+                    <td>{{$propertyInfoOne->baseBedroomsMinusProOne}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="table table-striped">
-                <tr>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->bedComparison}}%</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>3</td>
+                    <td>{{$propertyInfoTwo->bedrooms}}</td>
                 </tr>
                 <tr>
-                    <td>-1</td>
+                    <td>{{$propertyInfoTwo->baseBedroomsMinusProTwo}}</td>
                 </tr>
                 <tr>
-                    <td>-12.50%</td>
+                    <td>{{$propertyInfoTwo->bedComparison}}%</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="table table-striped">
+                <tr>
+                    <td>{{$propertyInfoThree->bedrooms}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->baseBedroomsMinusProThree}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->bedComparison}}%</td>
                 </tr>
             </table>
         </td>
@@ -139,11 +139,11 @@
     <tr>
         <td>4</td>
         <td>No. of Bathrooms</td>
-        <td>10%</td>
+        <td>{{$bathWeightagePerText}}</td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>3</td>
+                    <td>{{$propertyBaseInfo->bathrooms}}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -156,39 +156,39 @@
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>3</td>
+                    <td>{{$propertyInfoOne->bathrooms}}</td>
                 </tr>
                 <tr>
-                    <td>0</td>
+                    <td>{{$propertyInfoOne->bathBaseMinusProOne}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="table table-striped">
-                <tr>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->bathComparison}}</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped">
                 <tr>
-                    <td>3</td>
+                    <td>{{$propertyInfoTwo->bathrooms}}</td>
                 </tr>
                 <tr>
-                    <td>0</td>
+                    <td>{{$propertyInfoTwo->bathBaseMinusProOne}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoTwo->bathComparison}}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="table table-striped">
+                <tr>
+                    <td>{{$propertyInfoThree->bathrooms}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->bathBaseMinusProOne}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->bathComparison}}</td>
                 </tr>
             </table>
         </td>
@@ -196,18 +196,18 @@
 
     <tr>
         <td>5</td>
-        <td>Finishing Quailty</td>
-        <td>15%</td>
+        <td>Finishing Quality</td>
+        <td>{{$finishingQualityWeightagePerText}}</td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Good Condition</td>
+                    <td>{{$propertyBaseInfo->finishingQualitySelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>No Maintenance Needed</td>
+                    <td>{{$propertyBaseInfo->maintenanceSelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>6.25</td>
+                    <td>{{$propertyBaseInfo->finishingQualityCalBase}}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -217,48 +217,48 @@
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Good Condition</td>
+                    <td>{{$propertyInfoOne->finishingQualitySelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>No Maintenance Needed</td>
+                    <td>{{$propertyInfoOne->maintenanceSelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>6.25</td>
+                    <td>{{$propertyInfoOne->finishingQualityCalBase}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="table table-striped ">
-                <tr>
-                    <td>Good Condition</td>
-                </tr>
-                <tr>
-                    <td>No Maintenance Needed</td>
-                </tr>
-                <tr>
-                    <td>6.25</td>
-                </tr>
-                <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->finishingQualityComparison}}</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Good Condition</td>
+                    <td>{{$propertyInfoTwo->finishingQualitySelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>No Maintenance Needed</td>
+                    <td>{{$propertyInfoTwo->maintenanceSelectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>6.25</td>
+                    <td>{{$propertyInfoTwo->finishingQualityCalBase}}</td>
                 </tr>
                 <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoTwo->finishingQualityComparison}}</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="table table-striped ">
+                <tr>
+                    <td>{{$propertyInfoThree->finishingQualitySelectionTitle}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->maintenanceSelectionTitle}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->finishingQualityCalBase}}</td>
+                </tr>
+                <tr>
+                    <td>{{$propertyInfoThree->finishingQualityComparison}}</td>
                 </tr>
             </table>
         </td>
@@ -267,14 +267,14 @@
     <tr>
         <td>6</td>
         <td>Building Amenities and Facilities</td>
-        <td>15%</td>
+        <td>{{$amenitiesWeightagePerText}}</td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Refer to Section 17</td>
+                    <td>{{$propertyBaseInfo->amenitiesSlectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>8</td>
+                    <td>{{$propertyBaseInfo->amenities}}</td>
                 </tr>
 
                 <tr>
@@ -285,42 +285,42 @@
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Refer to Section 17</td>
+                    <td>{{$propertyInfoOne->amenitiesSlectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>8</td>
+                    <td>{{$propertyInfoOne->amenities}}</td>
                 </tr>
 
                 <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->amenitiesComparison}}</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Refer to Section 17</td>
+                    <td>{{$propertyInfoOne->amenitiesSlectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>8</td>
+                    <td>{{$propertyInfoOne->amenities}}</td>
                 </tr>
 
                 <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoOne->amenitiesComparison}}</td>
                 </tr>
             </table>
         </td>
         <td>
             <table class="table table-striped ">
                 <tr>
-                    <td>Refer to Section 17</td>
+                    <td>{{$propertyInfoThree->amenitiesSlectionTitle}}</td>
                 </tr>
                 <tr>
-                    <td>8</td>
+                    <td>{{$propertyInfoThree->amenities}}</td>
                 </tr>
 
                 <tr>
-                    <td>0.00%</td>
+                    <td>{{$propertyInfoThree->amenitiesComparison}}</td>
                 </tr>
             </table>
         </td>
@@ -331,30 +331,30 @@
         <td>Weighted Factor Adjustment</td>
         <td>%</td>
         <td></td>
-        <td>0.00%</td>
-        <td>0.00%</td>
-        <td>0.00%</td>
+        <td>{{$propertyInfoOne->weightedFacAdj}}</td>
+        <td>{{$propertyInfoTwo->weightedFacAdj}}</td>
+        <td>{{$propertyInfoThree->weightedFacAdj}}</td>
 
     </tr>
     <tr>
         <td>8</td>
         <td>Amount Adjustment to Original Price</td>
-        <td>BHD</td>
+        <td>{{$currency}}</td>
         <td></td>
-        <td>-</td>
-        <td>0.00</td>
-        <td>32,028.06</td>
+        <td>{{$propertyInfoOne->amountAdjOriPrice}}</td>
+        <td>{{$propertyInfoTwo->amountAdjOriPrice}}</td>
+        <td>{{$propertyInfoThree->amountAdjOriPrice}}</td>
 
     </tr>
 
     <tr>
         <td>9</td>
         <td>Weighted Factor Average Price</td>
-        <td>BHD</td>
+        <td>{{$currency}}</td>
         <td></td>
-        <td>130,000.00</td>
-        <td>120,000.00</td>
-        <td>102,971.94</td>
+        <td>{{$propertyInfoOne->weightedFactAvgPrice}}</td>
+        <td>{{$propertyInfoTwo->weightedFactAvgPrice}}</td>
+        <td>{{$propertyInfoThree->weightedFactAvgPrice}}</td>
 
     </tr>
 
@@ -363,9 +363,9 @@
         <td>Comparable Overall Weighted Adjustment </td>
         <td>100%</td>
         <td></td>
-        <td>100.00%</td>
-        <td>0.00%</td>
-        <td>0.00%</td>
+        <td>{{$propertyInfoOne->comparableOverallWeightAdj}}</td>
+        <td>{{$propertyInfoTwo->comparableOverallWeightAdj}}</td>
+        <td>{{$propertyInfoThree->comparableOverallWeightAdj}}</td>
 
     </tr>
     <tr>
@@ -373,16 +373,16 @@
         <td>Total Weighted Adjusted Price </td>
         <td></td>
         <td></td>
-        <td>130,000.00</td>
-        <td>-</td>
-        <td>-</td>
+        <td>{{$propertyInfoOne->totalWeightAdjPrice}}</td>
+        <td>{{$propertyInfoTwo->totalWeightAdjPrice}}</td>
+        <td>{{$propertyInfoThree->totalWeightAdjPrice}}</td>
 
     </tr>
     <tr>
         <td>12</td>
         <td>Subject Property Weighted Market Value</td>
-        <td>BHD</td>
-        <td colspan="4">130,000.00</td>
+        <td>{{$currency}}</td>
+        <td colspan="4">{{$propertyBaseInfo->weightedMrktValue}}</td>
     </tr>
 
     </tbody>
@@ -399,5 +399,10 @@
 
     .compareResTable .bold {
         font-weight: bold;
+    }
+    .compareResTable tbody tr td
+    {
+        font-size: 15px;
+        font-weight: 400;
     }
 </style>

@@ -201,7 +201,6 @@
                             <section id="section-line-2" class="show">
                                 <div class="white-box">
                                     <div class="row" id="comparisionResponse">
-                                        table will come here
                                     </div>
                                 </div>
                             </section>

@@ -95,7 +95,6 @@ class AddRefIdInValuationPropertyTable extends Migration
          {
             if (!Schema::hasColumn('valuation_properties', 'ref_id'))
             {
-                $table->dropColumn(['ref_id']);
             }
          }
        

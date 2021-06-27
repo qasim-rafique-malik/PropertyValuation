@@ -30,23 +30,68 @@
     <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/custom-select/custom-select.css') }}">
-
+<link rel="stylesheet" href="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
 @endpush
+@section('filter-section')
+<div class="row"  id="ticket-filters">
+    
+    <form action="" id="filter-form">
+        <div class="col-xs-12">
+            <h5 >@lang('app.selectDateRange')</h5>
+            <div class="input-daterange input-group" id="date-range">
+                <input type="text" class="form-control" autocomplete="off" id="start-date" placeholder="@lang('app.startDate')"
+                       value=""/>
+                <span class="input-group-addon bg-info b-0 text-white">@lang('app.to')</span>
+                <input type="text" class="form-control" id="end-date"  autocomplete="off" placeholder="@lang('app.endDate')"
+                       value=""/>
+            </div>
+        </div>
 
+        <div class="col-xs-12">
+            <div class="form-group">
+                <h5 >Type</h5>
+                <select class="form-control select2" name="client" id="client" data-style="form-control">
+                    <option value="all">All</option>
+                   
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <h5>City</h5>
+                <select class="form-control select2" name="category_id" id="category_id"
+                        data-style="form-control">
+                    <option value="all">All</option>
+                   
+                </select>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div class="form-group p-t-10">
+                <button type="button" id="apply-filters" class="btn btn-success col-md-6"><i class="fa fa-check"></i> @lang('app.apply')</button>
+                <button type="button" id="reset-filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> @lang('app.reset')</button>
+            </div>
+        </div>
+    </form>
+</div>
+@endsection
 @section('content')
 
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="white-box">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover toggle-circle default footable-loaded footable"
                            id="users-table">
                         <thead>
                         <tr>
+                            <th>@lang('valuation::valuation.property.sr')</th>
                             <th>@lang('valuation::app.id')</th>
                             <th>@lang('valuation::valuation.property.title')</th>
-                            <th>@lang('valuation::app.status')</th>
+                            <th>@lang('valuation::valuation.property.propertyType')</th>
+                            <th>@lang('valuation::valuation.property.propertyCity')</th>
                             <th>@lang('valuation::app.action')</th>
                         </tr>
                         </thead>
@@ -65,6 +110,8 @@
     <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
     <script src="{{ asset('plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
     <script>
 
@@ -77,8 +124,8 @@
         var table;
         $(function () {
             loadTable();
-            $(".data-section").removeClass('col-md-9');
-            $(".data-section").addClass('col-md-12');
+            /*$(".data-section").removeClass('col-md-9');
+            $(".data-section").addClass('col-md-12');*/
 
             $('body').on('click', '.sa-params', function () {
                 var id = $(this).attr('id');
@@ -149,9 +196,12 @@
                     });
                 },
                 columns: [
+                    
                     {data: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'id', name: 'id'},
                     {data: 'title', name: 'title'},
-                    {data: 'status', name: 'status'},
+                    {data: 'type', name: 'type'},
+                    {data: 'city', name: 'city'},
                     {data: 'action', name: 'action'}
                 ]
             })

@@ -65,6 +65,7 @@ class ValuationProperty extends ValuationBaseModel
     const UnitInfoStyling='UnitInfoStyling';
     const UnitInfoStatus='UnitInfoStatus';
     const UnitInfoInteriorStatus='UnitInfoInteriorStatus';
+    const UnitInfoFloor='UnitInfoFloor';
     const RentalIncomeUnitInfo='RentalIncomeUnitInfo';
     const EstimatedValueUnitInfo='EstimatedValueUnitInfo';
     const EstimatedValuePropertyInfo='EstimatedValuePropertyInfo';

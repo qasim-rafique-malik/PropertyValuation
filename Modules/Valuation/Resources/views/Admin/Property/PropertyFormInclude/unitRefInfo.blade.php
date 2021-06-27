@@ -29,6 +29,7 @@
             $UnitInfoStyling=($PropertyUnitObj != null)?optional($PropertyUnitObj->getMeta($PropertyUnitObj::UnitInfoStyling.'-'.$objRef->unit_id , array()))->toArray():array();
             $UnitInfoStatus=($PropertyUnitObj != null)?optional($PropertyUnitObj->getMeta($PropertyUnitObj::UnitInfoStatus.'-'.$objRef->unit_id , array()))->toArray():array();
             $UnitInfoInteriorStatus=($PropertyUnitObj != null)?optional($PropertyUnitObj->getMeta($PropertyUnitObj::UnitInfoInteriorStatus.'-'.$objRef->unit_id , array()))->toArray():array();
+            $UnitInfoFloor=($PropertyUnitObj != null)?optional($PropertyUnitObj->getMeta($PropertyUnitObj::UnitInfoFloor.'-'.$objRef->unit_id , array()))->toArray():array();
                 
                 
                 @endphp

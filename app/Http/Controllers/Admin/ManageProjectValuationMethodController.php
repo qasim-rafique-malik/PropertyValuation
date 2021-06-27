@@ -748,151 +748,23 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $locationPropertyBaseCalProThree = (($locationOfTansPropertyInfoThree)/$maxLocation);
         $propertyInfoThree->locationComparison = $locationPropertyBaseCalProThree;
 
-        /*
-                //bedrooms comparison
-                $baseBedrooms = $propertyBaseInfo->bedrooms;
-                $bedroomsPropertyInfoOne = $propertyInfoOne->bedrooms;
-                $bedroomsPropertyInfoTwo = $propertyInfoTwo->bedrooms;
-                $bedroomsPropertyInfoThree = $propertyInfoThree->bedrooms;
-                $maxBedrooms = '8';
+        //No. of Access Roads
+        $numAccRoadsPropertyBase = $propertyBaseInfo->numAccRoads;
+        $numAccRoadsPropertyInfoOne = $propertyInfoOne->numAccRoads;
+        $numAccRoadsPropertyInfoTwo = $propertyInfoTwo->numAccRoads;
+        $numAccRoadsPropertyInfoThree = $propertyInfoThree->numAccRoads;
 
-                $baseBedroomsMinusProOne = $baseBedrooms - $bedroomsPropertyInfoOne;
-                $propertyInfoOne->baseBedroomsMinusProOne = $baseBedroomsMinusProOne;
-                $propertyInfoOne->bedComparison = ($baseBedroomsMinusProOne / $maxBedrooms) * 100;
+        $landSizePropertyBaseMinusProOne = $landSizePropertyBase - $landSizePropertyInfoOne;
+        $propertyInfoOne->landSizeCal = $landSizePropertyBaseMinusProOne;
+        $propertyInfoOne->landSizeComparison = ($landSizePropertyBaseMinusProOne / $landSizePropertyBase);
 
-                $baseBedroomsMinusProTwo = $baseBedrooms - $bedroomsPropertyInfoTwo;
-                $propertyInfoTwo->baseBedroomsMinusProTwo = $baseBedroomsMinusProTwo;
-                $propertyInfoTwo->bedComparison = ($baseBedroomsMinusProTwo / $maxBedrooms) * 100;
+        $landSizePropertyBaseMinusProTwo = $landSizePropertyBase - $landSizePropertyInfoTwo;
+        $propertyInfoTwo->landSizeCal = $landSizePropertyBaseMinusProTwo;
+        $propertyInfoTwo->landSizeComparison = ($landSizePropertyBaseMinusProTwo / $landSizePropertyBase);
 
-                $baseBedroomsMinusProThree = $baseBedrooms - $bedroomsPropertyInfoThree;
-                $propertyInfoThree->baseBedroomsMinusProThree = $baseBedroomsMinusProThree;
-                $propertyInfoThree->bedComparison = ($baseBedroomsMinusProThree / $maxBedrooms) * 100;
-
-                // bathroom comparison
-                $baseBathroom = $propertyBaseInfo->bathrooms;
-                $bathroomsPropertyInfoOne = $propertyInfoOne->bathrooms;
-                $bathroomsPropertyInfoTwo = $propertyInfoTwo->bathrooms;
-                $bathroomsPropertyInfoThree = $propertyInfoThree->bathrooms;
-                $maxBathrooms = '8';
-
-                $bathBaseMinusProOne = $baseBathroom - $bathroomsPropertyInfoOne;
-                $propertyInfoOne->bathBaseMinusProOne = $bathBaseMinusProOne;
-                $propertyInfoOne->bathComparison = ($bathBaseMinusProOne / $maxBathrooms) * 100;
-
-                $bathBaseMinusProTwo = $baseBathroom - $bathroomsPropertyInfoTwo;
-                $propertyInfoTwo->bathBaseMinusProTwo = $bathBaseMinusProTwo;
-                $propertyInfoTwo->bathComparison = ($bathBaseMinusProTwo / $maxBathrooms) * 100;
-
-                $bathBaseMinusProThree = $baseBathroom - $bathroomsPropertyInfoThree;
-                $propertyInfoThree->bathBaseMinusProThree = $bathBaseMinusProThree;
-                $propertyInfoThree->bathComparison = ($bathBaseMinusProThree / $maxBathrooms) * 100;
-
-                //Finishing Quality
-                $finishingQualityBase = $propertyBaseInfo->finishingQuality;
-                $maintenanceBase = $propertyBaseInfo->maintenance;
-                $propertyBaseInfo->finishingQualitySelectionTitle = 'Good Condition';
-                $propertyBaseInfo->maintenanceSelectionTitle = 'No Maintenance Needed';
-
-                $finishingQualityPropertyInfoOne = $propertyInfoOne->finishingQuality;
-                $maintenancePropertyInfoOne = $propertyInfoOne->maintenance;
-                $propertyInfoOne->finishingQualitySelectionTitle = 'Good Condition';
-                $propertyInfoOne->maintenanceSelectionTitle = 'No Maintenance Needed';
-
-                $finishingQualityPropertyInfoTwo = $propertyInfoTwo->finishingQuality;
-                $maintenancePropertyInfoTwo = $propertyInfoTwo->maintenance;
-                $propertyInfoTwo->finishingQualitySelectionTitle = 'Good Condition';
-                $propertyInfoTwo->maintenanceSelectionTitle = 'No Maintenance Needed';
-
-                $finishingQualityPropertyInfoThree = $propertyInfoThree->finishingQuality;
-                $maintenancePropertyInfoThree = $propertyInfoThree->maintenance;
-                $propertyInfoThree->finishingQualitySelectionTitle = 'Good Condition';
-                $propertyInfoThree->maintenanceSelectionTitle = 'No Maintenance Needed';
-
-                $finishingQualityCalBase = $finishingQualityBase + $maintenanceBase;
-                $propertyBaseInfo->finishingQualityCal = $finishingQualityCalBase;
-
-                $finishingQualityCalProOne = $finishingQualityPropertyInfoOne + $maintenancePropertyInfoOne;
-                $propertyInfoOne->finishingQualityCal = $finishingQualityCalProOne;
-                $propertyInfoOne->finishingQualityComparison = ($finishingQualityCalBase - $finishingQualityCalProOne) / 100;
-
-                $finishingQualityCalProTwo = $finishingQualityPropertyInfoTwo + $maintenancePropertyInfoTwo;
-                $propertyInfoTwo->finishingQualityCal = $finishingQualityCalProTwo;
-                $propertyInfoTwo->finishingQualityComparison = ($finishingQualityCalBase - $finishingQualityCalProTwo) / 100;
-
-                $finishingQualityCalProThree = $finishingQualityPropertyInfoThree + $maintenancePropertyInfoThree;
-                $propertyInfoThree->finishingQualityCal = $finishingQualityCalProThree;
-                $propertyInfoThree->finishingQualityComparison = ($finishingQualityCalBase - $finishingQualityCalProThree) / 100;
-
-                // Building Amenities and Facilities
-                $amenitiesBase = $propertyBaseInfo->amenities;
-                $propertyBaseInfo->amenitiesSlectionTitle = 'Refer to Section 17';
-
-                $amenitiesPropertyInfoOne = $propertyInfoOne->amenities;
-                $propertyInfoOne->amenitiesSlectionTitle = 'Refer to Section 17';
-
-                $amenitiesPropertyInfoTwo = $propertyInfoTwo->amenities;
-                $propertyInfoTwo->amenitiesSlectionTitle = 'Refer to Section 17';
-
-                $amenitiesPropertyInfoThree = $propertyInfoThree->amenities;
-                $propertyInfoThree->amenitiesSlectionTitle = 'Refer to Section 17';
-
-                $amenitiesMax = 8;
-
-                $propertyInfoOne->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoOne) / $amenitiesMax;
-                $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoTwo) / $amenitiesMax;
-                $propertyInfoThree->amenitiesComparison = ($amenitiesBase - $amenitiesPropertyInfoThree) / $amenitiesMax;
-
-
-                //Weighted Factor Adjustment
-                $weightedFacAdjProOne = ($propertyInfoOne->aptSizeIPMSComparison*$sizeWeightagePer)+
-                    ($propertyInfoOne->bedComparison*$bedroomsWeightagePer)+
-                    ($propertyInfoOne->bathComparison*$bathWeightagePer)+
-                    ($propertyInfoOne->finishingQualityComparison*$finishingQualityWeightagePer)+
-                    ($propertyInfoOne->amenitiesComparison*$amenitiesWeightagePer);
-                $propertyInfoOne->weightedFacAdj = $weightedFacAdjProOne;
-
-                $weightedFacAdjProTwo = ($propertyInfoOne->aptSizeIPMSComparison*$sizeWeightagePer)+
-                    ($propertyInfoTwo->bedComparison*$bedroomsWeightagePer)+
-                    ($propertyInfoTwo->bathComparison*$bathWeightagePer)+
-                    ($propertyInfoTwo->finishingQualityComparison*$finishingQualityWeightagePer)+
-                    ($propertyInfoTwo->amenitiesComparison*$amenitiesWeightagePer);
-                $propertyInfoTwo->weightedFacAdj = $weightedFacAdjProTwo;
-
-                $weightedFacAdjProThree = ($propertyInfoOne->aptSizeIPMSComparison*$sizeWeightagePer)+
-                    ($propertyInfoThree->bedComparison*$bedroomsWeightagePer)+
-                    ($propertyInfoThree->bathComparison*$bathWeightagePer)+
-                    ($propertyInfoThree->finishingQualityComparison*$finishingQualityWeightagePer)+
-                    ($propertyInfoThree->amenitiesComparison*$amenitiesWeightagePer);
-                $propertyInfoThree->weightedFacAdj = $weightedFacAdjProThree;
-
-                //Amount Adjustment to Original Price
-                $propertyInfoOne->amountAdjOriPrice = $propertyInfoOne->estimated_value*$propertyInfoOne->weightedFacAdj;
-                $propertyInfoTwo->amountAdjOriPrice = $propertyInfoTwo->estimated_value*$propertyInfoTwo->weightedFacAdj;
-                $propertyInfoThree->amountAdjOriPrice = $propertyInfoThree->estimated_value*$propertyInfoThree->weightedFacAdj;
-
-                //Weighted Factor Average Price
-                $propertyInfoOne->weightedFactAvgPrice = $propertyInfoOne->estimated_value+$propertyInfoOne->amountAdjOriPrice;
-                $propertyInfoTwo->weightedFactAvgPrice = $propertyInfoTwo->estimated_value+$propertyInfoTwo->amountAdjOriPrice;
-                $propertyInfoThree->weightedFactAvgPrice = $propertyInfoThree->estimated_value+$propertyInfoThree->amountAdjOriPrice;
-
-                //Comparable Overall Weighted Adjustment
-                $propertyInfoOne->comparableOverallWeightAdj = 100;
-                $propertyInfoTwo->comparableOverallWeightAdj = 0.00;
-                $propertyInfoThree->comparableOverallWeightAdj = 0.00;
-
-                //Total Weighted Adjusted Price
-                $propertyInfoOne->totalWeightAdjPrice = $propertyInfoOne->weightedFactAvgPrice * $propertyInfoOne->comparableOverallWeightAdj;
-                $propertyInfoTwo->totalWeightAdjPrice = $propertyInfoTwo->weightedFactAvgPrice * $propertyInfoTwo->comparableOverallWeightAdj;
-                $propertyInfoThree->totalWeightAdjPrice =$propertyInfoThree->weightedFactAvgPrice * $propertyInfoThree->comparableOverallWeightAdj;
-
-                $propertyInfoOne->totalWeightAdjPrice = $propertyInfoOne->weightedFactAvgPrice * $propertyInfoOne->comparableOverallWeightAdj;
-                $propertyInfoTwo->totalWeightAdjPrice = $propertyInfoTwo->weightedFactAvgPrice * $propertyInfoTwo->comparableOverallWeightAdj;
-                $propertyInfoThree->totalWeightAdjPrice =$propertyInfoThree->weightedFactAvgPrice * $propertyInfoThree->comparableOverallWeightAdj;
-
-                //Subject Property Weighted Market Value
-                $propertyBaseInfo->weightedMrktValue = $propertyInfoOne->totalWeightAdjPrice
-                    +$propertyInfoTwo->totalWeightAdjPrice
-                    +$propertyInfoThree->totalWeightAdjPrice;*/
+        $landSizePropertyBaseMinusProThree = $landSizePropertyBase - $landSizePropertyInfoThree;
+        $propertyInfoThree->landSizeCal = $landSizePropertyBaseMinusProThree;
+        $propertyInfoThree->landSizeComparison = ($landSizePropertyBaseMinusProThree / $landSizePropertyBase);
 
         $propertiesInfo = array();
         $propertiesInfo['propertyBaseInfo'] = $propertyBaseInfo;

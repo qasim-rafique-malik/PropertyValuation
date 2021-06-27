@@ -167,13 +167,19 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Floor</label>
+                                            <input type="text" name="unitInfofloor-{{$objRef->unit_id}}"  @if(isset($UnitInfoFloor) && !empty($UnitInfoFloor) && !empty($UnitInfoFloor[0])) value="{{$UnitInfoFloor[0]}}" @endif class="form-control">
+                                        </div>
+                                    </div>
                                     
                                 </div>
                                  
                             </div>
                         </div>
 <!--                        UnitInfoFinancialInfo -->
-                        @include('valuation::Admin.Property.PropertyFormInclude.financialinfoForUnitinfo')
+                        @include('valuation::Admin.Property.PropertyFormInclude.FinancialinfoForUnitinfo')
 <!--                        UnitInfoFinancialInfo -->
                         <div class="tab-pane fade" id="UnitInfoImages-{{$objRef->unit_id}}" role="tabpanel">
                             

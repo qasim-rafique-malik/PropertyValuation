@@ -96,6 +96,23 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group">
+                                        <label class="control-label">Property Type</label>
+
+                                        <select class="selectpicker form-control" name="propertyType" id="propertyType"
+                                                data-style="form-control">
+                                            <option value="">@lang('messages.pleaseSelectPropertyType')</option>
+                                            @forelse($propertyType as $category)
+                                                <option @if( $category->id == $product->property_type) selected @endif value="{{ $category->id }}">{{ ucwords($category->title) }}</option>
+                                            @empty
+                                                <option value="">@lang('messages.noPropertyType')</option>
+                                            @endforelse
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">@lang('app.description')</label>

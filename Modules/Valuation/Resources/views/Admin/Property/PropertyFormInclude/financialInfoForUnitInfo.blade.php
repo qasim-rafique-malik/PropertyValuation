@@ -131,8 +131,6 @@
                         </div>
                         <!---FinancialInfoAddOnCostsUnitInfo -->
                         
-                       
-                        
                         <!---FinancialInfoIncomeUnitInfo -->
                         <div class="tab-pane fade" id="FinancialInfoIncomeUnitInfo-{{$objRef->unit_id}}">
                             <div class="form-body">

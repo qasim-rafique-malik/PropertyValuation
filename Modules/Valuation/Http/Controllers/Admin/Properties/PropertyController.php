@@ -153,7 +153,7 @@ class PropertyController extends ValuationAdminBaseController
         $properties = new ValuationProperty();
         if($id==0)
         {
-            $properties->company_id = isset($data['companyId']) ? $data['companyId'] : 0;
+            $properties->company_id = isset($this->data['companyId']) ? $this->data['companyId'] : 0;
             $properties->title = 'Temp';
             $properties->status = 'Draft';
             $properties->save();

@@ -179,7 +179,7 @@
                             </div>
                         </div>
 <!--                        UnitInfoFinancialInfo -->
-                        @include('valuation::Admin.Property.PropertyFormInclude.financialinfoForUnitinfo')
+                        @include('valuation::Admin.Property.PropertyFormInclude.FinancialinfoForUnitinfo')
 <!--                        UnitInfoFinancialInfo -->
                         <div class="tab-pane fade" id="UnitInfoImages-{{$objRef->unit_id}}" role="tabpanel">
                             

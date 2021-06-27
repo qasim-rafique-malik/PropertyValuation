@@ -115,7 +115,7 @@
                             @include('valuation::Admin.Property.PropertyFormInclude.StructureInfo')
                             
                             @include('valuation::Admin.Property.PropertyFormInclude.OtherInfo')
-                            @include('valuation::Admin.Property.PropertyFormInclude.unitRefInfo')
+                            @include('valuation::Admin.Property.PropertyFormInclude.UnitRefInfo')
                            
                             @include('valuation::Admin.Property.PropertyFormInclude.ObservationInfo')
                         </div>

@@ -191,12 +191,12 @@
                                                         <div class="row project-top-stats">
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center">
                                                                 <span class="font-12 text-muted m-l-5"> Purpose of valuation {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div>{{$productCategory}}</div>
+                                                                <div>{{$productSubCategory}}</div>
                                                             </div>
 
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center b-l">
                                                                 <span class="font-12 text-muted m-l-5"> Basis of Valuation {{--load it from lang @lang('modules.projects.hoursLogged')--}}</span>
-                                                                <div> {{$project->category->category_name}}</div>
+                                                                <div> {{$productCategory}}</div>
                                                             </div>
 
                                                             <div class="col-md-3 m-b-20 m-t-10 text-center b-l">

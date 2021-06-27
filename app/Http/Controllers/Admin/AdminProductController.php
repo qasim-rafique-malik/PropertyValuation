@@ -11,6 +11,7 @@ use App\ProductCategory;
 use App\ProductSubCategory;
 use App\Tax;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Valuation\Entities\ValuationPropertyType;
 
 class AdminProductController extends AdminBaseController
 {
@@ -46,6 +47,7 @@ class AdminProductController extends AdminBaseController
         $this->taxes = Tax::all();
         $this->categories = ProductCategory::all();
         $this->subCategories = ProductSubCategory::all();
+        $this->propertyType = ValuationPropertyType::all();
         return view('admin.products.create', $this->data);
     }
 
@@ -60,6 +62,7 @@ class AdminProductController extends AdminBaseController
         $products = new Product();
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->property_type = $request->propertyType;
         $products->taxes = $request->tax ? json_encode($request->tax) : null;
         $products->description = $request->description;
         $products->allow_purchase = ($request->purchase_allow == 'no')? true : false ;
@@ -93,6 +96,8 @@ class AdminProductController extends AdminBaseController
         $this->taxes = Tax::all();
         $this->categories = ProductCategory::all();
         $this->subCategories = ProductSubCategory::all();
+        $this->propertyType = ValuationPropertyType::all();
+        $this->propertyTypeValue = ValuationPropertyType::find($this->product->property_type);
 
         return view('admin.products.edit', $this->data);
     }
@@ -109,6 +114,7 @@ class AdminProductController extends AdminBaseController
         $products = Product::find($id);
         $products->name = $request->name;
         $products->price = $request->price;
+        $products->property_type = $request->propertyType;
         $products->taxes = $request->tax ? json_encode($request->tax) : null;
         $products->description = $request->description;
         $products->allow_purchase = ($request->purchase_allow == 'no')? true : false ;

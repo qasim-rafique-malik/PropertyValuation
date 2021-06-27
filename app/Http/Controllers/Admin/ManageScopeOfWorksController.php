@@ -436,7 +436,7 @@ class ManageScopeOfWorksController extends AdminBaseController
                 'Intended User' => $userNames??'',
                 'Currency' => $project->currency->currency_name??'',
                 'Purpose Of Valuation' => $product->subCategory->category_name??'',
-                'Basis Of Valuation' => $project->category->category_name??'',
+                'Basis Of Valuation' => $product->category->category_name??'',
                 'Valuation Date' => $valuationDate??'',
             ],
             'property'=>[

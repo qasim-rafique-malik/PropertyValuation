@@ -84,6 +84,7 @@ class ManageProjectMilestonesController extends AdminBaseController
     {
         //echo "here"; exit;
         $this->dataTable = New ScopeOfWorkDataTable();
+        $this->dataTable->projectId = $id;
 
         $this->currencies = Currency::all();
         $this->project = Project::findorFail($id);

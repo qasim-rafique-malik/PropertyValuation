@@ -22,6 +22,7 @@ class ScopeOfWorkDataTable extends BaseDataTable
      */
     public function dataTable($query)
     {
+
         $firstScopeOfWork = $this->firstScopeOfWork;
         return datatables()
             ->eloquent($query)
@@ -119,6 +120,7 @@ class ScopeOfWorkDataTable extends BaseDataTable
     {
         $request = $this->request();
 
+
         $this->firstScopeOfWork = ScopeOfWork::latest()->first();
      /*   $model = $model->join('client_details', 'scope_of_works.client_id', '=', 'client_details.user_id')
             ->join('currencies', 'currencies.id', '=', 'scope_of_works.currency_id')
@@ -127,7 +129,9 @@ class ScopeOfWorkDataTable extends BaseDataTable
             ->select('scope_of_works.id', 'scope_of_works.client_id', 'users.name', 'scope_of_works.total', 'currencies.currency_symbol', 'scope_of_works.status', 'scope_of_works.valid_till', 'scope_of_works.estimate_number', 'scope_of_works.send_status');*/
 
         $model = $model
-            ->select('scope_of_works.id', 'scope_of_works.client_id', 'scope_of_works.total',  'scope_of_works.status', 'scope_of_works.valid_till', 'scope_of_works.estimate_number', 'scope_of_works.send_status');
+            ->select('scope_of_works.id', 'scope_of_works.client_id', 'scope_of_works.total',  'scope_of_works.status', 'scope_of_works.valid_till', 'scope_of_works.estimate_number', 'scope_of_works.send_status')
+            ->where('scope_of_works.project_id', '=', $this->projectId);
+
 
         //echo "<pre>"; print_r($model); die;
         //dd($model);

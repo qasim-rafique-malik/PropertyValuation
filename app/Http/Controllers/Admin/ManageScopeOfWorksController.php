@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ClientDetails;
+use App\Company;
 use App\Currency;
 use App\DataTables\Admin\EstimatesDataTable;
 use App\DataTables\Admin\ScopeOfWorkDataTable;
@@ -15,6 +16,7 @@ use App\InvoiceSetting;
 use App\Notifications\NewEstimate;
 use App\Project;
 use App\ScopeOfWork;
+use App\User;
 use Carbon\Carbon;
 use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +24,12 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Tax;
 use App\Product;
+use Modules\Valuation\Entities\ValuationBlock;
+use Modules\Valuation\Entities\ValuationCity;
+use Modules\Valuation\Entities\ValuationGovernorate;
+use Modules\Valuation\Entities\ValuationProperty;
+use Modules\Valuation\Entities\ValuationPropertyClassification;
+use Modules\Valuation\Entities\ValuationPropertyType;
 
 class ManageScopeOfWorksController extends AdminBaseController
 {
@@ -40,7 +48,6 @@ class ManageScopeOfWorksController extends AdminBaseController
 
     public function index(ScopeOfWorkDataTable $dataTable)
     {
-
         return $dataTable->render('admin.scopeOfWork.index', $this->data);
     }
 
@@ -295,47 +302,64 @@ class ManageScopeOfWorksController extends AdminBaseController
         }
     }
 
+//    public function domPdfObjectForDownload($id)
+//    {
+//        $this->scopeOfWork = ScopeOfWork::findOrFail($id);
+//
+//
+//        $pdf = app('dompdf.wrapper');
+//        $pdf->loadView('admin.estimates.estimate-pdf', $this->data);
+//        $filename = $this->scopeOfWork->estimate_number;
+//
+//        return [
+//            'pdf' => $pdf,
+//            'fileName' => $filename
+//        ];
+//    }
+
     public function domPdfObjectForDownload($id)
     {
-        $this->scopeOfWork = ScopeOfWork::findOrFail($id);
-        if ($this->scopeOfWork->discount > 0) {
-            if ($this->scopeOfWork->discount_type == 'percent') {
-                $this->discount = (($this->scopeOfWork->discount / 100) * $this->scopeOfWork->sub_total);
-            } else {
-                $this->discount = $this->scopeOfWork->discount;
-            }
-        } else {
-            $this->discount = 0;
-        }
-        $taxList = array();
 
-        $items = EstimateItem::whereNotNull('taxes')
-            ->where('estimate_id', $this->scopeOfWork->id)
-            ->get();
-        $this->invoiceSetting = InvoiceSetting::first();
-        foreach ($items as $item) {
-            if ($this->scopeOfWork->discount > 0 && $this->scopeOfWork->discount_type == 'percent') {
-                $item->amount = $item->amount - (($this->scopeOfWork->discount / 100) * $item->amount);
-            }
-            foreach (json_decode($item->taxes) as $tax) {
-                $this->tax = EstimateItem::taxbyid($tax)->first();
-                if ($this->tax) {
-                    if (!isset($taxList[$this->tax->tax_name . ': ' . $this->tax->rate_percent . '%'])) {
-                        $taxList[$this->tax->tax_name . ': ' . $this->tax->rate_percent . '%'] = ($this->tax->rate_percent / 100) * $item->amount;
-                    } else {
-                        $taxList[$this->tax->tax_name . ': ' . $this->tax->rate_percent . '%'] = $taxList[$this->tax->tax_name . ': ' . $this->tax->rate_percent . '%'] + (($this->tax->rate_percent / 100) * $item->amount);
-                    }
-                }
-            }
-        }
+        $estimate = ScopeOfWork::whereRaw('id = ?', $id)->firstOrFail();
+        $company = Company::find($estimate->company_id);
+        $settings = $company;
 
-        $this->taxes = $taxList;
+        $data = $this->scopeOfWorkGetData($estimate);
+        $pdf = app('dompdf.wrapper',$paper = null);
+        $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
+            'allData' => $data,
+            'estimate' => $estimate,
+            'settings' => $settings,
+            'company' => $settings,
+            'global' => $settings,
+            'companyName' => $settings->company_name
+        ]);
+        $filename = 'scope-' . $estimate->id;
 
-        $this->settings = $this->global;
+        return [
+            'pdf' => $pdf,
+            'fileName' => $filename
+        ];
+    }
+
+    public function scopeOfWorkDomPdfObjectForDownload($id)
+    {
+        $estimate = ScopeOfWork::whereRaw('id = ?', $id)->firstOrFail();
+        $company = Company::find($estimate->company_id);
+        $settings = $company;
+
+        $data = $this->scopeOfWorkGetData($estimate);
 
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.estimates.estimate-pdf', $this->data);
-        $filename = $this->scopeOfWork->estimate_number;
+        $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
+            'allData' => $data,
+            'estimate' => $estimate,
+            'settings' => $settings,
+            'company' => $settings,
+            'global' => $settings,
+            'companyName' => $settings->company_name
+        ]);
+        $filename = 'scope-' . $estimate->id;
 
         return [
             'pdf' => $pdf,
@@ -345,6 +369,7 @@ class ManageScopeOfWorksController extends AdminBaseController
 
     public function download($id)
     {
+
         $pdfOption = $this->domPdfObjectForDownload($id);
         $pdf = $pdfOption['pdf'];
         $filename = $pdfOption['fileName'];
@@ -376,5 +401,57 @@ class ManageScopeOfWorksController extends AdminBaseController
 
         return Reply::success(__('messages.updateSuccess'));
     }
-    
+    private function scopeOfWorkGetData($estimate){
+        $project = Project::find($estimate->project_id);
+        $property = ValuationProperty::find($project->property_id);
+        $product = Product::find($project->product_id);
+        $propertyType = ValuationPropertyType::find($property->type_id);
+        $propertyClassification = ValuationPropertyClassification::find($property->classification_id);
+        $propertyAddBlock= ValuationBlock::find($property->block_id);
+        $propertyAddCity = ValuationCity::find($property->city_id);
+        $propertyAddGovern = ValuationGovernorate::find($property->governorate_id);
+
+        foreach ($project->members as $employeesIn){
+            $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
+            foreach ($roles as $role){
+                $roleName = $role->name ?? '';
+                if($roleName == 'Valuater'){
+                    $isValuator = $employeesIn->user;
+                    break;
+                }
+            }
+        }
+
+        $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
+        $IntendedUser = $project->getMeta('intendedUsers',null,'array');
+        $valuationDate = $project->getMeta('appointment_day',null,'string');
+        $user = User::whereIn('id',$IntendedUser)->pluck('name');
+        $userNames = implode(', ', $user->toArray());
+
+        $data = [
+            'info'=>[
+                'Valuer' => $isValuator->name ?? '',
+                'Client' => $project->client->name??'',
+                'Intended User' => $userNames??'',
+                'Currency' => $project->currency->currency_name??'',
+                'Purpose Of Valuation' => $product->subCategory->category_name??'',
+                'Basis Of Valuation' => $project->category->category_name??'',
+                'Valuation Date' => $valuationDate??'',
+            ],
+            'property'=>[
+                'Type' => $propertyType->title??'',
+                'Classification' => $propertyClassification->title??'',
+                'Address' => $address,
+            ],
+            'product'=>[
+                'Tittle' => $product->name??'',
+                'Category' => $product->category->category_name??'',
+                'Sub Category' => $product->subCategory->category_name??'',
+                'Price' => $product->price??'',
+            ]
+        ];
+
+        return $data;
+    }
+
 }

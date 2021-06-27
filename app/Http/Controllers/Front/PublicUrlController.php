@@ -19,6 +19,8 @@ use App\InvoiceItems;
 use App\Notifications\ContractSigned;
 use App\Notifications\NewInvoice;
 use App\Notifications\NewNotice;
+use App\Product;
+use App\Project;
 use App\ProjectMilestone;
 use App\ScopeOfWork;
 use App\Scopes\CompanyScope;
@@ -30,7 +32,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Modules\Valuation\Entities\ValuationBlock;
+use Modules\Valuation\Entities\ValuationCity;
+use Modules\Valuation\Entities\ValuationGovernorate;
 use Modules\Valuation\Entities\ValuationProperty;
+use Modules\Valuation\Entities\ValuationPropertyClassification;
+use Modules\Valuation\Entities\ValuationPropertyType;
+use Modules\Valuation\Entities\ValuationPropertyXref;
 
 class PublicUrlController extends FrontBaseController
 {
@@ -91,6 +99,59 @@ class PublicUrlController extends FrontBaseController
         ]);
     }
 
+    private function scopeOfWorkGetData($estimate){
+        $project = Project::find($estimate->project_id);
+        $property = ValuationProperty::find($project->property_id);
+        $product = Product::find($project->product_id);
+        $propertyType = ValuationPropertyType::find($property->type_id);
+        $propertyClassification = ValuationPropertyClassification::find($property->classification_id);
+        $propertyAddBlock= ValuationBlock::find($property->block_id);
+        $propertyAddCity = ValuationCity::find($property->city_id);
+        $propertyAddGovern = ValuationGovernorate::find($property->governorate_id);
+
+        foreach ($project->members as $employeesIn){
+            $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
+            foreach ($roles as $role){
+                $roleName = $role->name ?? '';
+                if($roleName == 'Valuater'){
+                    $isValuator = $employeesIn->user;
+                    break;
+                }
+            }
+        }
+
+        $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
+        $IntendedUser = $project->getMeta('intendedUsers',null,'array');
+        $valuationDate = $project->getMeta('appointment_day',null,'string');
+        $user = User::whereIn('id',$IntendedUser)->pluck('name');
+        $userNames = implode(', ', $user->toArray());
+
+        $data = [
+            'info'=>[
+                'Valuer' => $isValuator->name ?? '',
+                'Client' => $project->client->name??'',
+                'Intended User' => $userNames??'',
+                'Currency' => $project->currency->currency_name??'',
+                'Purpose Of Valuation' => $product->subCategory->category_name??'',
+                'Basis Of Valuation' => $project->category->category_name??'',
+                'Valuation Date' => $valuationDate??'',
+            ],
+            'property'=>[
+                'Type' => $propertyType->title??'',
+                'Classification' => $propertyClassification->title??'',
+                'Address' => $address,
+            ],
+            'product'=>[
+                'Tittle' => $product->name??'',
+                'Category' => $product->category->category_name??'',
+                'Sub Category' => $product->subCategory->category_name??'',
+                'Price' => $product->price??'',
+            ]
+        ];
+
+        return $data;
+    }
+
     public function scopeOfWorkView(Request $request, $id)
     {
         $pageTitle = __('app.menu.scopeOfWork');
@@ -98,33 +159,10 @@ class PublicUrlController extends FrontBaseController
         $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();
         $company = Company::find($estimate->company_id);
         App::setLocale(isset($company->locale) ? $company->locale : 'en');
-
         // public url company session set.
         session(['company' => $company]);
-        $property = ValuationProperty::find($estimate->property_id);
 
-       $data = [
-           'info'=>[
-               'Valuer' => '--',
-               'Client' => '--',
-               'Intended User' => '--',
-               'Currency' => '--',
-               'Purpose Of Valuation' => '--',
-               'Basis Of Valuation' => '--',
-               'Valuation Date' => '--',
-           ],
-           'property'=>[
-                'Type' => '--',
-               'Classification' => '--',
-               'Address' => '--',
-           ],
-           'product'=>[
-                'Tittle' => '--',
-               'Category' => '--',
-               'Sub Category' => '--',
-               'Price' => '--',
-           ]
-       ];
+       $data = $this->scopeOfWorkGetData($estimate);
 
         $settings = $company;
         return view('scopeOfWork', [
@@ -451,30 +489,8 @@ class PublicUrlController extends FrontBaseController
         $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();
         $company = Company::find($estimate->company_id);
         $settings = $company;
-        $property = ValuationProperty::find($estimate->property_id);
 
-        $data = [
-            'info'=>[
-                'Valuer' => '--',
-                'Client' => '--',
-                'Intended User' => '--',
-                'Currency' => '--',
-                'Purpose Of Valuation' => '--',
-                'Basis Of Valuation' => '--',
-                'Valuation Date' => '--',
-            ],
-            'property'=>[
-                'Type' => '--',
-                'Classification' => '--',
-                'Address' => '--',
-            ],
-            'product'=>[
-                'Tittle' => '--',
-                'Category' => '--',
-                'Sub Category' => '--',
-                'Price' => '--',
-            ]
-        ];
+        $data = $this->scopeOfWorkGetData($estimate);
 
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
@@ -504,6 +520,7 @@ class PublicUrlController extends FrontBaseController
 
     public function scopeOfWorkDownload($id)
     {
+        dd("here");
         $pdfOption = $this->scopeOfWorkDomPdfObjectForDownload($id);
         $pdf = $pdfOption['pdf'];
         $filename = $pdfOption['fileName'];

@@ -159,6 +159,7 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive m-t-30">
+
                                             {!! $dataTable->table(['class' => 'table table-bordered table-hover toggle-circle default footable-loaded footable']) !!}
                                         </div>
 

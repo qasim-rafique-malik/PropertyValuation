@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Notification;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationCity;
 use Modules\Valuation\Entities\ValuationGovernorate;
+use Modules\Valuation\Entities\ValuationIntendedUser;
 use Modules\Valuation\Entities\ValuationProperty;
 use Modules\Valuation\Entities\ValuationPropertyClassification;
 use Modules\Valuation\Entities\ValuationPropertyType;
@@ -123,7 +124,7 @@ class PublicUrlController extends FrontBaseController
         $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
         $IntendedUser = $project->getMeta('intendedUsers',null,'array');
         $valuationDate = $project->getMeta('appointment_day',null,'string');
-        $user = User::whereIn('id',$IntendedUser)->pluck('name');
+        $user = ValuationIntendedUser::whereIn('id',$IntendedUser)->pluck('title');
         $userNames = implode(', ', $user->toArray());
 
         $data = [

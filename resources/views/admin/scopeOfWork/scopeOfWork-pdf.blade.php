@@ -154,7 +154,7 @@
         table td {
             padding: 5px 10px 7px 10px;
             background: #EEEEEE;
-            text-align: center;
+            text-align: left;
             border-bottom: 1px solid #FFFFFF;
         }
 
@@ -164,7 +164,7 @@
         }
 
         table td {
-            text-align: right;
+            text-align: left;
         }
 
         table td.desc h3, table td.qty h3 {
@@ -437,9 +437,9 @@
             @if(!is_null($estimate->note))
                 {!! nl2br($estimate->note) !!}<br>
             @endif
-            @if(!is_null($invoiceSetting->estimate_terms))
-               {!! nl2br($invoiceSetting->estimate_terms) !!}
-            @endif
+{{--            @if(!is_null($invoiceSetting->estimate_terms))--}}
+{{--               {!! nl2br($invoiceSetting->estimate_terms) !!}--}}
+{{--            @endif--}}
         </p>
 
         @if($estimate->sign)

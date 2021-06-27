@@ -307,7 +307,7 @@ class ManageProjectValuationMethodController extends AdminBaseController
             return Reply::error('comparable property 3 id should be greater then 0');
         }
 
-        $propertyType = 'Land';
+        $propertyType = 'Apartment';
         $valuationMethod = 'comparision';
 
         switch ($valuationMethod) {
@@ -656,7 +656,7 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $propertyBaseInfo->locationWeightVal = -10.00;
         $propertyBaseInfo->numAccRoads = 4.00;
         $propertyBaseInfo->numAccRoadsWeightTitle = '';
-        $propertyBaseInfo->numAccRoadsWeightVal = '';
+        $propertyBaseInfo->numAccRoadsWeightVal = '0';
 
         $propertyInfoOne = ValuationProperty::findOrFail($propertyIdOne);
 
@@ -754,17 +754,11 @@ class ManageProjectValuationMethodController extends AdminBaseController
         $numAccRoadsPropertyInfoTwo = $propertyInfoTwo->numAccRoads;
         $numAccRoadsPropertyInfoThree = $propertyInfoThree->numAccRoads;
 
-        $landSizePropertyBaseMinusProOne = $landSizePropertyBase - $landSizePropertyInfoOne;
-        $propertyInfoOne->landSizeCal = $landSizePropertyBaseMinusProOne;
-        $propertyInfoOne->landSizeComparison = ($landSizePropertyBaseMinusProOne / $landSizePropertyBase);
+        $propertyInfoOne->numAccRoadsComparison = ($numAccRoadsPropertyInfoOne / $numAccRoadsPropertyBase);
 
-        $landSizePropertyBaseMinusProTwo = $landSizePropertyBase - $landSizePropertyInfoTwo;
-        $propertyInfoTwo->landSizeCal = $landSizePropertyBaseMinusProTwo;
-        $propertyInfoTwo->landSizeComparison = ($landSizePropertyBaseMinusProTwo / $landSizePropertyBase);
+        $propertyInfoTwo->numAccRoadsComparison = ($numAccRoadsPropertyInfoTwo / $numAccRoadsPropertyBase);
 
-        $landSizePropertyBaseMinusProThree = $landSizePropertyBase - $landSizePropertyInfoThree;
-        $propertyInfoThree->landSizeCal = $landSizePropertyBaseMinusProThree;
-        $propertyInfoThree->landSizeComparison = ($landSizePropertyBaseMinusProThree / $landSizePropertyBase);
+        $propertyInfoThree->numAccRoadsComparison = ($numAccRoadsPropertyInfoThree / $numAccRoadsPropertyBase);
 
         $propertiesInfo = array();
         $propertiesInfo['propertyBaseInfo'] = $propertyBaseInfo;

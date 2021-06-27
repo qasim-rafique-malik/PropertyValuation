@@ -45,6 +45,9 @@
                                 <span>@lang('modules.tasks.taskBoard')</span></a>
                         </li>
                     @endif
+                    <li class="projectReport">
+                        <a href="{{ route('admin.report.show', $project->id) }}"><i class="ti-check-box"></i> <span>Report</span></a>
+                    </li>
                     <li class="projectFiles">
                         <a href="{{ route('admin.files.show', $project->id) }}"><i class="ti-files"></i> <span>@lang('modules.projects.files')</span></a>
                     </li>

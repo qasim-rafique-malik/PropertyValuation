@@ -1,3 +1,10 @@
+@push('head-script')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/bower_components/custom-select/custom-select.css') }}">
+@endpush
 <div class="row">
     <div class="col-md-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRuleModel">Add New</button>
@@ -24,6 +31,7 @@
             <div class="modal-body">
               {!! Form::open(['id'=>'saveUpdateConditionRulesForm','class'=>'ajax-form','method'=>'POST']) !!}
               <div class="row">
+                  <input type="hidden" id="idEdit" name="id">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="required">Select Rule Type</label>
@@ -33,6 +41,7 @@
                                 <option value="InformationOfSources">Information of Sources</option>     
                                 <option value="TypeOfReport">Type Of Report</option>     
                                 <option value="RestrictionsOnDistribution">Restrictions On Distribution</option>     
+                                <option value="ValuationReport">Valuation Report</option>     
                             </select>
                         </div>
                     </div>
@@ -57,6 +66,11 @@
     </div>
 </div>
 @push('footer-script')
+<script src="{{ asset('plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+    <script src="{{ asset('plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
 <script>
         $('#saveUpdateConditionRules').click(function () {
 
@@ -79,15 +93,16 @@
         });
 
         var table;
+        var table2= $('#users-table2');
         $(function () {
             loadTable();
             //$(".data-section").removeClass('col-md-9');
             //$(".data-section").addClass('col-md-12');
-            /*$('body').on('click', '.sa-params', function () {
-                var id = $(this).data('user-id');
+            $('body').on('click', '.sa-params', function () {
+                var id = $(this).attr('id');
                 swal({
                     title: "Are you sure?",
-                    text: "You will not be able to recover the deleted user!",
+                    text: "You will not be able to recover the deleted Data!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -98,7 +113,7 @@
                 }, function (isConfirm) {
                     if (isConfirm) {
 
-                        var url = "{{ route('admin.clients.destroy',':id') }}";
+                        var url = "{{ route('valuation.admin.settings.general.destroyRule',':id') }}";
                         url = url.replace(':id', id);
 
                         var token = "{{ csrf_token() }}";
@@ -109,15 +124,15 @@
                             data: {'_token': token, '_method': 'DELETE'},
                             success: function (response) {
                                 if (response.status == "success") {
-                                    $.unblockUI();
+                                    $.unpropertyUI();
 //                                    swal("Deleted!", response.message, "success");
-                                    table._fnDraw();
+                                    table2._fnDraw();
                                 }
                             }
                         });
                     }
                 });
-            });*/
+            });
 
         });
 
@@ -140,11 +155,33 @@
                     });
                 },
                 columns: [
-                    {data: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'DT_RowIndex', orderable: false, searchable: true},
                     {data: 'type', name: 'type'},
                     {data: 'action', name: 'action'}
                 ]
             })
+        }
+        function loadEditData(EditId)
+        {
+            if(EditId!='' && EditId>0)
+            {
+                $.ajax({
+                    type:'get',
+                    url:"{{ route('valuation.admin.settings.general.editData') }}/"+EditId,
+                    cache:false,
+                    success:function(response)
+                    {
+                        
+                        if(response.test)
+                        {
+                            $('#addRuleModel textarea[name="ruleText"').val(response.test.description);
+                            $('#addRuleModel #idEdit').val(response.test.id);
+                            $("#addRuleModel option[value="+response.test.rule_type+"]").attr('selected', 'selected');
+                            $('#addRuleModel').modal('show');
+                        }
+                    }
+                });
+            }
         }
     </script>
 @endpush

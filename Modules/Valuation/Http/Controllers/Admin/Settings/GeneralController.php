@@ -15,6 +15,7 @@ class GeneralController extends ValuationAdminBaseController
     const saveUpdateDataRoute = 'valuation.admin.settings.general.saveUpdateData';
     const getAjaxDataRoute = 'valuation.admin.settings.block.getAjaxData';
     const saveUpdateRuleRoute ='valuation.admin.settings.general.saveUpdateRuleData';
+    const editDataRoute ='valuation.admin.settings.general.editData';
     private $viewFolderPath = 'valuation::Admin.Settings.General.';
 
     private $listingPageRoute = 'valuation.admin.settings.general';
@@ -23,6 +24,7 @@ class GeneralController extends ValuationAdminBaseController
     private $addEditViewRoute = 'valuation.admin.settings.general.addEditView';
     private $destroyRoute = 'valuation.admin.settings.general.destroy';
     private $saveUpdateRuleRoute = 'valuation.admin.settings.general.saveUpdateRuleData';
+    private $editDataRoute = 'valuation.admin.settings.general.editData';
     /**
      * @var mixed|string
      */
@@ -55,6 +57,7 @@ class GeneralController extends ValuationAdminBaseController
         $data['destroyRoute'] = $this->destroyRoute;
         $data['viewFolderPath'] = $this->viewFolderPath;
         $data['saveUpdateRuleRoute']=$this->saveUpdateRuleRoute;
+        $data['editDataRoute']=$this->editDataRoute;
         $data['companyId'] = isset(company()->id)?company()->id:0;
 
     }
@@ -139,6 +142,15 @@ class GeneralController extends ValuationAdminBaseController
 
         return Reply::success(__('valuation::messages.dataDeleted'));
     }
+    public function destroyRule($id)
+    {
+        $rule = ValuationSowRule::find($id);
+        if (empty($rule)) {
+            return Reply::error(__('valuation::messages.dataNotFound'));
+        }
+        ValuationSowRule::destroy($id);
+        return Reply::success(__('valuation::messages.dataDeleted'));
+    }
 
     public function getAjaxData()
     {
@@ -148,6 +160,23 @@ class GeneralController extends ValuationAdminBaseController
 
         echo  json_encode($fetureList);
     }
+    public function editData($id = 0)
+    {
+     
+        $this->__customConstruct($this->data);
+        if($id >0)
+        {
+            $ruleObj = ValuationSowRule::find($id);
+            $array = array();
+            $array['test'] = $ruleObj->toArray();
+            return Reply::successWithData('success',$array);
+        }
+        else
+        {
+            
+        }
+    }
+
     public function saveUpdateRuleData(Request $request)
     {
 //        $data = array();
@@ -170,7 +199,29 @@ class GeneralController extends ValuationAdminBaseController
 
     public function getData()
     {
-        
+        $ruleObj = new ValuationSowRule();
+        $rules = $ruleObj->getAllForCompany();
+        return DataTables::of($rules)
+            ->addIndexColumn()
+             ->editColumn(
+                'type',
+                function ($row) {
+                   return $row->rule_type; 
+                }
+            )
+            ->addColumn('action', function ($row) {
+                $action = '<div class="btn-group dropdown m-r-10">
+                <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle waves-effect waves-light" type="button"><i class="ti-more"></i></button>
+                <ul role="menu" class="dropdown-menu pull-right">
+                  <li><a href="javascript:void(0)" onclick="loadEditData('.$row->id.')"><i class="fa fa-pencil" aria-hidden="true"></i> ' . trans('valuation::app.edit') . '</a></li>
+                  <li><a href="javascript:void(0)" id="' . $row->id . '" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
+                     
+                 ';
+                $action .= '</ul> </div>';
+                return $action;
+            })
+            ->rawColumns(array('type', 'action'))
+            ->make(true);
     }
 
 

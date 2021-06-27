@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>-->
-        <div class="row">
+       {{-- <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label class="required" for="scopeOfWorkValuerValidTill">Scope of work valid till days</label>
@@ -24,8 +24,102 @@
                        value="{{isset($formData['scopeOfWorkValuerValidTill'])?$formData['scopeOfWorkValuerValidTill']:''}}" autocomplete="nope" name="scopeOfWorkValuerValidTill" />
             </div>
         </div>
-        </div>
-        </div>
+        </div>--}}
+
+    <div class="row">
+        <fieldset>
+            <legend>SOW Report Title</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="valuationInfoTitle">Valuation info title</label>
+                        <input type="text" class="form-control" id="valuationInfoTitle"
+                               value="{{isset($formData['valuationInfoTitle'])?$formData['valuationInfoTitle']:''}}" autocomplete="nope" name="valuationInfoTitle" />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="serviceInfoTitle">Service info  title</label>
+                        <input type="text" class="form-control" id="serviceInfoTitle"
+                               value="{{isset($formData['serviceInfoTitle'])?$formData['serviceInfoTitle']:''}}" autocomplete="nope" name="serviceInfoTitle" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="propertyInfoTitle">Property info  title</label>
+                        <input type="text" class="form-control" id="propertyInfoTitle"
+                               value="{{isset($formData['propertyInfoTitle'])?$formData['propertyInfoTitle']:''}}" autocomplete="nope" name="propertyInfoTitle" />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="scopeOfWorkValuerValidTill">Scope of work valid till days</label>
+                        <input type="number" class="form-control" id="scopeOfWorkValuerValidTill"
+                               value="{{isset($formData['scopeOfWorkValuerValidTill'])?$formData['scopeOfWorkValuerValidTill']:''}}" autocomplete="nope" name="scopeOfWorkValuerValidTill" />
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="row">
+        <fieldset>
+            <legend>Weight Max Values</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="maxNumberOfBedrooms">Max number of bedrooms</label>
+                        <input type="number" class="form-control" id="maxNumberOfBedrooms"
+                               value="{{isset($formData['maxNumberOfBedrooms'])?$formData['maxNumberOfBedrooms']:''}}" autocomplete="nope" name="maxNumberOfBedrooms" />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="maxNumberOfBathrooms">Max number of bathrooms</label>
+                        <input type="number" class="form-control" id="maxNumberOfBathrooms"
+                               value="{{isset($formData['maxNumberOfBathrooms'])?$formData['maxNumberOfBathrooms']:''}}" autocomplete="nope" name="maxNumberOfBathrooms" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="maxNumberOfAmenities">Max number of Amenities and facilities</label>
+                        <input type="number" class="form-control" id="maxNumberOfAmenities"
+                               value="{{isset($formData['maxNumberOfAmenities'])?$formData['maxNumberOfAmenities']:''}}" autocomplete="nope" name="maxNumberOfAmenities" />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="maxRecencyOfTransaction">Max recency of transaction</label>
+                        <input type="number" class="form-control" id="maxRecencyOfTransaction"
+                               value="{{isset($formData['maxRecencyOfTransaction'])?$formData['maxRecencyOfTransaction']:''}}" autocomplete="nope" name="maxRecencyOfTransaction" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="maxLocationOfLand">Max location of land</label>
+                        <input type="number" class="form-control" id="maxLocationOfLand"
+                               value="{{isset($formData['maxLocationOfLand'])?$formData['maxLocationOfLand']:''}}" autocomplete="nope" name="maxLocationOfLand" />
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+</div>
 
 
 </div>

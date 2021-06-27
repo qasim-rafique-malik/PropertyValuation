@@ -1,6 +1,6 @@
 {!! Form::open(['id'=>'saveUpdateFeature','class'=>'ajax-form','method'=>'POST']) !!}
 <div class="form-body">
-    <div class="row">
+<!--    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label class="required" for="scopeOfWorkValuerInformation">The nature and sources of information upon which the Valuer relies</label>
@@ -15,7 +15,7 @@
                             autocomplete="nope" name="ScopeOfWorkRestrictionsOnUse">{{isset($formData['ScopeOfWorkRestrictionsOnUse'])?$formData['ScopeOfWorkRestrictionsOnUse']:''}}</textarea>
             </div>
         </div>
-    </div>
+    </div>-->
         <div class="row">
         <div class="col-md-6">
             <div class="form-group">

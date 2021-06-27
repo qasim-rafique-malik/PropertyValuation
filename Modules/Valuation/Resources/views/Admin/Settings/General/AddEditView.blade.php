@@ -46,6 +46,10 @@
                             <div class="tab-content">
                                 <div id="vhome3" class="tab-pane active">
                                 @include($viewFolderPath.'Form')
+                                
+                                </div>
+                                <div id="vhome32" class="tab-pane active">
+                                    @include($viewFolderPath.'ConditionalRules')
                                 </div>
                             </div>
                         </div>
@@ -54,6 +58,7 @@
             </div>
         </div>
     </div>    <!-- .row -->
+ 
     {{--Ajax Modal--}}
     <div class="modal fade bs-modal-md in" id="departmentModel" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">

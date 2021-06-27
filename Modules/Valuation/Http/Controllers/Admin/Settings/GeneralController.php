@@ -7,13 +7,14 @@ use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Modules\Valuation\Entities\ValuationGeneralSetting;
+use Modules\Valuation\Entities\ValuationSowRule;
 
 class GeneralController extends ValuationAdminBaseController
 {
     const viewFolderPath = 'valuation::Admin.Settings.General.';
     const saveUpdateDataRoute = 'valuation.admin.settings.general.saveUpdateData';
     const getAjaxDataRoute = 'valuation.admin.settings.block.getAjaxData';
-
+    const saveUpdateRuleRoute ='valuation.admin.settings.general.saveUpdateRuleData';
     private $viewFolderPath = 'valuation::Admin.Settings.General.';
 
     private $listingPageRoute = 'valuation.admin.settings.general';
@@ -21,6 +22,7 @@ class GeneralController extends ValuationAdminBaseController
     private $saveUpdateDataRoute = 'valuation.admin.settings.general.saveUpdateData';
     private $addEditViewRoute = 'valuation.admin.settings.general.addEditView';
     private $destroyRoute = 'valuation.admin.settings.general.destroy';
+    private $saveUpdateRuleRoute = 'valuation.admin.settings.general.saveUpdateRuleData';
     /**
      * @var mixed|string
      */
@@ -52,6 +54,7 @@ class GeneralController extends ValuationAdminBaseController
         $data['addEditViewRoute'] = $this->addEditViewRoute;
         $data['destroyRoute'] = $this->destroyRoute;
         $data['viewFolderPath'] = $this->viewFolderPath;
+        $data['saveUpdateRuleRoute']=$this->saveUpdateRuleRoute;
         $data['companyId'] = isset(company()->id)?company()->id:0;
 
     }
@@ -63,6 +66,7 @@ class GeneralController extends ValuationAdminBaseController
         $feture = new ValuationGeneralSetting();
         $scope = $feture->getAllForCompany();
         $this->formData = array();
+        $formData = array();
         foreach ($scope as $data){
             $formData[$data->meta_key]=$data->meta_value;
         }
@@ -143,6 +147,30 @@ class GeneralController extends ValuationAdminBaseController
         $fetureList = $featureObj->getAllAjaxForCompany();
 
         echo  json_encode($fetureList);
+    }
+    public function saveUpdateRuleData(Request $request)
+    {
+//        $data = array();
+        $this->__customConstruct($this->data);
+        if(isset($request->id) && $request->id>0)
+        {
+            $ruleObj = ValuationSowRule::find($request->id);
+        }
+        else
+        {
+            $ruleObj=new ValuationSowRule();
+        }
+        $ruleObj->company_id=isset($this->data['companyId']) ? $this->data['companyId'] : 0;
+        $ruleObj->rule_type=isset($request->ruleType) ? $request->ruleType : 'ValuatorsLimitations';
+        $ruleObj->description=isset($request->ruleText) ? $request->ruleText : '';
+        $ruleObj->save();
+        
+        return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
+    }
+
+    public function getData()
+    {
+        
     }
 
 

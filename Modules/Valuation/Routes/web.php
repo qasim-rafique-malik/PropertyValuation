@@ -81,10 +81,11 @@ Route::prefix('valuation')->group(function() {
 
              //General settings
             Route::get('/general','Admin\Settings\GeneralController@index')->name('valuation.admin.settings.general');
-            Route::get('/general/data','Admin\Settings\GeneralController@data')->name('valuation.admin.settings.general.data');
+            Route::get('/general/data','Admin\Settings\GeneralController@getData')->name('valuation.admin.settings.general.data');
             Route::get('/general/addEditView/{id?}','Admin\Settings\GeneralController@addEditView')->name('valuation.admin.settings.general.addEditView');
             Route::post('/general/saveUpdateData/{id?}','Admin\Settings\GeneralController@saveUpdateData')->name('valuation.admin.settings.general.saveUpdateData');
             Route::delete('/general/destroy/{id?}','Admin\Settings\GeneralController@destroy')->name('valuation.admin.settings.general.destroy');
+            Route::post('/general/saveUpdateRuleData/{id?}','Admin\Settings\GeneralController@saveUpdateRuleData')->name('valuation.admin.settings.general.saveUpdateRuleData');
 
             //Property Feature Category
             Route::get('/category','Admin\Settings\FeatureCategoryController@index')->name('valuation.admin.settings.category');

@@ -34,17 +34,41 @@ class ManageProjectReportController extends AdminBaseController
         $this->generateProjectReportRoute = 'admin.report.generate';
         $this->id = $id;
         $this->currencies = Currency::all();
-        $this->project = Project::findorFail($id);
+            $this->project = Project::findorFail($id);
 
         return view('admin.projects.report.show', $this->data);
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     */
-    public function generateProjectReportRoute(Request $request, $id){
-        echo "<pre>"; print_r($_POST); exit;
+
+
+    public function generateProjectReportRoute($id)
+    {
+
+        $project = Project::findorFail($id);
+        $viewData = array();
+
+        $data = $this->scopeOfWorkGetData($estimate);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
+            'viewData' => $project,
+            'project' => $project,
+        ]);
+        $filename = 'ValuationReport-' . $id;
+
+        return [
+            'pdf' => $pdf,
+            'fileName' => $filename
+        ];
+    }
+
+    public function download($id)
+    {
+
+        $pdfOption = $this->domPdfObjectForDownload($id);
+        $pdf = $pdfOption['pdf'];
+        $filename = $pdfOption['fileName'];
+
+        return $pdf->download($filename . '.pdf');
     }
 
 }

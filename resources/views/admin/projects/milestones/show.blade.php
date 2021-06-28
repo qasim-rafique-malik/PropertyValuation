@@ -240,7 +240,7 @@
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" id="saveUpdateConditionRules" class="btn btn-success"><i class="fa fa-check"></i> @lang('app.save')</button>
+                        <button type="button" id="saveUpdateConditionRules" class="btn btn-success"><i class="fa fa-check"></i> @lang('app.save')</button>
                     </div>
                     {!! Form::close() !!}
                 </div>

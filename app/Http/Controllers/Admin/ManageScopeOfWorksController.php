@@ -58,10 +58,31 @@ class ManageScopeOfWorksController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(StoreEstimate $request)
     {
         DB::beginTransaction();
+        dd($request);
+        $scopeOfWork = new ScopeOfWork();
+        $scopeOfWork->project_id = $id;
+        $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
+        $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+20 days"));
+        $scopeOfWork->status = 'waiting';
+        /*dd($estimate->estimate_number);*/
 
+        $scopeOfWork->save();
+        $this->logSearchEntry($scopeOfWork->id, 'Estimate #' . $scopeOfWork->id, 'admin.estimates.edit', 'estimate');
+//        dd($scopeOfWork);
+        DB::commit();
+//        return Reply::success(__('messages.estimateSend'));
+//        return Reply::redirect(route('admin.milestones.show',$id), __('messages.estimateCreated'));
+        return redirect()->back()->with('messages', 'IT WORKS!');
+//        return Reply::success('messages');
+//        return Reply::redirect(route('admin.milestones.show',$id) , __('messages.estimateCreated'));
+    }
+public function sendValues($request)
+    {
+        DB::beginTransaction();
+        dd($request);
         $scopeOfWork = new ScopeOfWork();
         $scopeOfWork->project_id = $id;
         $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
@@ -80,9 +101,9 @@ class ManageScopeOfWorksController extends AdminBaseController
 //        return Reply::redirect(route('admin.milestones.show',$id) , __('messages.estimateCreated'));
     }
 
-    public function create($id)
+    public function create($request,$id)
     {
-        dd();
+        dd($request);
         dd($_GET);
         $this->clients = ClientDetails::all();
         $this->currencies = Currency::all();
@@ -126,6 +147,7 @@ class ManageScopeOfWorksController extends AdminBaseController
     public function store(StoreEstimate $request)
     {
         DB::beginTransaction();
+        dd($request);
         $items = $request->input('item_name');
         $itemsSummary = $request->input('item_summary');
         $cost_per_item = $request->input('cost_per_item');
@@ -216,8 +238,9 @@ class ManageScopeOfWorksController extends AdminBaseController
         return view('admin.scopeOfWorks.edit', $this->data);
     }
 
-    public function update(StoreEstimate $request, $id)
+    public function update($request, $id)
     {
+        dd($request);
         $items = $request->input('item_name');
         $itemsSummary = $request->input('item_summary');
         $cost_per_item = $request->input('cost_per_item');

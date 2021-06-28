@@ -147,10 +147,11 @@
 
                                         <div class="row m-b-10">
                                             <div class="col-xs-12">
-                                                <a href="{{ route('admin.scopeOfWork.show',$project->id ) }}"
-                                                   class="btn btn-success btn-outline"><i
+{{--                                                <button href="{{ route('admin.scopeOfWork.show',$project->id ) }}"--}}
+                                                <button
+                                                   class="btn btn-success btn-outline" type="button" data-toggle="modal" data-target="#addRuleModel"><i
                                                             class="fa fa-flag"></i> @lang('modules.projects.createScopeOfWork')
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -168,7 +169,6 @@
 
                             </div>
                         </section>
-
                     </div><!-- /content -->
                 </div><!-- /tabs -->
             </section>
@@ -177,6 +177,79 @@
 
     </div>
     <!-- .row -->
+    <div class="modal fade openModal" id="addRuleModel" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    {!! Form::open(['id'=>'saveUpdateConditionRulesForm','class'=>'ajax-form','method'=>'POST']) !!}
+                    {!! Form::hidden('project_id', $project->id) !!}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="informationOfSources">Information Of Sources</label>
+                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="informationOfSources[]">
+                                    @foreach($informationOfSources as $emp)
+                                        <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="valuatorsLimitations">Valuators Limitations</label>
+                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="valuatorsLimitations[]">
+                                    @foreach($valuatorsLimitations as $emp)
+                                        <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="typeOfReport">Type Of Report</label>
+                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="typeOfReport[]">
+                                    @foreach($typeOfReport as $emp)
+                                        <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="restrictionsOnDistribution">Restrictions On Distribution</label>
+                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="restrictionsOnDistribution[]">
+                                    @foreach($restrictionsOnDistribution as $emp)
+                                        <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="saveUpdateConditionRules" class="btn btn-success"><i class="fa fa-check"></i> @lang('app.save')</button>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{--Ajax Modal--}}
     <div class="modal fade bs-modal-md in" id="editTimeLogModal" role="dialog" aria-labelledby="myModalLabel"
@@ -219,9 +292,26 @@
 <script src="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
 <script src="{{ asset('js/datatables/buttons.server-side.js') }}"></script>
-
 {!! $dataTable->scripts() !!}
+
+
+<script src="{{ asset('js/cbpFWTabs.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/multiselect/js/jquery.multi-select.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 <script>
+    $('#saveUpdateConditionRules').click(function () {
+
+        $.easyAjax({
+            url: '{{route('admin.scopeOfWork.sendValues')}}',
+            container: '#saveUpdateConditionRulesForm',
+            type: 'POST',
+            data:  $('#saveUpdateConditionRulesForm').serialize()
+
+        })
+    });
+
     var table = $('#timelog-table').dataTable({
         responsive: true,
         processing: true,
@@ -274,7 +364,7 @@
         $.easyAjax({
             url: '{{route('admin.milestones.store')}}',
             container: '#logTime',
-            type: "POST",
+            type: 'POST',
             data: $('#logTime').serialize(),
             success: function (data) {
                 if (data.status == 'success') {

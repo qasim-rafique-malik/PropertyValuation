@@ -307,6 +307,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('scopeOfWork/duplicate-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@duplicateEstimate'])->name('scopeOfWork.duplicate-estimate');
                 Route::get('scopeOfWork/change-status/{id}', ['uses' => 'ManageScopeOfWorksController@changeStatus'])->name('scopeOfWork.change-status');
                 Route::post('scopeOfWork/send-estimate/{id}', ['uses' => 'ManageScopeOfWorksController@sendEstimate'])->name('scopeOfWork.send-estimate');
+                Route::post('scopeOfWork/sendValues', ['uses' => 'ManageScopeOfWorksController@sendValues'])->name('scopeOfWork.sendValues');
                 Route::resource('scopeOfWork', 'ManageScopeOfWorksController');
 
                 Route::get('designations/quick-create', ['uses' => 'ManageDesignationController@quickCreate'])->name('designations.quick-create');

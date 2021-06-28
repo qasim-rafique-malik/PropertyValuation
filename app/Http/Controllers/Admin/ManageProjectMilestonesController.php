@@ -8,6 +8,7 @@ use App\Http\Requests\Milestone\StoreMilestone;
 use App\DataTables\Admin\ScopeOfWorkDataTable;
 use App\ProjectMilestone;
 use App\Helper\Reply;
+use Modules\Valuation\Entities\ValuationSowRule;
 use Yajra\DataTables\Facades\DataTables;
 use App\Currency;
 
@@ -85,7 +86,10 @@ class ManageProjectMilestonesController extends AdminBaseController
         //echo "here"; exit;
         $this->dataTable = New ScopeOfWorkDataTable();
         $this->dataTable->projectId = $id;
-
+        $this->informationOfSources =   ValuationSowRule::where('rule_type',ValuationSowRule::InformationOfSources)->get();
+        $this->valuatorsLimitations =   ValuationSowRule::where('rule_type',ValuationSowRule::ValuatorsLimitations)->get();
+        $this->typeOfReport =   ValuationSowRule::where('rule_type',ValuationSowRule::TypeOfReport)->get();
+        $this->restrictionsOnDistribution =   ValuationSowRule::where('rule_type',ValuationSowRule::RestrictionsOnDistribution)->get();
         $this->currencies = Currency::all();
         $this->project = Project::findorFail($id);
         return $this->dataTable->render('admin.projects.milestones.show', $this->data);

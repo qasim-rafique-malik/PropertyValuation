@@ -21,7 +21,7 @@ class CreateValuationSowRules extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('company_id')->nullable();
                 $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
-                $table->enum('rule_type', array('ValuatorsLimitations', 'InformationOfSources', 'TypeOfReport','RestrictionsOnDistribution'))->default('ValuatorsLimitations');
+                $table->enum('rule_type', array('ValuatorsLimitations', 'InformationOfSources', 'TypeOfReport','RestrictionsOnDistribution','ValuationReport'))->default('ValuatorsLimitations');
                 $table->longText('description')->nullable();
                 $table->timestamps();
             });

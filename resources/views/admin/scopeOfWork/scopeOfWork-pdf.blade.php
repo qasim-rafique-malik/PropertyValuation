@@ -370,7 +370,7 @@
     </div>
     <div class="col-xs-12">
         <div class="table-responsive m-t-40" style="clear: both;">
-            <h3 class="text-left"> <b>Info</b></h3>
+            <h3 class="text-left"> <b>{{$allData['info']['service']}}</b></h3>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -391,7 +391,7 @@
     </div>
     <div class="col-xs-12">
         <div class="table-responsive m-t-40" style="clear: both;">
-            <h3 class="text-left"> <b>Property</b></h3>
+            <h3 class="text-left"> <b>{{$allData['titles']['property']}}</b></h3>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -412,7 +412,7 @@
     </div>
     <div class="col-xs-12">
         <div class="table-responsive m-t-40" style="clear: both;">
-            <h3 class="text-left"> <b>Product</b></h3>
+            <h3 class="text-left"> <b>{{$allData['titles']['service']}}</b></h3>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -432,7 +432,8 @@
         </div>
     </div>
     <div class="col-xs-12">
-        @foreach($allData['conditionRules'] as $key => $value)
+        <h3 class="text-left"><b>Conditional applied rule</b></h3>
+    @foreach($allData['conditionRules'] as $key => $value)
             <div class="col-xs-12">
                 <label for="shipping_address">
                     @if($key=="'valuatorsLimitations'")

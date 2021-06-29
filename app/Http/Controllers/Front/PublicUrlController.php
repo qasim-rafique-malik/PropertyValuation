@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationCity;
+use Modules\Valuation\Entities\ValuationGeneralSetting;
 use Modules\Valuation\Entities\ValuationGovernorate;
 use Modules\Valuation\Entities\ValuationIntendedUser;
 use Modules\Valuation\Entities\ValuationProperty;
@@ -101,61 +102,75 @@ class PublicUrlController extends FrontBaseController
         ]);
     }
 
-    private function scopeOfWorkGetData($estimate){
+    private function scopeOfWorkGetData($estimate)
+    {
         $project = Project::find($estimate->project_id);
         $property = ValuationProperty::find($project->property_id);
         $product = Product::find($project->product_id);
         $propertyType = ValuationPropertyType::find($property->type_id);
         $propertyClassification = ValuationPropertyClassification::find($property->classification_id);
-        $propertyAddBlock= ValuationBlock::find($property->block_id);
+        $propertyAddBlock = ValuationBlock::find($property->block_id);
         $propertyAddCity = ValuationCity::find($property->city_id);
         $propertyAddGovern = ValuationGovernorate::find($property->governorate_id);
 
-        foreach ($project->members as $employeesIn){
-            $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
-            foreach ($roles as $role){
+        foreach ($project->members as $employeesIn) {
+            $roles = !empty($employeesIn->user->roles) ? $employeesIn->user->roles : array();
+            foreach ($roles as $role) {
                 $roleName = $role->name ?? '';
-                if($roleName == 'Valuater'){
+                if ($roleName == 'Valuater') {
                     $isValuator = $employeesIn->user;
                     break;
                 }
             }
         }
 
-        $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
-        $IntendedUser = $project->getMeta('intendedUsers',null,'array');
-        $valuationDate = $project->getMeta('appointment_day',null,'string');
-        $user = ValuationIntendedUser::whereIn('id',$IntendedUser)->pluck('title');
+        $address = ($property->plot_num ?? '') . ' ' . ($propertyAddBlock->name ?? '') . ' ' . ($propertyAddCity->name ?? '') . ' ' . ($propertyAddGovern->name ?? '');
+        $IntendedUser = $project->getMeta('intendedUsers', null, 'array');
+        $valuationDate = $project->getMeta('appointment_day', null, 'string');
+        $user = ValuationIntendedUser::whereIn('id', $IntendedUser)->pluck('title');
         $userNames = implode(', ', $user->toArray());
-        $conditionRules= json_decode($estimate->meta);
-        $conditionRulesData=array();
-        foreach ($conditionRules as $key=> $rule){
-            $array = ValuationSowRule::whereIn('id',$rule)->get();
+        $conditionRules = array();
+        $conditionRules = json_decode($estimate->meta);
+        $conditionRulesData = array();
+        if ($conditionRules) {
 
-            $conditionRulesData[$key]=$array;
+            foreach ($conditionRules as $key => $rule) {
+                $array = ValuationSowRule::whereIn('id', $rule)->get();
+
+                $conditionRulesData[$key] = $array;
+            }
         }
+        $valuationInfoTitle = ValuationGeneralSetting::where('meta_key', 'valuationInfoTitle')->pluck('meta_value')[0];
+        $serviceInfoTitle = ValuationGeneralSetting::where('meta_key', 'serviceInfoTitle')->pluck('meta_value')[0];
+        $propertyInfoTitle = ValuationGeneralSetting::where('meta_key', 'propertyInfoTitle')->pluck('meta_value')[0];
+        $valuationGeneralSetting = new ValuationGeneralSetting();
         $data = [
-            'info'=>[
-                'Valuer' => $isValuator->name ?? '',
-                'Client' => $project->client->name??'',
-                'Intended User' => $userNames??'',
-                'Currency' => $project->currency->currency_name??'',
-                'Purpose Of Valuation' => $product->subCategory->category_name??'',
-                'Basis Of Valuation' => $product->category->category_name??'',
-                'Valuation Date' => $valuationDate??'',
+            'titles'=>[
+                'info' => $valuationInfoTitle ?? $valuationGeneralSetting->data['valuationInfoTitle'],
+                'property' => $propertyInfoTitle ?? $valuationGeneralSetting->data['propertyInfoTitle'],
+                'service' => $serviceInfoTitle ?? $valuationGeneralSetting->data['serviceInfoTitle'],
             ],
-            'property'=>[
-                'Type' => $propertyType->title??'',
-                'Classification' => $propertyClassification->title??'',
+            'info' => [
+                'Valuer' => $isValuator->name ?? '',
+                'Client' => $project->client->name ?? '',
+                'Intended User' => $userNames ?? '',
+                'Currency' => $project->currency->currency_name ?? '',
+                'Purpose Of Valuation' => $product->subCategory->category_name ?? '',
+                'Basis Of Valuation' => $product->category->category_name ?? '',
+                'Valuation Date' => $valuationDate ?? '',
+            ],
+            'property' => [
+                'Type' => $propertyType->title ?? '',
+                'Classification' => $propertyClassification->title ?? '',
                 'Address' => $address,
             ],
-            'product'=>[
-                'Tittle' => $product->name??'',
-                'Category' => $product->category->category_name??'',
-                'Sub Category' => $product->subCategory->category_name??'',
-                'Price' => $product->price??'',
+            'product' => [
+                'Tittle' => $product->name ?? '',
+                'Category' => $product->category->category_name ?? '',
+                'Sub Category' => $product->subCategory->category_name ?? '',
+                'Price' => $product->price ?? '',
             ],
-            'conditionRules'=>$conditionRulesData
+            'conditionRules' => $conditionRulesData
         ];
 
         return $data;
@@ -171,7 +186,7 @@ class PublicUrlController extends FrontBaseController
         // public url company session set.
         session(['company' => $company]);
 
-       $data = $this->scopeOfWorkGetData($estimate);
+        $data = $this->scopeOfWorkGetData($estimate);
 
         $settings = $company;
 
@@ -331,7 +346,7 @@ class PublicUrlController extends FrontBaseController
 
         //log search
         DB::commit();
-        return Reply::redirect(route('admin.milestones.show', $project_id) , 'Scope successfully accepted.');
+        return Reply::redirect(route('admin.milestones.show', $project_id), 'Scope successfully accepted.');
     }
 
     public function logSearchEntry($searchableId, $title, $route, $type)
@@ -360,12 +375,12 @@ class PublicUrlController extends FrontBaseController
     {
         $contract = Contract::findOrFail($id);
         $global = cache()->remember(
-            'global-setting', 60*60*24, function () {
-                return \App\Setting::with('currency')->first();
-            }
+            'global-setting', 60 * 60 * 24, function () {
+            return \App\Setting::with('currency')->first();
+        }
         );
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.contracts.contract-pdf', ['contract' => $contract,'global' => $global]);
+        $pdf->loadView('admin.contracts.contract-pdf', ['contract' => $contract, 'global' => $global]);
         $filename = 'contract-' . $contract->id;
 
         return $pdf->download($filename . '.pdf');
@@ -376,11 +391,11 @@ class PublicUrlController extends FrontBaseController
         $contract = Contract::findOrFail($id);
         $pdf = app('dompdf.wrapper');
         $global = cache()->remember(
-            'global-setting', 60*60*24, function () {
-                return \App\Setting::with('currency')->first();
-            }
+            'global-setting', 60 * 60 * 24, function () {
+            return \App\Setting::with('currency')->first();
+        }
         );
-        $pdf->loadView('admin.contracts.contract-pdf', ['contract' => $contract ,'global' => $global]);
+        $pdf->loadView('admin.contracts.contract-pdf', ['contract' => $contract, 'global' => $global]);
 
         $filename = 'contract-' . $this->contract->id;
 
@@ -423,7 +438,7 @@ class PublicUrlController extends FrontBaseController
         $sign->signature = $imageName;
         $sign->save();
 
-        $allAdmins =  User::join('role_user', 'role_user.user_id', '=', 'users.id')
+        $allAdmins = User::join('role_user', 'role_user.user_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'role_user.role_id')
             ->select('users.id', 'users.name', 'users.email', 'users.created_at')
             ->where('roles.name', 'admin')
@@ -494,6 +509,7 @@ class PublicUrlController extends FrontBaseController
             'fileName' => $filename
         ];
     }
+
     public function scopeOfWorkDomPdfObjectForDownload($id)
     {
         $estimate = ScopeOfWork::whereRaw('md5(id) = ?', $id)->firstOrFail();

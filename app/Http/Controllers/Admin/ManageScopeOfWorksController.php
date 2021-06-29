@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Tax;
 use App\Product;
+use Modules\Valuation\Entities\ValuationBaseModel;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationCity;
 use Modules\Valuation\Entities\ValuationGeneralSetting;
@@ -57,7 +58,7 @@ class ManageScopeOfWorksController extends AdminBaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($request)
@@ -67,44 +68,31 @@ class ManageScopeOfWorksController extends AdminBaseController
         $scopeOfWork = new ScopeOfWork();
         $scopeOfWork->project_id = $id;
         $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
-        $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+20 days"));
+        $scopeOfWork->valid_till = date('Y-m-d', strtotime("+20 days"));
         $scopeOfWork->status = 'waiting';
-        /*dd($estimate->estimate_number);*/
-
         $scopeOfWork->save();
         $this->logSearchEntry($scopeOfWork->id, 'Estimate #' . $scopeOfWork->id, 'admin.estimates.edit', 'estimate');
-//        dd($scopeOfWork);
         DB::commit();
-//        return Reply::success(__('messages.estimateSend'));
-//        return Reply::redirect(route('admin.milestones.show',$id), __('messages.estimateCreated'));
         return redirect()->back()->with('messages', 'IT WORKS!');
-//        return Reply::success('messages');
-//        return Reply::redirect(route('admin.milestones.show',$id) , __('messages.estimateCreated'));
     }
-public function sendValues(\Illuminate\Http\Request $request)
+
+    public function sendValues(\Illuminate\Http\Request $request)
     {
         DB::beginTransaction();
         $scopeOfWork = new ScopeOfWork();
         $scopeOfWork->project_id = $request->project_id;
         $scopeOfWork->meta = json_encode($request->conditionRules);
         $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
-        $days = ValuationGeneralSetting::where('meta_key','scopeOfWorkValuerValidTill')->pluck('meta_value');
-        $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+".$days." days"));
+        $days = ValuationGeneralSetting::where('meta_key', 'scopeOfWorkValuerValidTill')->pluck('meta_value');
+        $scopeOfWork->valid_till = date('Y-m-d', strtotime("+" . $days . " days"));
         $scopeOfWork->status = 'waiting';
-        /*dd($estimate->estimate_number);*/
-
         $scopeOfWork->save();
         $this->logSearchEntry($scopeOfWork->id, 'Estimate #' . $scopeOfWork->id, 'admin.estimates.edit', 'estimate');
-//        dd($scopeOfWork);
         DB::commit();
-//        return Reply::success(__('messages.estimateSend'));
-//        return Reply::redirect(route('admin.milestones.show',$id), __('messages.estimateCreated'));
         return redirect()->back()->with('messages', 'IT WORKS!');
-//        return Reply::success('messages');
-//        return Reply::redirect(route('admin.milestones.show',$id) , __('messages.estimateCreated'));
     }
 
-    public function create($request,$id)
+    public function create($request, $id)
     {
         dd($request);
         dd($_GET);
@@ -329,20 +317,6 @@ public function sendValues(\Illuminate\Http\Request $request)
         }
     }
 
-//    public function domPdfObjectForDownload($id)
-//    {
-//        $this->scopeOfWork = ScopeOfWork::findOrFail($id);
-//
-//
-//        $pdf = app('dompdf.wrapper');
-//        $pdf->loadView('admin.estimates.estimate-pdf', $this->data);
-//        $filename = $this->scopeOfWork->estimate_number;
-//
-//        return [
-//            'pdf' => $pdf,
-//            'fileName' => $filename
-//        ];
-//    }
 
     public function domPdfObjectForDownload($id)
     {
@@ -369,30 +343,6 @@ public function sendValues(\Illuminate\Http\Request $request)
         ];
     }
 
-    public function scopeOfWorkDomPdfObjectForDownload($id)
-    {
-        $estimate = ScopeOfWork::whereRaw('id = ?', $id)->firstOrFail();
-        $company = Company::find($estimate->company_id);
-        $settings = $company;
-
-        $data = $this->scopeOfWorkGetData($estimate);
-
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.scopeOfWork.scopeOfWork-pdf', [
-            'allData' => $data,
-            'estimate' => $estimate,
-            'settings' => $settings,
-            'company' => $settings,
-            'global' => $settings,
-            'companyName' => $settings->company_name
-        ]);
-        $filename = 'scope-' . $estimate->id;
-
-        return [
-            'pdf' => $pdf,
-            'fileName' => $filename
-        ];
-    }
 
     public function download($id)
     {
@@ -407,7 +357,7 @@ public function sendValues(\Illuminate\Http\Request $request)
     public function sendEstimate($id)
     {
         $scopeOfWork = ScopeOfWork::findOrFail($id);
-        if(!is_null($scopeOfWork->client)){
+        if (!is_null($scopeOfWork->client)) {
             $scopeOfWork->client->notify(new NewEstimate($scopeOfWork));
         }
 
@@ -428,61 +378,76 @@ public function sendValues(\Illuminate\Http\Request $request)
 
         return Reply::success(__('messages.updateSuccess'));
     }
-    private function scopeOfWorkGetData($estimate){
+
+    private function scopeOfWorkGetData($estimate)
+    {
         $project = Project::find($estimate->project_id);
         $property = ValuationProperty::find($project->property_id);
         $product = Product::find($project->product_id);
         $propertyType = ValuationPropertyType::find($property->type_id);
         $propertyClassification = ValuationPropertyClassification::find($property->classification_id);
-        $propertyAddBlock= ValuationBlock::find($property->block_id);
+        $propertyAddBlock = ValuationBlock::find($property->block_id);
         $propertyAddCity = ValuationCity::find($property->city_id);
         $propertyAddGovern = ValuationGovernorate::find($property->governorate_id);
 
-        foreach ($project->members as $employeesIn){
-            $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
-            foreach ($roles as $role){
+        foreach ($project->members as $employeesIn) {
+            $roles = !empty($employeesIn->user->roles) ? $employeesIn->user->roles : array();
+            foreach ($roles as $role) {
                 $roleName = $role->name ?? '';
-                if($roleName == 'Valuater'){
+                if ($roleName == 'Valuater') {
                     $isValuator = $employeesIn->user;
                     break;
                 }
             }
         }
 
-        $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
-        $IntendedUser = $project->getMeta('intendedUsers',null,'array');
-        $valuationDate = $project->getMeta('appointment_day',null,'string');
-        $user = ValuationIntendedUser::whereIn('id',$IntendedUser)->pluck('title');
+        $address = ($property->plot_num ?? '') . ' ' . ($propertyAddBlock->name ?? '') . ' ' . ($propertyAddCity->name ?? '') . ' ' . ($propertyAddGovern->name ?? '');
+        $IntendedUser = $project->getMeta('intendedUsers', null, 'array');
+        $valuationDate = $project->getMeta('appointment_day', null, 'string');
+        $user = ValuationIntendedUser::whereIn('id', $IntendedUser)->pluck('title');
         $userNames = implode(', ', $user->toArray());
-        $conditionRules= json_decode($estimate->meta);
-        $conditionRulesData=array();
-        foreach ($conditionRules as $key=> $rule){
-            $array = ValuationSowRule::whereIn('id',$rule)->get();
+        $conditionRules = array();
+        $conditionRules = json_decode($estimate->meta);
+        $conditionRulesData = array();
+        if ($conditionRules) {
 
-            $conditionRulesData[$key]=$array;
+            foreach ($conditionRules as $key => $rule) {
+                $array = ValuationSowRule::whereIn('id', $rule)->get();
+
+                $conditionRulesData[$key] = $array;
+            }
         }
+        $valuationInfoTitle = ValuationGeneralSetting::where('meta_key', 'valuationInfoTitle')->pluck('meta_value')[0];
+        $serviceInfoTitle = ValuationGeneralSetting::where('meta_key', 'serviceInfoTitle')->pluck('meta_value')[0];
+        $propertyInfoTitle = ValuationGeneralSetting::where('meta_key', 'propertyInfoTitle')->pluck('meta_value')[0];
+        $valuationGeneralSetting = new ValuationGeneralSetting();
         $data = [
-            'info'=>[
-                'Valuer' => $isValuator->name ?? '',
-                'Client' => $project->client->name??'',
-                'Intended User' => $userNames??'',
-                'Currency' => $project->currency->currency_name??'',
-                'Purpose Of Valuation' => $product->subCategory->category_name??'',
-                'Basis Of Valuation' => $product->category->category_name??'',
-                'Valuation Date' => $valuationDate??'',
+            'titles'=>[
+                'info' => $valuationInfoTitle ?? $valuationGeneralSetting->data['valuationInfoTitle'],
+                'property' => $propertyInfoTitle ?? $valuationGeneralSetting->data['propertyInfoTitle'],
+                'service' => $serviceInfoTitle ?? $valuationGeneralSetting->data['serviceInfoTitle'],
             ],
-            'property'=>[
-                'Type' => $propertyType->title??'',
-                'Classification' => $propertyClassification->title??'',
+            'info' => [
+                'Valuer' => $isValuator->name ?? '',
+                'Client' => $project->client->name ?? '',
+                'Intended User' => $userNames ?? '',
+                'Currency' => $project->currency->currency_name ?? '',
+                'Purpose Of Valuation' => $product->subCategory->category_name ?? '',
+                'Basis Of Valuation' => $product->category->category_name ?? '',
+                'Valuation Date' => $valuationDate ?? '',
+            ],
+            'property' => [
+                'Type' => $propertyType->title ?? '',
+                'Classification' => $propertyClassification->title ?? '',
                 'Address' => $address,
             ],
-            'product'=>[
-                'Tittle' => $product->name??'',
-                'Category' => $product->category->category_name??'',
-                'Sub Category' => $product->subCategory->category_name??'',
-                'Price' => $product->price??'',
+            'product' => [
+                'Tittle' => $product->name ?? '',
+                'Category' => $product->category->category_name ?? '',
+                'Sub Category' => $product->subCategory->category_name ?? '',
+                'Price' => $product->price ?? '',
             ],
-            'conditionRules'=>$conditionRulesData
+            'conditionRules' => $conditionRulesData
         ];
 
         return $data;

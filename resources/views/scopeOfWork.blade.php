@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicon/android-icon-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
@@ -38,22 +38,22 @@
     <!-- This is Sidebar menu CSS -->
     <link href="{{ asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('plugins/bower_components/toast-master/css/jquery.toast.css') }}"   rel="stylesheet">
-    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}"   rel="stylesheet">
+    <link href="{{ asset('plugins/bower_components/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet">
 
     <!-- This is a Animation CSS -->
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
 
-<!-- This is a Custom CSS -->
+    <!-- This is a Custom CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <!-- color CSS you can use different color css from css/colors folder -->
     <!-- We have chosen the skin-blue (default.css) for this starter
        page. However, you can choose any other skin from folder css / colors .
        -->
-    <link href="{{ asset('css/colors/default.css') }}" id="theme"  rel="stylesheet">
-    <link href="{{ asset('plugins/froiden-helper/helper.css') }}"   rel="stylesheet">
-    <link href="{{ asset('css/custom-new.css') }}"   rel="stylesheet">
-    <link href="{{ asset('css/rounded.css') }}"   rel="stylesheet">
+    <link href="{{ asset('css/colors/default.css') }}" id="theme" rel="stylesheet">
+    <link href="{{ asset('plugins/froiden-helper/helper.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom-new.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/rounded.css') }}" rel="stylesheet">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,16 +64,19 @@
     <![endif]-->
 
     <style>
-        .sidebar .notify  {
+        .sidebar .notify {
             margin: 0 !important;
         }
+
         .sidebar .notify .heartbit {
             top: -23px !important;
             right: -15px !important;
         }
+
         .sidebar .notify .point {
             top: -13px !important;
         }
+
         .wrapper {
             position: relative;
             width: 100%;
@@ -88,13 +91,17 @@
             position: absolute;
             left: 0;
             top: 0;
-            width:100%;
+            width: 100%;
             height: 100%;
             background-color: white;
         }
-        @media (max-width:991px){
-            .tablet-margin{margin-top: 35px;}
+
+        @media (max-width: 991px) {
+            .tablet-margin {
+                margin-top: 35px;
+            }
         }
+
         .ribbon {
             top: 12px !important;
             left: 0px;
@@ -123,13 +130,20 @@
                                 <div class="clearfix"></div>
                             </div>
                             @if($estimate->status == 'waiting')
-                            <button type="button" id="accept_action" class="btn btn-success pull-right m-r-10" onclick="accept();return false;"><i class="fa fa-check"></i> @lang('app.accept')</button>
-                            <button type="submit" class="btn btn-danger pull-right m-r-10" onclick="decline();return false;"><i class="fa fa-remove"></i> @lang('app.decline')</button>
+                                <button type="button" id="accept_action" class="btn btn-success pull-right m-r-10"
+                                        onclick="accept();return false;"><i class="fa fa-check"></i> @lang('app.accept')
+                                </button>
+                                <button type="submit" class="btn btn-danger pull-right m-r-10"
+                                        onclick="decline();return false;"><i
+                                            class="fa fa-remove"></i> @lang('app.decline')</button>
 
                             @elseif($estimate->status == 'accepted')
-                                <a class="btn btn-success pull-right m-r-10"><i class="fa fa-check"></i> @lang('app.signed')</a>
+                                <a class="btn btn-success pull-right m-r-10"><i
+                                            class="fa fa-check"></i> @lang('app.signed')</a>
                             @endif
-                            <a href="{{ route("front.scopeOfWorkDownload", md5($estimate->id)) }}" class="btn btn-default pull-right m-r-10"><i class="fa fa-file-pdf-o"></i> @lang('app.download')</a>
+                            <a href="{{ route("front.scopeOfWorkDownload", md5($estimate->id)) }}"
+                               class="btn btn-default pull-right m-r-10"><i
+                                        class="fa fa-file-pdf-o"></i> @lang('app.download')</a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -149,13 +163,17 @@
                                         <div class="ribbon ribbon-bookmark ribbon-success">@lang('modules.estimates.accepted')</div>
                                     @endif
 
-                                    <h3 class="text-right"> <b>{{ $estimate->estimate_number }}</b></h3>
+                                    <h3 class="text-right"><b>{{ $estimate->estimate_number }}</b></h3>
                                     <hr>
                                     <div class="row tablet-margin">
                                         <div class="col-xs-12">
                                             <div class="pull-left">
                                                 <address>
-                                                    <h3> &nbsp;<b class="text-danger">{{ ucwords($setting->company_name) }}</b></h3>
+                                                    <h3>
+                                                        <b class="text-danger">
+                                                            {{ ucwords($setting->company_name) }}
+                                                        </b>
+                                                    </h3>
                                                     @if(!is_null($settings) && !is_null($setting->address))
                                                         <p class="text-muted m-l-5">{!! nl2br($setting->address) !!}</p>
                                                     @endif
@@ -179,7 +197,7 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="table-responsive m-t-40" style="clear: both;">
-                                                <h3 class="text-left"> <b>Info</b></h3>
+                                                <h3 class="text-left"><b>{{$allData['titles']['info']}}</b></h3>
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
@@ -189,10 +207,10 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($allData['info'] as $key => $value)
-                                                            <tr>
-                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
-                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                            <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                                                        </tr>
                                                     @endforeach
                                                     </tbody>
                                                 </table>
@@ -200,7 +218,7 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="table-responsive m-t-40" style="clear: both;">
-                                                <h3 class="text-left"> <b>Property</b></h3>
+                                                <h3 class="text-left"><b>{{$allData['titles']['property']}}</b></h3>
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
@@ -210,10 +228,10 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($allData['property'] as $key => $value)
-                                                            <tr>
-                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
-                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                            <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                                                        </tr>
                                                     @endforeach
                                                     </tbody>
                                                 </table>
@@ -221,7 +239,7 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="table-responsive m-t-40" style="clear: both;">
-                                                <h3 class="text-left"> <b>Product</b></h3>
+                                                <h3 class="text-left"><b>{{$allData['titles']['service']}}</b></h3>
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
@@ -231,32 +249,33 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($allData['product'] as $key => $value)
-                                                            <tr>
-                                                                <td class="text-left col-xs-6">{!! $key !!} </td>
-                                                                <td class="text-left col-xs-6"> {!! $value  !!} </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td class="text-left col-xs-6">{!! $key !!} </td>
+                                                            <td class="text-left col-xs-6"> {!! $value  !!} </td>
+                                                        </tr>
                                                     @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
+                                            <h3 class="text-left"><b>Conditional applied rule</b></h3>
                                             @foreach($allData['conditionRules'] as $key => $value)
                                                 <div class="col-xs-12">
-                                                <label for="shipping_address">
-                                                    @if($key=="'valuatorsLimitations'")
-                                                        Valuator's Limitations :
+                                                    <label for="shipping_address">
+                                                        @if($key=="'valuatorsLimitations'")
+                                                            Valuator's Limitations :
                                                         @elseif($key=="'informationOfSources'")
-                                                        Information of Sources :
+                                                            Information of Sources :
                                                         @elseif($key=="'typeOfReport'")
-                                                        Type Of Report :
+                                                            Type Of Report :
                                                         @elseif($key=="'restrictionsOnDistribution'")
-                                                        Restrictions On Distribution :
-                                                    @endif
-                                                </label>
-                                                @foreach($value as $v)
-                                                <span>{{$v->description}} , </span>
-                                                @endforeach
+                                                            Restrictions On Distribution :
+                                                        @endif
+                                                    </label>
+                                                    @foreach($value as $v)
+                                                        <span>{{$v->description}} , </span>
+                                                    @endforeach
                                                 </div>
                                             @endforeach
                                         </div>
@@ -287,7 +306,8 @@
 
 
     {{--Timer Modal--}}
-    <div class="modal fade bs-modal-md in" id="estimateAccept" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade bs-modal-md in" id="estimateAccept" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-md" id="modal-data-application">
             <div class="modal-content">
                 <div class="modal-header">
@@ -339,12 +359,12 @@
     //Decline estimate
     function decline() {
         $.easyAjax({
-            type:'POST',
-            url:'{{route('front.scopeOfWork.decline', $estimate->id)}}',
-            container:'#estimates',
+            type: 'POST',
+            url: '{{route('front.scopeOfWork.decline', $estimate->id)}}',
+            container: '#estimates',
             data: {_token: '{{ csrf_token() }}'},
-            success: function(response){
-                if(response.status == 'success') {
+            success: function (response) {
+                if (response.status == 'success') {
                     window.location.reload();
                 }
             }

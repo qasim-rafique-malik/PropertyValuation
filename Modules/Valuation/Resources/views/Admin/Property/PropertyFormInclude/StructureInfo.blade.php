@@ -560,9 +560,16 @@
 <script>
 var StructureInfoUnitListTable =$("#StructureInfoUnitListTable").DataTable();
 var unitListCounter=1;
+var propertyTypeHtmlOption=[];
+var propetyType='<?php echo json_encode($types, JSON_UNESCAPED_UNICODE );?>';
+
+jQuery.each(JSON.parse(propetyType), function(index,vaule) {
+ propertyTypeHtmlOption.push('<option value="'+vaule.id+'">'+vaule.title+'</option>');
+});
+
 $("#StructureInfoUnitListAddBtn").on("click", function() {
     StructureInfoUnitListTable.row.add([
-        '<input type="text" name="structureUnitType[]" class="form-control">',
+        '<select  name="structureUnitType[]" class="form-control">'+propertyTypeHtmlOption+'</select>',
         '<input type="text" name="structureUnitId[]" class="form-control">',
         '<textarea name="structureUnitDescription[]" class="form-control"></textarea>'
         

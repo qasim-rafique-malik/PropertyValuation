@@ -46,6 +46,10 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
     ApiRoute::get('/task/me', ['as' => 'task.me', 'uses' => 'TaskController@me']);
     ApiRoute::get('/task/remind/{id}', ['as' => 'task.remind', 'uses' => 'TaskController@remind']);
 
+    //ApiRoute::get('taskFormFields/sendDummyData/{id?}', 'TaskFormFieldsController@sendDummyData');
+    //ApiRoute::resource('taskFormFields', 'TaskFormFieldsController');
+    ApiRoute::resource('/task/{task_id}/taskFormFields', 'TaskFormFieldsController');
+
     ApiRoute::resource('/task/{task_id}/subtask', 'SubTaskController');
     ApiRoute::resource('task', 'TaskController');
     ApiRoute::resource('task-category', 'TaskCategoryController');

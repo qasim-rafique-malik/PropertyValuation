@@ -31,6 +31,7 @@ use Modules\Valuation\Entities\ValuationProperty;
 use Modules\Valuation\Entities\ValuationPropertyClassification;
 use Modules\Valuation\Entities\ValuationPropertyType;
 use Modules\Valuation\Entities\ValuationIntendedUser;
+use Modules\Valuation\Entities\ValuationSowRule;
 
 class ManageScopeOfWorksController extends AdminBaseController
 {
@@ -58,7 +59,7 @@ class ManageScopeOfWorksController extends AdminBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(StoreEstimate $request)
+    public function show($request)
     {
         DB::beginTransaction();
         dd($request);
@@ -79,12 +80,12 @@ class ManageScopeOfWorksController extends AdminBaseController
 //        return Reply::success('messages');
 //        return Reply::redirect(route('admin.milestones.show',$id) , __('messages.estimateCreated'));
     }
-public function sendValues($request)
+public function sendValues(\Illuminate\Http\Request $request)
     {
         DB::beginTransaction();
-        dd($request);
         $scopeOfWork = new ScopeOfWork();
-        $scopeOfWork->project_id = $id;
+        $scopeOfWork->project_id = $request->project_id;
+        $scopeOfWork->meta = json_encode($request->conditionRules);
         $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
         $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+20 days"));
         $scopeOfWork->status = 'waiting';
@@ -447,11 +448,17 @@ public function sendValues($request)
         }
 
         $address =  ($property->plot_num??''). ' ' . ($propertyAddBlock->name??'') . ' ' . ($propertyAddCity->name??'') . ' ' .($propertyAddGovern->name??'');
-        $IntendedUser = $project->getMeta('intendedUsers',array(),'array');
+        $IntendedUser = $project->getMeta('intendedUsers',null,'array');
         $valuationDate = $project->getMeta('appointment_day',null,'string');
         $user = ValuationIntendedUser::whereIn('id',$IntendedUser)->pluck('title');
         $userNames = implode(', ', $user->toArray());
+        $conditionRules= json_decode($estimate->meta);
+        $conditionRulesData=array();
+        foreach ($conditionRules as $key=> $rule){
+            $array = ValuationSowRule::whereIn('id',$rule)->get();
 
+            $conditionRulesData[$key]=$array;
+        }
         $data = [
             'info'=>[
                 'Valuer' => $isValuator->name ?? '',
@@ -472,10 +479,12 @@ public function sendValues($request)
                 'Category' => $product->category->category_name??'',
                 'Sub Category' => $product->subCategory->category_name??'',
                 'Price' => $product->price??'',
-            ]
+            ],
+            'conditionRules'=>$conditionRulesData
         ];
 
         return $data;
     }
+
 
 }

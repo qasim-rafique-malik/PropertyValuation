@@ -431,6 +431,26 @@
             </table>
         </div>
     </div>
+    <div class="col-xs-12">
+        @foreach($allData['conditionRules'] as $key => $value)
+            <div class="col-xs-12">
+                <label for="shipping_address">
+                    @if($key=="'valuatorsLimitations'")
+                        Valuator's Limitations :
+                    @elseif($key=="'informationOfSources'")
+                        Information of Sources :
+                    @elseif($key=="'typeOfReport'")
+                        Type Of Report :
+                    @elseif($key=="'restrictionsOnDistribution'")
+                        Restrictions On Distribution :
+                    @endif
+                </label>
+                @foreach($value as $v)
+                    <span>{{$v->description}} , </span>
+                @endforeach
+            </div>
+        @endforeach
+    </div>
         <p>&nbsp;</p>
         <hr>
         <p id="notes">

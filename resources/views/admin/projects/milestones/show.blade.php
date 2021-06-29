@@ -192,7 +192,7 @@
                             <div class="form-group">
                                 <label for="informationOfSources">Information Of Sources</label>
                                 <select class="select2 m-b-10 select2-multiple " multiple="multiple"
-                                        data-placeholder="@lang('modules.messages.chooseMember')" name="informationOfSources[]">
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['informationOfSources'][]">
                                     @foreach($informationOfSources as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
                                     @endforeach
@@ -205,7 +205,7 @@
                             <div class="form-group">
                                 <label for="valuatorsLimitations">Valuators Limitations</label>
                                 <select class="select2 m-b-10 select2-multiple " multiple="multiple"
-                                        data-placeholder="@lang('modules.messages.chooseMember')" name="valuatorsLimitations[]">
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['valuatorsLimitations'][]">
                                     @foreach($valuatorsLimitations as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
                                     @endforeach
@@ -218,7 +218,7 @@
                             <div class="form-group">
                                 <label for="typeOfReport">Type Of Report</label>
                                 <select class="select2 m-b-10 select2-multiple " multiple="multiple"
-                                        data-placeholder="@lang('modules.messages.chooseMember')" name="typeOfReport[]">
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['typeOfReport'][]">
                                     @foreach($typeOfReport as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
                                     @endforeach
@@ -231,7 +231,7 @@
                             <div class="form-group">
                                 <label for="restrictionsOnDistribution">Restrictions On Distribution</label>
                                 <select class="select2 m-b-10 select2-multiple " multiple="multiple"
-                                        data-placeholder="@lang('modules.messages.chooseMember')" name="restrictionsOnDistribution[]">
+                                        data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['restrictionsOnDistribution'][]">
                                     @foreach($restrictionsOnDistribution as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
                                     @endforeach

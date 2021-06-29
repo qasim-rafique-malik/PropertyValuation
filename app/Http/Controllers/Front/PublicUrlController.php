@@ -40,6 +40,7 @@ use Modules\Valuation\Entities\ValuationProperty;
 use Modules\Valuation\Entities\ValuationPropertyClassification;
 use Modules\Valuation\Entities\ValuationPropertyType;
 use Modules\Valuation\Entities\ValuationPropertyXref;
+use Modules\Valuation\Entities\ValuationSowRule;
 
 class PublicUrlController extends FrontBaseController
 {
@@ -126,7 +127,13 @@ class PublicUrlController extends FrontBaseController
         $valuationDate = $project->getMeta('appointment_day',null,'string');
         $user = ValuationIntendedUser::whereIn('id',$IntendedUser)->pluck('title');
         $userNames = implode(', ', $user->toArray());
+        $conditionRules= json_decode($estimate->meta);
+        $conditionRulesData=array();
+        foreach ($conditionRules as $key=> $rule){
+            $array = ValuationSowRule::whereIn('id',$rule)->get();
 
+            $conditionRulesData[$key]=$array;
+        }
         $data = [
             'info'=>[
                 'Valuer' => $isValuator->name ?? '',
@@ -147,7 +154,8 @@ class PublicUrlController extends FrontBaseController
                 'Category' => $product->category->category_name??'',
                 'Sub Category' => $product->subCategory->category_name??'',
                 'Price' => $product->price??'',
-            ]
+            ],
+            'conditionRules'=>$conditionRulesData
         ];
 
         return $data;
@@ -166,6 +174,7 @@ class PublicUrlController extends FrontBaseController
        $data = $this->scopeOfWorkGetData($estimate);
 
         $settings = $company;
+
         return view('scopeOfWork', [
             'allData' => $data,
             'estimate' => $estimate,
@@ -521,7 +530,6 @@ class PublicUrlController extends FrontBaseController
 
     public function scopeOfWorkDownload($id)
     {
-        dd("here");
         $pdfOption = $this->scopeOfWorkDomPdfObjectForDownload($id);
         $pdf = $pdfOption['pdf'];
         $filename = $pdfOption['fileName'];

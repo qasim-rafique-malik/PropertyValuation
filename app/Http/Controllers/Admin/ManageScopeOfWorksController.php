@@ -26,6 +26,7 @@ use App\Tax;
 use App\Product;
 use Modules\Valuation\Entities\ValuationBlock;
 use Modules\Valuation\Entities\ValuationCity;
+use Modules\Valuation\Entities\ValuationGeneralSetting;
 use Modules\Valuation\Entities\ValuationGovernorate;
 use Modules\Valuation\Entities\ValuationProperty;
 use Modules\Valuation\Entities\ValuationPropertyClassification;
@@ -87,7 +88,8 @@ public function sendValues(\Illuminate\Http\Request $request)
         $scopeOfWork->project_id = $request->project_id;
         $scopeOfWork->meta = json_encode($request->conditionRules);
         $scopeOfWork->estimate_number = ScopeOfWork::lastEstimateNumber() + 1;
-        $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+20 days"));
+        $days = ValuationGeneralSetting::where('meta_key','scopeOfWorkValuerValidTill')->pluck('meta_value');
+        $scopeOfWork->valid_till =  date('Y-m-d', strtotime("+".$days." days"));
         $scopeOfWork->status = 'waiting';
         /*dd($estimate->estimate_number);*/
 

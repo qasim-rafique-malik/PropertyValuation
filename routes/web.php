@@ -347,6 +347,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('leadCategory', 'LeadCategoryController');      
                 Route::resource('events-type', 'EventTypeController');
                 Route::resource('events-category', 'EventCategoryController');
+                Route::resource('valuationMethod', 'ValuationMethodController');
+                Route::resource('valuationApproach', 'ValuationApproacheController');
 
                 Route::get('clientCategory/create-cat', ['uses' => 'ClientCategoryController@createCat'])->name('clientCategory.create-cat');
                 Route::post('clientCategory/store-cat', ['uses' => 'ClientCategoryController@storeCat'])->name('clientCategory.store-cat');

@@ -14,7 +14,13 @@ class CreateValuationMethodsTable extends Migration
     public function up()
     {
         Schema::create('valuation_methods', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('company_id')->nullable();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('valuation_approaches')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('name')->default(null);
+            $table->enum('status', array('Active', 'Inactive'));
             $table->timestamps();
         });
     }

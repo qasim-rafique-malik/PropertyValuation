@@ -129,6 +129,14 @@ $propertyFeatures['category']="Category";
 
 $valuationLang['propertyFeature']=$propertyFeatures;
 
+$valuationMethod=array();
+$valuationMethod['Title']="Valuation Method Setting";
+$valuationMethod['createFeature']="Create Method";
+$valuationMethod['totalFeture']="Total Methods";
+$valuationMethod['name']="Method Name";
+$valuationMethod['category']="Approach";
+
+$valuationLang['valuationMethod']=$valuationMethod;
 
 $feactureCategory=array();
 $feactureCategory['Title']="Property Feature Category";
@@ -136,7 +144,13 @@ $feactureCategory['createCategory']="New Category";
 $feactureCategory['categoryName']="Category Name";
 $feactureCategory['categoryCount']="Total Category";
 
-$valuationLang['propertyFeatureCategory']=$feactureCategory;
+$valuationApproach=array();
+$valuationApproach['Title']="Valuation Approach";
+$valuationApproach['createCategory']="New Approach";
+$valuationApproach['categoryName']="Approach Name";
+$valuationApproach['categoryCount']="Total Approaches";
+
+$valuationLang['valuationApproach']=$valuationApproach;
 
 $weightageCategory = array();
 $weightageCategory['title'] = 'Weightage Category';

@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Modules\Valuation\Http\Controllers\Admin\Settings;
 
 use App\Helper\Reply;
 use App\Http\Controllers\Controller;
-use App\ValuationMethod;
+use Modules\Valuation\Entities\ValuationApproache;
+use Modules\Valuation\Entities\ValuationMethod;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Modules\Valuation\Entities\ValuationBaseModel;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
@@ -13,23 +15,23 @@ use Yajra\DataTables\Facades\DataTables;
 class ValuationMethodController extends ValuationAdminBaseController
 {
 
-    const viewFolderPath = 'valuation::Admin.Settings.Feature.';
-    const saveUpdateDataRoute = 'valuation.admin.settings.feature.saveUpdateData';
-    const getAjaxDataRoute = 'valuation.admin.settings.block.getAjaxData';
+    const viewFolderPath = 'valuation::Admin.Settings.Method.';
+    const saveUpdateDataRoute = 'valuation.admin.settings.valuationMethod.saveUpdateData';
+    const getAjaxDataRoute = 'valuation.admin.settings.valuationMethod.getAjaxData';
 
-    private $viewFolderPath = 'valuation::Admin.Settings.Feature.';
+    private $viewFolderPath = 'valuation::Admin.Settings.Method.';
 
-    private $listingPageRoute = 'valuation.admin.settings.feature';
-    private $dataRoute = 'valuation.admin.settings.feature.data';
-    private $saveUpdateDataRoute = 'valuation.admin.settings.feature.saveUpdateData';
-    private $addEditViewRoute = 'valuation.admin.settings.feature.addEditView';
-    private $destroyRoute = 'valuation.admin.settings.block.destroy';
+    private $listingPageRoute = 'valuation.admin.settings.valuationMethod';
+    private $dataRoute = 'valuation.admin.settings.valuationMethod.data';
+    private $saveUpdateDataRoute = 'valuation.admin.settings.valuationMethod.saveUpdateData';
+    private $addEditViewRoute = 'valuation.admin.settings.valuationMethod.addEditView';
+    private $destroyRoute = 'valuation.admin.settings.valuationMethod.destroy';
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->pageTitle = 'valuation::valuation.propertyFeature.Title';
+        $this->pageTitle = 'valuation::valuation.valuationMethod.Title';
 
         $this->pageIcon = 'icon-speedometer';
     }
@@ -51,7 +53,7 @@ class ValuationMethodController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
 
-        $feture = new ValuationPropertyFeature();
+        $feture = new ValuationMethod();
 
         $this->fetureCount = $feture->countForCompany();
 
@@ -63,22 +65,20 @@ class ValuationMethodController extends ValuationAdminBaseController
         $this->__customConstruct($this->data);
 
         $governorate = null;
-        $this->title = 'valuation::valuation.propertyFeature.createFeature';
+        $this->title = 'valuation::valuation.valuationMethod.createFeature';
         $this->id = $id;
-        $categoryObj=new ValuationPropertyFeatureCategory();
+        $categoryObj=new ValuationApproache();
         $this->category=$categoryObj->getAllForCompany();
         if ($id > 0)
         {
-            $featureObj = new ValuationPropertyFeature;
+            $featureObj = new ValuationMethod;
             $features = $featureObj->find($id);
             $this->id=$id;
         }
 
-        $this->feature_name = isset($features->feature_name) ? $features->feature_name : '';
-        $this->countryId = isset($features->company_id) ? $features->company_id : '';
-        $this->field_type = isset($features->field_type) ? $features->field_type : '';
-        $this->category_id = isset($features->category_id) ? $features->category_id : '';
-        $this->sub_fields = isset($features->sub_fields) ? json_decode($features->sub_fields) : '';
+        $this->name = $features->name ?? '';
+        $this->company_id = $features->company_id ?? '';
+        $this->category_id = $features->category_id ?? '';
 
         return view($this->viewFolderPath . 'AddEditView', $this->data);
     }
@@ -88,35 +88,15 @@ class ValuationMethodController extends ValuationAdminBaseController
         $data = array();
         $this->__customConstruct($data);
 
-        if (ValuationPropertyFeature::find($request->id)) {
-            $features = ValuationPropertyFeature::find($request->id);
+        if (ValuationMethod::find($request->id)) {
+            $features = ValuationMethod::find($request->id);
         } else {
-            $features = new ValuationPropertyFeature;
+            $features = new ValuationMethod;
         }
         $features->company_id = isset($data['companyId']) ? $data['companyId'] : 0;
-        $features->feature_name = isset($request->featureName) ? $request->featureName : '';
+        $features->name = isset($request->featureName) ? $request->featureName : '';
         $features->category_id = isset($request->feactureCategory) ? $request->feactureCategory : '';
-        $features->field_type = isset($request->fieldType) ? $request->fieldType : '';
-        $subField=  isset($request->subField) ? $request->subField:array();
-        $fieldsArray=array();
-        if(!empty($subField))
-        {
-            foreach($subField as $key=>$field)
-            {
-                if(!empty($subField[$key]))
-                {
-                    $fieldsArray[]=array('name'=>$subField[$key]);
-                }
-            }
-        }
-        if(!empty($fieldsArray))
-        {
-            $features->sub_fields=json_encode($fieldsArray);
-        }
-        else
-        {
-            $features->sub_fields='';
-        }
+        $features->status = isset($request->status) ? $request->status : "Active";
         $features->save();
         $featureId=$features->id;
         if($featureId)
@@ -143,20 +123,20 @@ class ValuationMethodController extends ValuationAdminBaseController
     public function destroy($id)
     {
 
-        $feature = ValuationPropertyFeature::find($id);
+        $feature = ValuationMethod::find($id);
 
         if (empty($feature)) {
             return Reply::error(__('valuation::messages.dataNotFound'));
         }
 
-        ValuationPropertyFeature::destroy($id);
+        ValuationMethod::destroy($id);
 
         return Reply::success(__('valuation::messages.dataDeleted'));
     }
 
     public function getAjaxData()
     {
-        $featureObj = new ValuationPropertyFeature();
+        $featureObj = new ValuationMethod();
 
         $fetureList = $featureObj->getAllAjaxForCompany();
 
@@ -165,7 +145,7 @@ class ValuationMethodController extends ValuationAdminBaseController
 
     public function data()
     {
-        $featureObj = new ValuationPropertyFeature();
+        $featureObj = new ValuationMethod();
         $featureList = $featureObj->getAllForCompany();
 
         return DataTables::of($featureList)
@@ -183,17 +163,16 @@ class ValuationMethodController extends ValuationAdminBaseController
                 return $action;
 
             })
-
             ->editColumn(
                 'name',
                 function ($row) {
-                    return ucfirst($row->feature_name);
+                    return ucfirst($row->name);
                 }
             )
             ->editColumn(
                 'category',
                 function ($row) {
-                    return ucfirst(isset($row->featureCategory->category_name)?$row->featureCategory->category_name:'Category not found');
+                    return ucfirst($row->featureCategory->name??'Category not found');
                 }
             )
             ->addIndexColumn()

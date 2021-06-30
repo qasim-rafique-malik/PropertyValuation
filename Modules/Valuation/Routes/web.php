@@ -79,6 +79,13 @@ Route::prefix('valuation')->group(function() {
             Route::post('/feature/saveUpdateData/{id?}','Admin\Settings\FeatureController@saveUpdateData')->name('valuation.admin.settings.feature.saveUpdateData');
             Route::delete('/feature/destroy/{id?}','Admin\Settings\FeatureController@destroy')->name('valuation.admin.settings.feature.destroy');
 
+            //Property Feature
+            Route::get('/valuationMethod','Admin\Settings\ValuationMethodController@index')->name('valuation.admin.settings.valuationMethod');
+            Route::get('/valuationMethod/data','Admin\Settings\ValuationMethodController@data')->name('valuation.admin.settings.valuationMethod.data');
+            Route::get('/valuationMethod/addEditView/{id?}','Admin\Settings\ValuationMethodController@addEditView')->name('valuation.admin.settings.valuationMethod.addEditView');
+            Route::post('/valuationMethod/saveUpdateData/{id?}','Admin\Settings\ValuationMethodController@saveUpdateData')->name('valuation.admin.settings.valuationMethod.saveUpdateData');
+            Route::delete('/valuationMethod/destroy/{id?}','Admin\Settings\ValuationMethodController@destroy')->name('valuation.admin.settings.valuationMethod.destroy');
+
              //General settings
             Route::get('/general','Admin\Settings\GeneralController@index')->name('valuation.admin.settings.general');
             Route::get('/general/data','Admin\Settings\GeneralController@getData')->name('valuation.admin.settings.general.data');
@@ -96,6 +103,13 @@ Route::prefix('valuation')->group(function() {
             Route::get('/category/data','Admin\Settings\FeatureCategoryController@data')->name('valuation.admin.settings.category.data');
             Route::get('/category/getAjaxData', 'Admin\Settings\FeatureCategoryController@getAjaxData')->name('valuation.admin.settings.category.getAjaxData');
             Route::delete('/category/destroy/{id?}','Admin\Settings\FeatureCategoryController@destroy')->name('valuation.admin.settings.category.destroy');
+
+            Route::get('/valuationApproach','Admin\Settings\ValuationApproacheController@index')->name('valuation.admin.settings.valuationApproach');
+            Route::get('/valuationApproach/addEditView/{id?}','Admin\Settings\ValuationApproacheController@addEditView')->name('valuation.admin.settings.valuationApproach.addEditView');
+            Route::post('/valuationApproach/saveUpdateData/{id?}','Admin\Settings\ValuationApproacheController@saveUpdateData')->name('valuation.admin.settings.valuationApproach.saveUpdateData');
+            Route::get('/valuationApproach/data','Admin\Settings\ValuationApproacheController@data')->name('valuation.admin.settings.valuationApproach.data');
+            Route::get('/valuationApproach/getAjaxData', 'Admin\Settings\ValuationApproacheController@getAjaxData')->name('valuation.admin.settings.valuationApproach.getAjaxData');
+            Route::delete('/valuationApproach/destroy/{id?}','Admin\Settings\ValuationApproacheController@destroy')->name('valuation.admin.settings.valuationApproach.destroy');
 
 
             //Property Weightage

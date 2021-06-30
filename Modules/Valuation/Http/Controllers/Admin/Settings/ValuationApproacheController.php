@@ -1,34 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Modules\Valuation\Http\Controllers\Admin\Settings;
 
 use App\Helper\Reply;
 use App\Http\Controllers\Controller;
-use App\ValuationApproache;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Modules\Valuation\Entities\ValuationApproache;
 use Modules\Valuation\Entities\ValuationBaseModel;
 use Modules\Valuation\Http\Controllers\Admin\ValuationAdminBaseController;
 use Yajra\DataTables\Facades\DataTables;
 
 class ValuationApproacheController extends ValuationAdminBaseController
 {
-    const viewFolderPath = 'valuation::Admin.Settings.FeatureCategory.';
-    const saveUpdateDataRoute = 'valuation.admin.settings.category.saveUpdateData';
-    const getAjaxDataRoute = 'valuation.admin.settings.category.getAjaxData';
 
-    private $viewFolderPath = 'valuation::Admin.Settings.FeatureCategory.';
+    const viewFolderPath = 'valuation::Admin.Settings.Approach.';
+    const saveUpdateDataRoute = 'valuation.admin.settings.valuationApproach.saveUpdateData';
+    const getAjaxDataRoute = 'valuation.admin.settings.valuationApproach.getAjaxData';
 
-    private $listingPageRoute = 'valuation.admin.settings.category';
-    private $dataRoute = 'valuation.admin.settings.category.data';
-    private $saveUpdateDataRoute = 'valuation.admin.settings.category.saveUpdateData';
-    private $addEditViewRoute = 'valuation.admin.settings.category.addEditView';
-    private $destroyRoute = 'valuation.admin.settings.category.destroy';
+    private $viewFolderPath = 'valuation::Admin.Settings.Approach.';
+
+    private $listingPageRoute = 'valuation.admin.settings.valuationApproach';
+    private $dataRoute = 'valuation.admin.settings.valuationApproach.data';
+    private $saveUpdateDataRoute = 'valuation.admin.settings.valuationApproach.saveUpdateData';
+    private $addEditViewRoute = 'valuation.admin.settings.valuationApproach.addEditView';
+    private $destroyRoute = 'valuation.admin.settings.valuationApproach.destroy';
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->pageTitle = 'valuation::valuation.propertyFeatureCategory.Title';
+        $this->pageTitle = 'valuation::valuation.valuationApproach.Title';
 
         $this->pageIcon = 'icon-speedometer';
     }
@@ -50,7 +52,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
     {
         $this->__customConstruct($this->data);
 
-        $feactureCategory = new ValuationPropertyFeatureCategory();
+        $feactureCategory = new ValuationApproache();
 
         $this->feactureCategoryCount = $feactureCategory->countForCompany();
 
@@ -62,15 +64,15 @@ class ValuationApproacheController extends ValuationAdminBaseController
         $this->__customConstruct($this->data);
 
         $governorate = null;
-        $this->title = 'valuation::valuation.propertyFeatureCategory.createCategory';
+        $this->title = 'valuation::valuation.valuationApproach.createCategory';
         $this->id = $id;
 
 
         if ($id > 0) {
-            $category = ValuationPropertyFeatureCategory::find($id);
+            $category = ValuationApproache::find($id);
         }
 
-        $this->category_name = isset($category->category_name) ? $category->category_name : '';
+        $this->name = $category->name ?? '';
 
 
         return view($this->viewFolderPath . 'AddEditView', $this->data);
@@ -81,13 +83,14 @@ class ValuationApproacheController extends ValuationAdminBaseController
         $data = array();
         $this->__customConstruct($data);
 
-        if (ValuationPropertyFeatureCategory::find($request->id)) {
-            $category = ValuationPropertyFeatureCategory::find($request->id);
+        if (ValuationApproache::find($request->id)) {
+            $category = ValuationApproache::find($request->id);
         } else {
-            $category = new ValuationPropertyFeatureCategory;
+            $category = new ValuationApproache;
         }
         $category->company_id = isset($data['companyId']) ? $data['companyId'] : 0;
-        $category->category_name = isset($request->feactureCategory) ? $request->feactureCategory : 0;
+        $category->name = isset($request->feactureCategory) ? $request->feactureCategory : 0;
+        $category->status = isset($request->status) ? $request->status : "Active";
         $category->save();
 
         return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
@@ -102,20 +105,20 @@ class ValuationApproacheController extends ValuationAdminBaseController
     public function destroy($id)
     {
 
-        $feactureCategory = ValuationPropertyFeatureCategory::find($id);
+        $feactureCategory = ValuationApproache::find($id);
 
         if (empty($feactureCategory)) {
             return Reply::error(__('valuation::messages.dataNotFound'));
         }
 
-        ValuationPropertyFeatureCategory::destroy($id);
+        ValuationApproache::destroy($id);
 
         return Reply::success(__('valuation::messages.dataDeleted'));
     }
 
     public function getAjaxData()
     {
-        $feactureCategory = new ValuationPropertyFeatureCategory();
+        $feactureCategory = new ValuationApproache();
 
         $category = $feactureCategory->getAllAjaxForCompany();
 
@@ -124,7 +127,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
 
     public function data()
     {
-        $feactureCategory = new ValuationPropertyFeatureCategory();
+        $feactureCategory = new ValuationApproache();
 
         $categorList = $feactureCategory->getAllForCompany();
 
@@ -143,11 +146,14 @@ class ValuationApproacheController extends ValuationAdminBaseController
                 return $action;
 
             })
+            ->addColumn('status', function ($row) {
 
+                return $row->status;
+            })
             ->editColumn(
                 'name',
                 function ($row) {
-                    return ucfirst($row->category_name);
+                    return ucfirst($row->name);
                 }
             )
             ->addIndexColumn()

@@ -6,7 +6,7 @@
         <!-- .page title -->
         <div class="col-lg-8 col-md-5 col-sm-6 col-xs-12">
             <h4 class="page-title"><i class="{{ $pageIcon }}"></i> {{ __($pageTitle) }}
-                <span class="text-info b-l p-l-10 m-l-5">{{ $feactureCategoryCount }}</span> <span
+                <span class="text-info b-l p-l-10 m-l-5">{{  $feactureCategoryCount }}</span> <span
                         class="font-12 text-muted m-l-5"> @lang('valuation::valuation.valuationApproach.categoryCount')</span>
             </h4>
         </div>

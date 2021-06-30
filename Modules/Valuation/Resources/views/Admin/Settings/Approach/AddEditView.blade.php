@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/bower_components/custom-select/custom-select.css') }}">
-   
+
     <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/datatables-bundle.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/prismjs-bundle.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/metronic_plugin/css/style-bundle.css') }}">
@@ -46,7 +46,7 @@
                             <div class="tab-content">
                                 <div id="vhome3" class="tab-pane active">
                                     @include($viewFolderPath.'Form')
-                                 </div>
+                                </div>
                             </div>
                         </div>
                     </div>

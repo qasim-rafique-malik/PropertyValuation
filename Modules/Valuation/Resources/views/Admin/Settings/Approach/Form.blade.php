@@ -5,7 +5,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="required">Approach Name</label>
-                <input type="text" name="feactureCategory" id="feactureCategory" class="form-control" autocomplete="nope" value="{{isset($category_name)?$category_name:''}}">
+                <input type="text" name="feactureCategory" id="feactureCategory" class="form-control"
+                       autocomplete="nope" value="{{isset($category_name)?$category_name:''}}">
             </div>
         </div>
         <div class="col-md-6">
@@ -28,7 +29,7 @@
     <button type="submit" id="saveCategoryForm" class="btn btn-success"><i
                 class="fa fa-check"></i> @lang('app.save')</button>
 </div>
-      
+
 {!! Form::close() !!}
 
 @push('footer-script')
@@ -55,17 +56,17 @@
                     return "{{ __('messages.noRecordFound') }}";
                 }
             });
-           
+
         })
     </script>
-   
+
     <script>
-        
-       
+
+
         $('#saveCategoryForm').click(function () {
 
             let name = $("#feactureCategory");
-           
+
             if (name.val() == '') {
                 alert('Please enter name');
                 return false;

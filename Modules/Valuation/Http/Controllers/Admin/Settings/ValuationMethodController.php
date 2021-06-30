@@ -45,7 +45,7 @@ class ValuationMethodController extends ValuationAdminBaseController
         $data['addEditViewRoute'] = $this->addEditViewRoute;
         $data['destroyRoute'] = $this->destroyRoute;
         $data['viewFolderPath'] = $this->viewFolderPath;
-        $data['companyId'] = isset(company()->id)?company()->id:0;
+        $data['companyId'] = isset(company()->id) ? company()->id : 0;
 
     }
 
@@ -67,13 +67,12 @@ class ValuationMethodController extends ValuationAdminBaseController
         $governorate = null;
         $this->title = 'valuation::valuation.valuationMethod.createFeature';
         $this->id = $id;
-        $categoryObj=new ValuationApproache();
-        $this->category=$categoryObj->getAllForCompany();
-        if ($id > 0)
-        {
+        $categoryObj = new ValuationApproache();
+        $this->category = $categoryObj->getAllForCompany();
+        if ($id > 0) {
             $featureObj = new ValuationMethod;
             $features = $featureObj->find($id);
-            $this->id=$id;
+            $this->id = $id;
         }
 
         $this->name = $features->name ?? '';
@@ -98,17 +97,12 @@ class ValuationMethodController extends ValuationAdminBaseController
         $features->category_id = isset($request->feactureCategory) ? $request->feactureCategory : '';
         $features->status = isset($request->status) ? $request->status : "Active";
         $features->save();
-        $featureId=$features->id;
-        if($featureId)
-        {
-            return Reply::redirect(route($this->addEditViewRoute,$featureId), __('Save Success'));
-        }
-        else if($request->id)
-        {
-            return Reply::redirect(route($this->addEditViewRoute,$request->id), __('Updated Success'));
-        }
-        else
-        {
+        $featureId = $features->id;
+        if ($featureId) {
+            return Reply::redirect(route($this->addEditViewRoute, $featureId), __('Save Success'));
+        } else if ($request->id) {
+            return Reply::redirect(route($this->addEditViewRoute, $request->id), __('Updated Success'));
+        } else {
             return Reply::redirect(route($this->listingPageRoute), __('Save Success'));
         }
 
@@ -117,7 +111,7 @@ class ValuationMethodController extends ValuationAdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -140,7 +134,7 @@ class ValuationMethodController extends ValuationAdminBaseController
 
         $fetureList = $featureObj->getAllAjaxForCompany();
 
-        echo  json_encode($fetureList);
+        echo json_encode($fetureList);
     }
 
     public function data()
@@ -155,7 +149,7 @@ class ValuationMethodController extends ValuationAdminBaseController
                 <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle waves-effect waves-light" type="button"><i class="ti-more"></i></button>
                 <ul role="menu" class="dropdown-menu pull-right">
                   <li><a href="' . route($this->addEditViewRoute, $row->id) . '"><i class="fa fa-pencil" aria-hidden="true"></i> ' . trans('valuation::app.edit') . '</a></li>
-                  <li><a href="javascript:void(0)" id="'.$row->id.'" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
+                  <li><a href="javascript:void(0)" id="' . $row->id . '" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
                  ';
 
                 $action .= '</ul> </div>';
@@ -172,7 +166,7 @@ class ValuationMethodController extends ValuationAdminBaseController
             ->editColumn(
                 'category',
                 function ($row) {
-                    return ucfirst($row->featureCategory->name??'Category not found');
+                    return ucfirst($row->featureCategory->name ?? 'Category not found');
                 }
             )
             ->addIndexColumn()

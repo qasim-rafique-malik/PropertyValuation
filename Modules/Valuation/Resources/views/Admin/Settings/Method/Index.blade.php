@@ -13,7 +13,9 @@
         <!-- /.page title -->
         <!-- .breadcrumb -->
         <div class="col-lg-4 col-sm-6 col-md-7 col-xs-12 text-right">
-            <a href="{{ route($addEditViewRoute) }}" class="btn btn-outline btn-success btn-sm">@lang('valuation::valuation.valuationMethod.createFeature') <i class="fa fa-plus" aria-hidden="true"></i></a>
+            <a href="{{ route($addEditViewRoute) }}"
+               class="btn btn-outline btn-success btn-sm">@lang('valuation::valuation.valuationMethod.createFeature') <i
+                        class="fa fa-plus" aria-hidden="true"></i></a>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.dashboard') }}">@lang('app.menu.home')</a></li>
@@ -75,7 +77,6 @@
     <script src="{{ asset('plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
 
     <script>
-
 
 
         $(".select2").select2({

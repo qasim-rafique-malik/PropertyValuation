@@ -13,7 +13,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ValuationApproacheController extends ValuationAdminBaseController
 {
-
     const viewFolderPath = 'valuation::Admin.Settings.Approach.';
     const saveUpdateDataRoute = 'valuation.admin.settings.valuationApproach.saveUpdateData';
     const getAjaxDataRoute = 'valuation.admin.settings.valuationApproach.getAjaxData';
@@ -44,7 +43,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
         $data['addEditViewRoute'] = $this->addEditViewRoute;
         $data['destroyRoute'] = $this->destroyRoute;
         $data['viewFolderPath'] = $this->viewFolderPath;
-        $data['companyId'] = isset(company()->id)?company()->id:0;
+        $data['companyId'] = isset(company()->id) ? company()->id : 0;
 
     }
 
@@ -99,7 +98,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -122,7 +121,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
 
         $category = $feactureCategory->getAllAjaxForCompany();
 
-        echo  json_encode($category);
+        echo json_encode($category);
     }
 
     public function data()
@@ -138,7 +137,7 @@ class ValuationApproacheController extends ValuationAdminBaseController
                 <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle waves-effect waves-light" type="button"><i class="ti-more"></i></button>
                 <ul role="menu" class="dropdown-menu pull-right">
                   <li><a href="' . route($this->addEditViewRoute, $row->id) . '"><i class="fa fa-pencil" aria-hidden="true"></i> ' . trans('valuation::app.edit') . '</a></li>
-                  <li><a href="javascript:void(0)" id="'.$row->id.'" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
+                  <li><a href="javascript:void(0)" id="' . $row->id . '" class="sa-params"><i class="fa fa-times" aria-hidden="true"></i> ' . trans('valuation::app.delete') . '</a></li>
                  ';
 
                 $action .= '</ul> </div>';

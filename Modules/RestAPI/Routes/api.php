@@ -29,6 +29,7 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
     ApiRoute::get('dashboard/me', ['as' => 'api.dashboard', 'uses' => 'DashboardController@myDashboard']);
     ApiRoute::get('auth/me', ['as' => 'api.auth.me', 'uses' => 'AuthController@me']);
     ApiRoute::get('/project/me', ['as' => 'project.me', 'uses' => 'ProjectController@me']);
+    ApiRoute::get('/appointment/me', ['as' => 'appointment.me', 'uses' => 'AppointmentController@me']);
 
     ApiRoute::get('company', ['as' => 'api.app', 'uses' => 'CompanyController@company']);
     ApiRoute::post('/project/{project_id}/members', ['as' => 'project.member', 'uses' => 'ProjectController@members']);
@@ -39,6 +40,7 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
             'uses' => 'ProjectController@memberRemove'
         ]
     );
+    ApiRoute::resource('appointment', 'AppointmentController');
     ApiRoute::resource('project', 'ProjectController');
     ApiRoute::resource('project-category', 'ProjectCategoryController');
     ApiRoute::resource('currency', 'CurrencyController');

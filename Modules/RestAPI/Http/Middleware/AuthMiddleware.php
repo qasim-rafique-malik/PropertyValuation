@@ -24,7 +24,7 @@ class AuthMiddleware
         // Do not apply this middleware to OPTIONS request
         if ($request->getMethod() !== 'OPTIONS') {
             try {
-                if (!$user = api_user()) {
+                if ($user = api_user()) {
                     throw new ApiException('User not found', null, 403, 403, 2006);
                 }
             } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {

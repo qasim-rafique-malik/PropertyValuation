@@ -81,15 +81,25 @@ class TaskFormFieldsController extends ApiBaseController
         $subTaskData[1]['startDate'] = null;
         $subTaskData[1]['status'] = 'incomplete';
 
+        $selectOptionArray = array();
+        $selectOptionArray[0]['title'] = 'Option One';
+        $selectOptionArray[0]['value'] = 'option1';
+
+        $selectOptionArray[1]['title'] = 'Option two';
+        $selectOptionArray[1]['value'] = 'option2';
+
+        $selectOptionArray[2]['title'] = 'Option three';
+        $selectOptionArray[2]['value'] = 'option3';
+
         $subTaskData[2]['id'] = '1';
         $subTaskData[2]['taskId'] = '2';
         $subTaskData[2]['title'] = 'Select Option';
         $subTaskData[2]['fieldType'] = 'select';
         $subTaskData[2]['isRequired'] = 'true';
         $subTaskData[2]['fieldProperties'] = array();
-        $subTaskData[2]['fieldProperties']['value'] = 'optionOne';
+        $subTaskData[2]['fieldProperties']['value'] = 'option2';
         $subTaskData[2]['fieldProperties']['linkFieldWith'] = array('table'=>'db_table',  'field'=>'db_field' );
-        $subTaskData[2]['fieldProperties']['option'] = array('optionOne'=>'Option One', 'optionTwo'=>'Option Two');
+        $subTaskData[2]['fieldProperties']['option'] = $selectOptionArray;
         $subTaskData[2]['dueDate'] = '2021-06-28T00:00:00+00:00';
         $subTaskData[2]['startDate'] = null;
         $subTaskData[2]['status'] = 'incomplete';
@@ -124,16 +134,13 @@ class TaskFormFieldsController extends ApiBaseController
         $radioChildArray = array();
         $radioChildArray[0]['title'] = 'Option One';
         $radioChildArray[0]['value'] = 'option1';
-        $radioChildArray[0]['isChecked'] = 'false';
-
 
         $radioChildArray[1]['title'] = 'Option two';
         $radioChildArray[1]['value'] = 'option2';
-        $radioChildArray[1]['isChecked'] = 'true';
+
 
         $radioChildArray[2]['title'] = 'Option three';
         $radioChildArray[2]['value'] = 'option3';
-        $radioChildArray[2]['isChecked'] = 'true';
 
         $subTaskData[4]['id'] = '1';
         $subTaskData[4]['taskId'] = '2';
@@ -141,7 +148,7 @@ class TaskFormFieldsController extends ApiBaseController
         $subTaskData[4]['fieldType'] = 'radioButton';
         $subTaskData[4]['isRequired'] = 'true';
         $subTaskData[4]['fieldProperties'] = array();
-        $subTaskData[4]['fieldProperties']['value'] = '';
+        $subTaskData[4]['fieldProperties']['value'] = 'option3';
         $subTaskData[4]['fieldProperties']['linkFieldWith'] = array('table'=>'db_table',  'field'=>'db_field' );
         $subTaskData[4]['fieldProperties']['option'] = array();
         $subTaskData[4]['fieldProperties']['child'] = $radioChildArray;

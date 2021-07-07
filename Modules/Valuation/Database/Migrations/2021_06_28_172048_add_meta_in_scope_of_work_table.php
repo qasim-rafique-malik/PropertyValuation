@@ -13,9 +13,14 @@ class AddMetaInScopeOfWorkTable extends Migration
      */
     public function up()
     {
-        Schema::table('scope_of_works', function (Blueprint $table) {
-            $table->text('meta')->default(0);
-        });
+        if (Schema::hasTable('scope_of_works')) {
+            if (!Schema::hasColumn('scope_of_works', 'meta')) {
+                Schema::table('scope_of_works', function (Blueprint $table) {
+                    $table->text('meta')->nullable();
+                });
+            }
+        }
+
     }
 
     /**

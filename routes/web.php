@@ -624,7 +624,8 @@ Route::group(['middleware' => 'auth'], function () {
                         Route::get('milestones/data/{id}', ['uses' => 'ManageProjectMilestonesController@data'])->name('milestones.data');
                         Route::resource('milestones', 'ManageProjectMilestonesController');
 
-                        Route::post('report/generate/{id}', ['uses' => 'ManageProjectReportController@generateProjectReportRoute'])->name('report.generate');
+                        Route::post('report/generate/{id}', ['uses' => 'ManageProjectReportController@generateProjectReport'])->name('report.generate');
+                        Route::get('report/tempGenerate/{id}', ['uses' => 'ManageProjectReportController@tempGenerateProjectReport'])->name('report.tempGenerate');
                         Route::resource('report', 'ManageProjectReportController');
 
                         Route::post('valuation-method/processComparison', ['uses' => 'ManageProjectValuationMethodController@processComparison'])->name('valuation-method.processComparison');

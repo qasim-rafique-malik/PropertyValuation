@@ -89,6 +89,15 @@
                                         </div>
                                         {!! Form::close() !!}
 
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <a href="{{route('admin.report.tempGenerate', $id)}}" id="save-form" class="btn btn-success pull-right"><i
+                                                                class="fa fa-check"></i> Generate Report</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 

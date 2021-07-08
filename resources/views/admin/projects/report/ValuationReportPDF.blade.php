@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>Valuation Report #{{ (is_null($estimate->estimate_number)) ? $estimate->id : $estimate->estimate_number }}</title>
+    <title>Valuation Report #{{ (is_null($project->id)) ? $project->id : $project->id }}</title>
     <style>
         /* Please don't remove this code it is useful in case of add new language in dompdf */
 
@@ -48,7 +48,7 @@
 
         @php
             $font = '';
-            if($company->locale == 'ja') {
+            /*if($company->locale == 'ja') {
                 $font = 'ipag';
             } else if($company->locale == 'hi') {
                 $font = 'hindi';
@@ -56,7 +56,7 @@
                 $font = 'THSarabun';
             } else {
                 $font = 'noto-sans';
-            }
+            }*/
         @endphp
 
         * {
@@ -369,82 +369,82 @@
 
     </div>
     <table border="0" cellspacing="0" cellpadding="0">
-            <thead>
-            <tr>
-                <th class="no">#</th>
-                <th class="desc">@lang("modules.invoices.item")</th>
-                <th class="qty">@lang("modules.invoices.qty")</th>
-                <th class="qty">@lang("modules.invoices.unitPrice") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
-                <th class="unit">@lang("modules.invoices.price") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php $count = 0; ?>
-            @foreach($estimate->items as $item)
-                @if($item->type == 'item')
-                    <tr style="page-break-inside: avoid;">
-                        <td class="no">{{ ++$count }}</td>
-                        <td class="desc"><h3>{{ ucfirst($item->item_name) }}</h3>
-                            @if(!is_null($item->item_summary))
-                                <p class="item-summary">{{ $item->item_summary }}</p>
-                            @endif
-                        </td>
-                        <td class="qty"><h3>{{ $item->quantity }}</h3></td>
-                        <td class="qty"><h3>{{ number_format((float)$item->unit_price, 2, '.', '') }}</h3></td>
-                        <td class="unit">{{ number_format((float)$item->amount, 2, '.', '') }}</td>
-                    </tr>
-                @endif
-            @endforeach
-            <tr style="page-break-inside: avoid;" class="subtotal">
+        <thead>
+        <tr>
+            <th class="no">#</th>
+            <th class="desc">@lang("modules.invoices.item")</th>
+            <th class="qty">@lang("modules.invoices.qty")</th>
+            <th class="qty">@lang("modules.invoices.unitPrice") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
+            <th class="unit">@lang("modules.invoices.price") ({!! htmlentities($estimate->currency->currency_code)  !!})</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $count = 0; ?>
+        @foreach($estimate->items as $item)
+            @if($item->type == 'item')
+                <tr style="page-break-inside: avoid;">
+                    <td class="no">{{ ++$count }}</td>
+                    <td class="desc"><h3>{{ ucfirst($item->item_name) }}</h3>
+                        @if(!is_null($item->item_summary))
+                            <p class="item-summary">{{ $item->item_summary }}</p>
+                        @endif
+                    </td>
+                    <td class="qty"><h3>{{ $item->quantity }}</h3></td>
+                    <td class="qty"><h3>{{ number_format((float)$item->unit_price, 2, '.', '') }}</h3></td>
+                    <td class="unit">{{ number_format((float)$item->amount, 2, '.', '') }}</td>
+                </tr>
+            @endif
+        @endforeach
+        <tr style="page-break-inside: avoid;" class="subtotal">
+            <td class="no">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="desc">@lang("modules.invoices.subTotal")</td>
+            <td class="unit">{{ number_format((float)$estimate->sub_total, 2, '.', '') }}</td>
+        </tr>
+        @if($discount != 0 && $discount != '')
+            <tr style="page-break-inside: avoid;" class="discount">
                 <td class="no">&nbsp;</td>
                 <td class="qty">&nbsp;</td>
                 <td class="qty">&nbsp;</td>
-                <td class="desc">@lang("modules.invoices.subTotal")</td>
-                <td class="unit">{{ number_format((float)$estimate->sub_total, 2, '.', '') }}</td>
+                <td class="desc">@lang("modules.invoices.discount")</td>
+                <td class="unit">-{{ number_format((float)$discount, 2, '.', '') }}</td>
             </tr>
-            @if($discount != 0 && $discount != '')
-                <tr style="page-break-inside: avoid;" class="discount">
-                    <td class="no">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="desc">@lang("modules.invoices.discount")</td>
-                    <td class="unit">-{{ number_format((float)$discount, 2, '.', '') }}</td>
-                </tr>
-            @endif
-            @foreach($taxes as $key=>$tax)
-                <tr style="page-break-inside: avoid;" class="tax">
-                    <td class="no">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="qty">&nbsp;</td>
-                    <td class="desc">{{ strtoupper($key) }}</td>
-                    <td class="unit">{{ number_format((float)$tax, 2, '.', '') }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-            <tfoot>
-            <tr dontbreak="true">
-                <td colspan="4">@lang("modules.invoices.total")</td>
-                <td style="text-align: center">{{ number_format((float)$estimate->total, 2, '.', '') }}</td>
-            </tr>
-            </tfoot>
-        </table>
-        <p>&nbsp;</p>
-        <hr>
-        <p id="notes">
-            @if(!is_null($estimate->note))
-                {!! nl2br($estimate->note) !!}<br>
-            @endif
-            @if(!is_null($invoiceSetting->estimate_terms))
-               {!! nl2br($invoiceSetting->estimate_terms) !!}
-            @endif
-        </p>
-
-        @if($estimate->sign)
-            <div style="text-align: right;">
-                <h2 class="name" style="margin-bottom: 20px;">@lang('modules.estimates.signature') (@lang('app.customers'))</h2>
-                    <img src="{{ $estimate->sign->signature }}" style="width: 250px;">
-            </div>
         @endif
+        @foreach($taxes as $key=>$tax)
+            <tr style="page-break-inside: avoid;" class="tax">
+                <td class="no">&nbsp;</td>
+                <td class="qty">&nbsp;</td>
+                <td class="qty">&nbsp;</td>
+                <td class="desc">{{ strtoupper($key) }}</td>
+                <td class="unit">{{ number_format((float)$tax, 2, '.', '') }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+        <tfoot>
+        <tr dontbreak="true">
+            <td colspan="4">@lang("modules.invoices.total")</td>
+            <td style="text-align: center">{{ number_format((float)$estimate->total, 2, '.', '') }}</td>
+        </tr>
+        </tfoot>
+    </table>
+    <p>&nbsp;</p>
+    <hr>
+    <p id="notes">
+        @if(!is_null($estimate->note))
+            {!! nl2br($estimate->note) !!}<br>
+        @endif
+        @if(!is_null($invoiceSetting->estimate_terms))
+            {!! nl2br($invoiceSetting->estimate_terms) !!}
+        @endif
+    </p>
+
+    @if($estimate->sign)
+        <div style="text-align: right;">
+            <h2 class="name" style="margin-bottom: 20px;">@lang('modules.estimates.signature') (@lang('app.customers'))</h2>
+            <img src="{{ $estimate->sign->signature }}" style="width: 250px;">
+        </div>
+    @endif
 </main>
 </body>
 </html>

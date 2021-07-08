@@ -100,4 +100,7 @@
     'bold' => $fontDir . '/thsarabun-bold_2727579895b1ed2218b207764549dd14',
     'bold_italic' => $fontDir . '/thsarabun-bold-italic_11865407fddc9449cfb1ef0a41d636d3',
   ),
+  'glyphicons halflings' => array(
+    'normal' => $fontDir . '/glyphicons-halflings-normal_91a063d0f3772b152f606edc0383c99d',
+  ),
 ) ?>

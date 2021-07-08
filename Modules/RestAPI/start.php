@@ -29,7 +29,7 @@ if (!function_exists('parseUser')) {
 
                 $user = auth()->user();
 
-                if (!$user === false) {
+                if ($user === false) {
                     $exception =  new \Froiden\RestAPI\Exceptions\UnauthorizedException('User not found', null, 403, 403, 2006);
                     return \Froiden\RestAPI\ApiResponse::exception($exception);
                 }

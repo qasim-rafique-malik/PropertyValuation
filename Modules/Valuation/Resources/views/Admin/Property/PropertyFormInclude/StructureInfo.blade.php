@@ -580,7 +580,7 @@ $("#StructureInfoUnitListAddBtn").on("click", function() {
 $("#StructureInfoUnitListAddBtn").click();
 function saveUnit()
 {
-     var unitStructureType=$("input[name='structureUnitType[]']").map(function(){return $(this).val();}).get();
+     var unitStructureType=$("select[name='structureUnitType[]']").map(function(){return $(this).val();}).get();
      var unitStructureUnitId=$("input[name='structureUnitId[]']").map(function(){return $(this).val();}).get();
      var structureUnitDescription=$("input[name='structureUnitDescription[]']").map(function(){return $(this).val();}).get();
      var token=$('input[name="_token"]').val();

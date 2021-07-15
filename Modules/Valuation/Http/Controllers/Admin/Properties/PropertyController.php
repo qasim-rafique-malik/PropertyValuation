@@ -277,8 +277,8 @@ class PropertyController extends ValuationAdminBaseController
         $this->cityId = isset($propertyData->city_id) ? $propertyData->city_id : 0;
         $this->blockId = isset($propertyData->block_id) ? $propertyData->block_id : 0;
         $this->classId = isset($propertyData->class_id) ? $propertyData->class_id : 0;
-        $this->categorizationId = isset($propertyData->classification_id) ? $propertyData->classification_id : 0;
-        $this->classificationId = isset($propertyData->categorization_id) ? $propertyData->categorization_id : 0;
+        $this->classificationId = isset($propertyData->classification_id) ? $propertyData->classification_id : 0;
+        $this->categorizationId = isset($propertyData->categorization_id) ? $propertyData->categorization_id : 0;
         $this->typeId = isset($propertyData->type_id) ? $propertyData->type_id : 0;
         $this->processStatusId = isset($propertyData->process_status_id) ? $propertyData->process_status_id : 0;
         $this->propertyTitle = isset($propertyData->title) ? $propertyData->title : '';
@@ -313,7 +313,14 @@ class PropertyController extends ValuationAdminBaseController
         $this->landPrice = isset($propertyData->land_price) ? $propertyData->land_price : 0;
         $this->constructionPrice = isset($propertyData->construction_price) ? $propertyData->construction_price : 0;
         $this->renovationPrice = isset($propertyData->renovation_price) ? $propertyData->renovation_price : 0;
-        $this->rentalIncome = isset($propertyData->rental_income) ? $propertyData->rental_income : 0;
+        $this->rentalIncome = isset($propertyData->rental_income) ? $propertyData->rental_income : 0;///
+        $this->rentalStructureIncome = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::RentalIncomeStructure , array()))->toArray():array();
+        $this->estimatedValueStructure = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::EstimatedValueStructure , array()))->toArray():array();
+        $this->residual_value_for_Structure = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::ResidualValueForStructure , array()))->toArray():array();
+        $this->depicted_value_for_Structure = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DepictedValueForStructure , array()))->toArray():array();
+        $this->cost_construction_for_Structure = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::CostOfConstructionValueForStructure , array()))->toArray():array();
+        $this->incomebasevalue_for_Structure = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::IncomeBaseValueForStructure , array()))->toArray():array();
+//        $this->estimatedValue = isset($propertyData->estimated_value) ? $propertyData->estimated_value : 0;
         $this->estimatedValue = isset($propertyData->estimated_value) ? $propertyData->estimated_value : 0;
         $this->status = isset($propertyData->status) ? $propertyData->status : 'Draft';
         $this->dimensionsMeta = ($propertyData != null)?optional($propertyData->getMeta(ValuationProperty::DimensionsMetaKey , array()))->toArray():array();
@@ -386,7 +393,6 @@ class PropertyController extends ValuationAdminBaseController
 
     public function saveUpdateData(Request $request)
     {
-
         $data = array();
         $this->__customConstruct($data);
         $propertyFeatureEncode = $this->featureMetaData($_POST['feature']);
@@ -401,7 +407,7 @@ class PropertyController extends ValuationAdminBaseController
         $property->type_id = isset($request->propertyType) ? $request->propertyType : 0;
         $property->class_id = isset($request->propertyClass) ? $request->propertyClass : 0;
         $property->categorization_id = isset($request->propertyCategorization) ? $request->propertyCategorization : 0;
-        
+
         $property->neighbour_front = isset($request->front) ? $request->front : '';
         $property->neighbour_back = isset($request->back) ? $request->back : '';
         $property->left_side = isset($request->leftSide) ? $request->leftSide : '';
@@ -589,6 +595,9 @@ class PropertyController extends ValuationAdminBaseController
         $estimatedValuePropertyInfoArray[]=$estimatedValuePropertyInfo;
         
         $ValuationPropertyXref=new ValuationPropertyXref();
+        $unitTypeArray=array();
+        $bedRoomsUnitInfoWeightageArray=array();
+
         if(isset($request->id) && $request->id>0)
         {
            $getAllUnit=$ValuationPropertyXref->getAllUnit($request->id); 

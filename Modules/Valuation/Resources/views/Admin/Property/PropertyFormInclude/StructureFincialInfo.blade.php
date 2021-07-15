@@ -333,7 +333,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Rental income</label>
-                                            <input type="number" name="rentalIncomeStructure" id="rentalIncomeStructure" value="{{isset($rentalIncome)?$rentalIncome:0.00}}"
+                                            <input type="number" name="rentalIncomeStructure" id="rentalIncomeStructure" value="{{isset($rentalStructureIncome)?$rentalStructureIncome[0]:0.00}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
@@ -380,7 +380,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Estimated value</label>
-                                            <input type="number" name="estimatedValueStructure" id="estimatedValueStructure" value="{{isset($estimatedValue)?$estimatedValue:0.00}}"
+                                            <input type="number" name="estimatedValueStructure" id="estimatedValueStructure" value="{{isset($estimatedValueStructure)?$estimatedValueStructure:0.00}}"
                                                    class="form-control priceField"
                                                    autocomplete="nope">
                                         </div>
@@ -388,13 +388,13 @@
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Residual Value</label>
-                                            <input type="text" name="residual_value_for_Structure" class="form-control priceField" value="">
+                                            <input type="text" name="residual_value_for_Structure" class="form-control priceField" value="{{isset($residual_value_for_Structure)?$residual_value_for_Structure:''}}">
                                          </div>
                                     </div>
                                      <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Depicted Value</label>
-                                            <input type="text" name="depicted_value_for_Structure" class="form-control priceField" value="">
+                                            <input type="text" name="depicted_value_for_Structure" class="form-control priceField" value="{{isset($depicted_value_for_Structure)?$depicted_value_for_Structure:''}}">
                                          </div>
                                     </div>
                                 </div>
@@ -402,13 +402,13 @@
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Cost Of Construction</label>
-                                            <input type="text" name="cost_construction_for_Structure" class="form-control priceField" value="">
+                                            <input type="text" name="cost_construction_for_Structure" class="form-control priceField" value="{{isset($cost_construction_for_Structure)?$cost_construction_for_Structure:''}}">
                                          </div>
                                     </div>
                                     <div class="col-md-4">
                                          <div class="form-group">
                                             <label class="control-label">Income Base Value</label>
-                                            <input type="text" name="incomebasevalue_for_Structure" class="form-control priceField" value="">
+                                            <input type="text" name="incomebasevalue_for_Structure" class="form-control priceField" value="{{isset($incomebasevalue_for_Structure)?$incomebasevalue_for_Structure:''}}">
                                          </div>
                                     </div>
                                 </div>

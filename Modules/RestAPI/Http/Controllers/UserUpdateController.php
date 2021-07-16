@@ -30,6 +30,9 @@ class UserUpdateController extends ApiController
 
         //updating user
         $user = AppUser::where('id', $id)->first();
+        if(empty($userByEmail)){
+            throw new ApiException('User not exist', null, 422, 422, 2001);
+        }
         $user->name = $name;
         $user->email = $email;
         $user->mobile = $number;

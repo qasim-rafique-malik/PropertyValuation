@@ -40,7 +40,15 @@ ApiRoute::group(['namespace' => 'Modules\RestAPI\Http\Controllers','middleware' 
             'uses' => 'ProjectController@memberRemove'
         ]
     );
+    ApiRoute::resource('projectProperty', 'ProjectPropertyController');
+    ApiRoute::post('/projectProperty/saveImage', ['as' => 'projectProperty.saveImage', 'uses' => 'ProjectPropertyController@saveImage']);
+
+    ApiRoute::resource('profile', 'UserUpdateController');
+    ApiRoute::post('/profile/update', ['as' => 'profile.update', 'uses' => 'UserUpdateController@updateProfile']);
+
+
     ApiRoute::resource('appointment', 'AppointmentController');
+    ApiRoute::post('/appointment/list', ['as' => 'appointment.list', 'uses' => 'AppointmentController@list']);
     ApiRoute::resource('project', 'ProjectController');
     ApiRoute::resource('project-category', 'ProjectCategoryController');
     ApiRoute::resource('currency', 'CurrencyController');

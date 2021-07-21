@@ -390,7 +390,8 @@ class PropertyController extends ValuationAdminBaseController
     {
         $data = array();
         $this->__customConstruct($data);
-        $propertyFeatureEncode = $this->featureMetaData($_POST['feature']);
+        $postFeatures = isset($_POST['feature'])?$_POST['feature']:array();
+        $propertyFeatureEncode = $this->featureMetaData($postFeatures);
         if (ValuationProperty::find($request->id)) {
             $property = ValuationProperty::find($request->id);
         } else {
@@ -485,6 +486,12 @@ class PropertyController extends ValuationAdminBaseController
             }
 
         }
+
+        $bathRoomUnitInfoWeightageArray = array();
+        $finishingQualityUnitInfoWeightageArray = array();
+        $unitInfoMaintenanceWeightageArray = array();
+        $unitInfoFloorLevelWeightageArray = array();
+        $unitInfoViewWeightageArray = array();
 
         $landClassificationWeightage = isset($request->LandClassification) ? $request->LandClassification : 0;
         $landClassificationWeightageArray = array();

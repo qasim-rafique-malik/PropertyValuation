@@ -72,7 +72,7 @@
                                                    autocomplete="nope">
                                         </div>
                                     </div>
-                                      @if(isset($LandShape) && !empty($LandShape))
+                                      @if(isset($LandShape[0]) && !empty($LandShape[0]))
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">{{$LandShape[0]->title}}</label>
@@ -124,93 +124,6 @@
                             </div>
                         </div>
                         <!---LandInfoMeasurements -->
-
-<!--                        -LandInfoNeighbourhood 
-                        <div class="tab-pane fade" id="LandInfoNeighbourhood">
-                            <div class="form-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Front</label>
-                                            <input type="text" name="front" id="front"
-                                                   value="{{isset($front)?$front:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Back</label>
-                                            <input type="text" name="back" id="back" value="{{isset($back)?$back:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Left side</label>
-                                            <input type="text" name="leftSide" id="leftSide"
-                                                   value="{{isset($leftSide)?$leftSide:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Right side</label>
-                                            <input type="text" name="rightSide" id="rightSide"
-                                                   value="{{isset($rightSide)?$rightSide:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Adjacent</label>
-                                            <input type="text" name="adjacent" id="adjacent"
-                                                   value="{{isset($adjacent)?$adjacent:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Surroundings</label>
-                                            <input type="text" name="surroundings" id="surroundings"
-                                                   value="{{isset($surroundings)?$surroundings:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Views</label>
-                                            <input type="text" name="views" id="views"
-                                                   value="{{isset($views)?$views:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Accessibility</label>
-                                            <input type="text" name="accessibility" id="accessibility"
-                                                   value="{{isset($accessibility)?$accessibility:''}}"
-                                                   class="form-control"
-                                                   autocomplete="nope">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        -LandInfoNeighbourhood -->
 
                         
                     </div>

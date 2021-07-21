@@ -508,10 +508,10 @@ $("#kt_datatable_example_1_addrowStructure").click();
 $("#FinancialInfoBuiltUpCostAddBtnStructure").click();
 $("#FinancialInfoAddOnCostAddBtnStructure").click();
 $("#FinancialInfoIncomeAddBtnStructure").click();
-$(".transectionType").select2({
+/*$(".transectionType").select2({
     formatNoMatches: function () {
         return "{{ __('messages.noRecordFound') }}";
     }
-    });
+    });*/
 </script>
 @endpush

@@ -267,10 +267,10 @@ $("#FinancialInfoIncomeAddBtnPropertyInfo").on("click", function() {
 //$("#kt_datatable_example_1_addrowPropertyInfo").click();
 //$("#FinancialInfoAddOnCostAddBtnPropertyInfo").click();
 //$("#FinancialInfoIncomeAddBtnPropertyInfo").click();
-$(".transectionType").select2({
+/*$(".transectionType").select2({
     formatNoMatches: function () {
         return "{{ __('messages.noRecordFound') }}";
     }
-    });
+    });*/
 </script>
 @endpush

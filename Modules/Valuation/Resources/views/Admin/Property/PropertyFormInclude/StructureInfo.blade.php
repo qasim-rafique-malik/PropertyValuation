@@ -291,7 +291,7 @@
                          <!---PropertyInfoFeatures -->
                         <div class="tab-pane fade" id="PropertyInfoFeatures">
                             <div class="form-body">
-                                @if(isset($Amenities) && !empty($Amenities))
+                                @if(isset($Amenities[0]) && !empty($Amenities[0]))
                                 <fieldset>
                                     <legend>{{$Amenities[0]->title}}</legend>
                                 <div class="row">

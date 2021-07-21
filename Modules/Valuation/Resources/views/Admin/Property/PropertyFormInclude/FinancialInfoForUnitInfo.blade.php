@@ -279,11 +279,11 @@ $("#FinancialInfoIncomeAddBtnUnitInfo-{{$objRef->unit_id}}").on("click", functio
 $("#kt_datatable_example_1_addrowUnitInfo-{{$objRef->unit_id}}").click();
 $("#FinancialInfoAddOnCostAddBtnUnitInfo-{{$objRef->unit_id}}").click();
 $("#FinancialInfoIncomeAddBtnUnitInfo-{{$objRef->unit_id}}").click();
-$(".transectionType").select2({
+/*$(".transectionType").select2({
     formatNoMatches: function () {
         return "{{ __('messages.noRecordFound') }}";
     }
-    });
+    });*/
 </script>
 @endpush
 

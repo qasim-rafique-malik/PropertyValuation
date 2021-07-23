@@ -89,7 +89,8 @@ class ManageScopeOfWorksController extends AdminBaseController
         $scopeOfWork->save();
         $this->logSearchEntry($scopeOfWork->id, 'Estimate #' . $scopeOfWork->id, 'admin.estimates.edit', 'estimate');
         DB::commit();
-        return redirect()->back()->with('messages', 'IT WORKS!');
+        return Reply::redirect(route('admin.milestones.show',$request->project_id), __('Created Successfully'));
+        //return redirect()->back()->with('messages', 'IT WORKS!');
     }
 
     public function create($request, $id)
@@ -308,10 +309,11 @@ class ManageScopeOfWorksController extends AdminBaseController
 
     public function destroy($id)
     {
+        $projectId = isset($_POST['projectId'])?$_POST['projectId']:0;
         $firstEstimate = ScopeOfWork::orderBy('id', 'desc')->first();
         if ($firstEstimate->id == $id) {
             ScopeOfWork::destroy($id);
-            return Reply::success(__('messages.estimateDeleted'));
+            return Reply::redirect(route('admin.milestones.show',$projectId), __('Deleted Successfully'));
         } else {
             return Reply::error(__('messages.estimateCanNotDeleted'));
         }

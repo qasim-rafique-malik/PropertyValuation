@@ -191,7 +191,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="informationOfSources">Information Of Sources</label>
-                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                <select class="select2 m-b-10 select2-multiple form-control" multiple="multiple"
                                         data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['informationOfSources'][]">
                                     @foreach($informationOfSources as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
@@ -204,7 +204,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="valuatorsLimitations">Valuators Limitations</label>
-                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                <select class="select2 m-b-10 select2-multiple form-control" multiple="multiple"
                                         data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['valuatorsLimitations'][]">
                                     @foreach($valuatorsLimitations as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
@@ -217,7 +217,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="typeOfReport">Type Of Report</label>
-                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                <select class="select2 m-b-10 select2-multiple form-control" multiple="multiple"
                                         data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['typeOfReport'][]">
                                     @foreach($typeOfReport as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
@@ -230,7 +230,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="restrictionsOnDistribution">Restrictions On Distribution</label>
-                                <select class="select2 m-b-10 select2-multiple " multiple="multiple"
+                                <select class="select2 m-b-10 select2-multiple form-control" multiple="multiple"
                                         data-placeholder="@lang('modules.messages.chooseMember')" name="conditionRules['restrictionsOnDistribution'][]">
                                     @foreach($restrictionsOnDistribution as $emp)
                                         <option value="{{ $emp->id }}">{{ ucwords($emp->description) }} </option>
@@ -448,27 +448,7 @@
             format: '{{ $global->date_picker_format }}',
         });
 
-        $('#estimates-table').on('preXhr.dt', function (e, settings, data) {
-            var startDate = $('#start-date').val();
-
-            if (startDate == '') {
-                startDate = null;
-            }
-
-            var endDate = $('#end-date').val();
-
-            if (endDate == '') {
-                endDate = null;
-            }
-
-            var status = $('#status').val();
-
-            data['startDate'] = startDate;
-            data['endDate'] = endDate;
-            data['status'] = status;
-        });
-
-        loadTable();
+        //loadTable();
 
         $('body').on('click', '.change-status', function(){
             var id = $(this).data('estimate-id');
@@ -502,41 +482,61 @@
             });
         });
 
-        $('body').on('click', '.sa-params', function(){
-            var id = $(this).data('estimate-id');
-            swal({
-                title: "@lang('messages.sweetAlertTitle')",
-                text: "@lang('messages.confirmation.deleteEstimate')",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "@lang('messages.deleteConfirmation')",
-                cancelButtonText: "@lang('messages.confirmNoArchive')",
-                closeOnConfirm: true,
-                closeOnCancel: true
-            }, function(isConfirm){
-                if (isConfirm) {
+    });
 
-                    var url = "{{ route('admin.scopeOfWork.destroy',':id') }}";
-                    url = url.replace(':id', id);
+    $('#estimates-table').on('preXhr.dt', function (e, settings, data) {
+        var startDate = $('#start-date').val();
 
-                    var token = "{{ csrf_token() }}";
+        if (startDate == '') {
+            startDate = null;
+        }
 
-                    $.easyAjax({
-                        type: 'POST',
-                        url: url,
-                        data: {'_token': token, '_method': 'DELETE'},
-                        success: function (response) {
-                            if (response.status == "success") {
-                                $.unblockUI();
-                                loadTable();
-                            }
+        var endDate = $('#end-date').val();
+
+        if (endDate == '') {
+            endDate = null;
+        }
+
+        var status = $('#status').val();
+
+        data['startDate'] = startDate;
+        data['endDate'] = endDate;
+        data['status'] = status;
+    });
+
+    $('body').on('click', '.sa-params-sow', function(){
+        var id = $(this).data('estimate-id');
+        swal({
+            title: "@lang('messages.sweetAlertTitle')",
+            text: "@lang('messages.confirmation.deleteEstimate')",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "@lang('messages.deleteConfirmation')",
+            cancelButtonText: "@lang('messages.confirmNoArchive')",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        }, function(isConfirm){
+            if (isConfirm) {
+
+                var url = "{{ route('admin.scopeOfWork.destroy',':id') }}";
+                url = url.replace(':id', id);
+
+                var token = "{{ csrf_token() }}";
+
+                $.easyAjax({
+                    type: 'POST',
+                    url: url,
+                    data: {'_token': token, '_method': 'DELETE', 'projectId':"{{$project->id}}"},
+                    success: function (response) {
+                        if (response.status == "success") {
+                            $.unblockUI();
+                            loadTable();
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }
         });
-
     });
 
     function loadTable (){

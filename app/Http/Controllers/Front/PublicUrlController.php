@@ -127,8 +127,11 @@ class PublicUrlController extends FrontBaseController
         $address = ($property->plot_num ?? '') . ' ' . ($propertyAddBlock->name ?? '') . ' ' . ($propertyAddCity->name ?? '') . ' ' . ($propertyAddGovern->name ?? '');
         $IntendedUser = $project->getMeta('intendedUsers', null, 'array');
         $valuationDate = $project->getMeta('appointment_day', null, 'string');
-        $user = ValuationIntendedUser::whereIn('id', $IntendedUser)->pluck('title');
-        $userNames = implode(', ', $user->toArray());
+        $userNames = '';
+        if($IntendedUser != null){
+            $user = ValuationIntendedUser::whereIn('id', $IntendedUser)->pluck('title');
+            $userNames = implode(', ', $user->toArray());
+        }
         $conditionRules = array();
         $conditionRules = json_decode($estimate->meta);
         $conditionRulesData = array();
@@ -140,15 +143,21 @@ class PublicUrlController extends FrontBaseController
                 $conditionRulesData[$key] = $array;
             }
         }
-        $valuationInfoTitle = ValuationGeneralSetting::where('meta_key', 'valuationInfoTitle')->pluck('meta_value')[0];
-        $serviceInfoTitle = ValuationGeneralSetting::where('meta_key', 'serviceInfoTitle')->pluck('meta_value')[0];
-        $propertyInfoTitle = ValuationGeneralSetting::where('meta_key', 'propertyInfoTitle')->pluck('meta_value')[0];
+
+        //$valuationInfoTitle = ValuationGeneralSetting::where('meta_key', 'valuationInfoTitle')->pluck('meta_value')[0];
+        $valuationInfoTitle = ValuationGeneralSetting::where('meta_key', 'valuationInfoTitle')->pluck('meta_value');
+        $valuationInfoTitle = $valuationInfoTitle[0] ?? '';
+        $serviceInfoTitle = ValuationGeneralSetting::where('meta_key', 'serviceInfoTitle')->pluck('meta_value');
+        $serviceInfoTitle = $serviceInfoTitle[0] ?? '';
+        $propertyInfoTitle = ValuationGeneralSetting::where('meta_key', 'propertyInfoTitle')->pluck('meta_value');
+        $propertyInfoTitle = $propertyInfoTitle[0] ?? '';
         $valuationGeneralSetting = new ValuationGeneralSetting();
+
         $data = [
             'titles'=>[
-                'info' => $valuationInfoTitle ?? $valuationGeneralSetting->data['valuationInfoTitle'],
-                'property' => $propertyInfoTitle ?? $valuationGeneralSetting->data['propertyInfoTitle'],
-                'service' => $serviceInfoTitle ?? $valuationGeneralSetting->data['serviceInfoTitle'],
+                'info' => ($valuationInfoTitle != '') ? $valuationInfoTitle :$valuationGeneralSetting->data['valuationInfoTitle'],
+                'property' => ($propertyInfoTitle != '') ? $propertyInfoTitle : $valuationGeneralSetting->data['propertyInfoTitle'],
+                'service' => ($serviceInfoTitle != '') ? $serviceInfoTitle : $valuationGeneralSetting->data['serviceInfoTitle'],
             ],
             'info' => [
                 'Valuer' => $isValuator->name ?? '',

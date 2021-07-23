@@ -36,20 +36,20 @@ class ScopeOfWorkDataTable extends BaseDataTable
                 }
                 $action .= '<li><a href="' . route("front.scopeOfWork.show", md5($row->id)) . '" target="_blank"><i class="fa fa-eye"></i> ' . __('app.view') . '</a></li>';
 
-                $action .= '<li><a href="javascript:;" data-toggle="tooltip"  data-estimate-id="' . $row->id . '" class="sendButton"><i class="fa fa-send"></i> ' . __('app.send') . '</a></li>';
+                //$action .= '<li><a href="javascript:;" data-toggle="tooltip"  data-estimate-id="' . $row->id . '" class="sendButton"><i class="fa fa-send"></i> ' . __('app.send') . '</a></li>';
 
                 if ($row->status == 'waiting' || $row->status == 'draft') {
-                    $action .= '<li><a href="' . route("admin.scopeOfWork.edit", $row->id) . '" ><i class="fa fa-pencil"></i> ' . __('app.edit') . '</a></li>';
+                    //$action .= '<li><a href="' . route("admin.scopeOfWork.edit", $row->id) . '" ><i class="fa fa-pencil"></i> ' . __('app.edit') . '</a></li>';
                 }
                  if ($firstScopeOfWork->id == $row->id) {
-                    $action .= '<li><a class="sa-params" href="javascript:;" data-estimate-id="' . $row->id . '"><i class="fa fa-times"></i> ' . __('app.delete') . '</a></li>';
+                    $action .= '<li><a class="sa-params-sow" href="javascript:;" data-estimate-id="' . $row->id . '"><i class="fa fa-times"></i> ' . __('app.delete') . '</a></li>';
                  }
                 if ($row->status == 'waiting') {
 //                    $action .= '<li><a href="' . route("admin.all-invoices.convert-estimate", $row->id) . '" ><i class="ti-receipt"></i> ' . __('app.create') . ' ' . __('app.invoice') . '</a></li>';
 
-                    $action .= '<li><a href="javascript:;" class="change-status" data-estimate-id="' . $row->id . '" ><i class="ti-times"></i> ' . __('app.cancelEstimate') . '</a></li>';
+                    //$action .= '<li><a href="javascript:;" class="change-status" data-estimate-id="' . $row->id . '" ><i class="ti-times"></i> ' . __('app.cancelEstimate') . '</a></li>';
                 }
-                $action .= '<li><a href="' . route("admin.scopeOfWork.duplicate-estimate", $row->id) . '" ><i class="ti-files"></i> ' . __('app.create') . ' ' . __('app.duplicate') . '</a></li>';
+                //$action .= '<li><a href="' . route("admin.scopeOfWork.duplicate-estimate", $row->id) . '" ><i class="ti-files"></i> ' . __('app.create') . ' ' . __('app.duplicate') . '</a></li>';
 
                 $action .= '</ul>
               </div>

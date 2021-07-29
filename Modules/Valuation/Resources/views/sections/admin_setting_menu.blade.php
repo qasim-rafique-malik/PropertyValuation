@@ -6,5 +6,5 @@
     //echo getValuationSettingMenu($modules, $openValuationMainMenu)
     
 @endphp
-<li class="tab "> <a href="{{ route('valuation.admin.settings.menu') }}">Valuation Setting</a></li>
+<li class="tab "> <a href="{{ route('valuation.admin.settings.menu') }}">VMS Setting</a></li>
 

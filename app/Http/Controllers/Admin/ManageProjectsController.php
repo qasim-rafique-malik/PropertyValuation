@@ -433,7 +433,8 @@ class ManageProjectsController extends AdminBaseController
         $this->productName = isset($this->product->name)?$this->product->name:'--';
         $this->productCategory = isset($this->product->category->category_name)?$this->product->category->category_name:'--';
         $this->productSubCategory = isset($this->product->category->category_name)?$this->product->category->category_name:'--';
-
+        $selectedPropertyTypeObj = isset($this->product->getPropertyType)?$this->product->getPropertyType:null;
+        $this->selectedPropertyType = isset($selectedPropertyTypeObj->title)?$selectedPropertyTypeObj->title:'Property type not selected';
 
         return view('admin.projects.show', $this->data);
     }
@@ -538,6 +539,13 @@ class ManageProjectsController extends AdminBaseController
         $project->property_id = (isset($request->projectPropertyId) && $request->projectPropertyId != '' )?$request->projectPropertyId:'';
 
         $project->save();
+
+        $metaData['approaches']=$request->approaches;
+        $metaData['methods']=$request->methods;
+        $metaData['contact_name']=$request->contact_name;
+        $metaData['contact_phone']=$request->contact_phone;
+        $metaData['appointment_day']=$request->appointment_day;
+        $project->setMeta($metaData);
 
         // To add custom fields data
         if ($request->get('custom_fields_data')) {

@@ -246,7 +246,7 @@ return array(
     'projectSummary' => 'Valuation Objectives',
     'note' => 'Note',
     'updateTitle' => 'Update Project Details',
-    'projectCategory' => 'Basis of Valuation',
+    'projectCategory' => 'Valuation Category',
     'clientFeedback' => 'Client Feedback',
     'projectCompletionStatus' => 'Project Completion Status',
     'overview' => 'Overview',
@@ -1498,8 +1498,8 @@ return array(
     'subCategory' => 'Sub Category',
     'subCategoryName' => 'Sub Category Name',
     'category' => 'Category',
-    'productCategory' => 'Product Category',
-    'productSubCategory' => 'Product Sub Category',
+    'productCategory' => 'Purpose of valuation',
+    'productSubCategory' => 'Basis of Valuation',
   ),
   'expenseCategory' =>
   array(

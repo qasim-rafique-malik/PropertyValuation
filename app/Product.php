@@ -6,6 +6,7 @@ use App\Observers\ProductObserver;
 use App\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Valuation\Entities\ValuationPropertyType;
 
 class Product extends BaseModel
 {
@@ -48,5 +49,10 @@ class Product extends BaseModel
         }
 
         return "";
+    }
+
+    public function getPropertyType()
+    {
+        return $this->belongsTo(ValuationPropertyType::class, 'property_type');
     }
 }

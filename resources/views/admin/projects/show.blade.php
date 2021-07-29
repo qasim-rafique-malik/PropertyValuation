@@ -251,14 +251,21 @@
                                                             </p>
                                                         </div>
                                                         <div class="col-xs-6">
+                                                            <label class="font-semi-bold">Property Type</label><br>
+                                                            <p>
+                                                                {{$selectedPropertyType}}
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
                                                             <label class="font-semi-bold">Category</label><br>
                                                             <p>
                                                                 {{$productCategory}}
                                                             </p>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="row">
                                                         <div class="col-xs-6">
                                                             <label class="font-semi-bold">Sub Category</label><br>
                                                             <p>

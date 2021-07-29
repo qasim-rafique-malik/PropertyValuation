@@ -45,6 +45,8 @@ class ProjectTemplateProductController extends AdminBaseController
         $projectTemplateProductRefData = $projectTemplateProductRefObj->where('project_template_id', '=', $id)->first();
 
         $selectedProductData = isset($projectTemplateProductRefData->projectTemplateProduct)?$projectTemplateProductRefData->projectTemplateProduct:null;
+        $selectedPropertyTypeObj = isset($selectedProductData->getPropertyType)?$selectedProductData->getPropertyType:null;
+        $selectedPropertyType = isset($selectedPropertyTypeObj->title)?$selectedPropertyTypeObj->title:'Property type not selected';
         $this->productId = isset($selectedProductData->id)?$selectedProductData->id:0;
         $this->price = isset($selectedProductData->price)?$selectedProductData->price:0;
 
@@ -52,6 +54,7 @@ class ProjectTemplateProductController extends AdminBaseController
         $selectedProductDataSubCategory = isset($selectedProductData->subcategory)?$selectedProductData->subcategory:null;
         $this->category = isset($selectedProductDataCategory->category_name)?$selectedProductDataCategory->category_name:'';
         $this->subCategory = isset($selectedProductDataSubCategory->category_name)?$selectedProductDataSubCategory->category_name:'';;
+        $this->selectedPropertyType = $selectedPropertyType;
 
         $this->projectTemplateProductRefData = $projectTemplateProductRefData;
 

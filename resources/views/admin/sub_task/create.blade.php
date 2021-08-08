@@ -20,7 +20,7 @@
                         <input type="text" name="due_date" autocomplete="off" id="due_date3" class="form-control datepicker">
                     </div>
                 </div>
-                <div class="col-xs-12">
+              {{--  <div class="col-xs-12">
                     <div class="form-group">
                         <label class="required">Field Type</label>
                         <select name="fieldType" id="fieldType" onchange="checkFieldType(this.value)" class="form-control">
@@ -35,18 +35,15 @@
                         </select>
                     </div>
                 </div>
+--}}
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label class="required">Field Linked With</label>
-                        <select name="fieldType" id="fieldLink"  class="form-control">
+                        <select name="formFieldKey" id="fieldLink"  class="form-control">
                             <option value="">--Select Type--</option>
-                            <option value="text" @if(isset($field_type) && $field_type == 'text') selected="selected" @endif >Text</option>
-                            <option value="select" @if(isset($field_type) && $field_type == 'select') selected="selected" @endif>Select Box</option>
-                            <option value="textarea" @if(isset($field_type) && $field_type == 'textarea') selected="selected" @endif>Textarea</option>
-                            <option value="checkbox" @if(isset($field_type) && $field_type == 'checkbox') selected="selected" @endif>Check Box</option>
-                            <option value="radio" @if(isset($field_type) && $field_type == 'radio') selected="selected" @endif>Radio</option>
-                            <!--                     <option value="checkbox">CheckBox</option>
-                                                 <option value="radiobox">RadioBox</option>-->
+                            @foreach($subTaskFormElements as $key=>$value)
+                            <option value="{{$key}}" >{{$value}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

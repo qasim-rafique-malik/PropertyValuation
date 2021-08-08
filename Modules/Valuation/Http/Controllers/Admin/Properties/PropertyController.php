@@ -247,7 +247,9 @@ class PropertyController extends ValuationAdminBaseController
 //                }
             }
         }
-
+       //*************************************************************
+//all options to show on property
+        //*********************************
         $categoryObj = new ValuationPropertyWeightageCategory();
         $this->Accessibility = (object)$categoryObj->where('conditional_text', '=', ValuationPropertyWeightageCategory::AccessibilityText)->get();
         $this->AccessibilityType = (object)$categoryObj->where('conditional_text', '=', ValuationPropertyWeightageCategory::AccessibilityTypeText)->get();

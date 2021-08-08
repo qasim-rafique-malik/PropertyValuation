@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helper\Reply;
+use App\Http\Controllers\Classes\TaskLinker;
 use App\SubTask;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class ManageSubTaskController extends AdminBaseController
     public function create(Request $request)
     {
         $this->taskID = $request->task_id;
+        $this->subTaskFormElements = TaskLinker::$subTaskFormElement;
         return view('admin.sub_task.create', $this->data);
     }
 
@@ -47,6 +49,7 @@ class ManageSubTaskController extends AdminBaseController
         $subTask = new SubTask();
         $subTask->title = $request->name;
         $subTask->task_id = $request->taskID;
+        $subTask->formFieldKey = $request->formFieldKey;
         $subTask->due_date = Carbon::createFromFormat($this->global->date_format, $request->due_date)->format('Y-m-d');
         $subTask->save();
 

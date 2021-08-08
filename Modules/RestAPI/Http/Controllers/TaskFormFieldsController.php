@@ -2,6 +2,7 @@
 
 namespace Modules\RestAPI\Http\Controllers;
 
+use App\Http\Controllers\Classes\TaskLinker;
 use Froiden\RestAPI\ApiResponse;
 use Modules\RestAPI\Entities\SubTask;
 use Modules\RestAPI\Http\Requests\TaskFormFields\IndexRequest;
@@ -53,8 +54,16 @@ class TaskFormFieldsController extends ApiBaseController
     public function index()
     {
         $modelSubTask = new SubTask();
-        $subTaskData = $modelSubTask->where('task_id', request()->route('task_id'))->get();
-        $subTaskData = array();
+        $taskID = request()->route('task_id');
+        $subTasks = $modelSubTask->where('task_id', $taskID)->get();
+
+        $taskLinker = new TaskLinker();
+        $returnAraay = $taskLinker->index($subTasks,$taskID);
+        $data = [
+            'taskFormField'=>$returnAraay,
+
+        ];
+       /* $subTaskData = array();
         $subTaskData[0]['id'] = '1';
         $subTaskData[0]['taskId'] = '2';
         $subTaskData[0]['title'] = 'Floor number';
@@ -155,14 +164,11 @@ class TaskFormFieldsController extends ApiBaseController
         $subTaskData[4]['dueDate'] = '2021-06-28T00:00:00+00:00';
         $subTaskData[4]['startDate'] = null;
         $subTaskData[4]['status'] = 'incomplete';
-
+*/
 
        // echo "<pre>"; print_r($subTaskData); exit;
         //$meta = array();
-        $data = [
-            'taskFormField'=>$subTaskData,
 
-        ];
         $meta = parent::getMetaData(true);
         return ApiResponse::make(null, $data,$meta);
         echo "<pre>"; print_r("var"); exit;

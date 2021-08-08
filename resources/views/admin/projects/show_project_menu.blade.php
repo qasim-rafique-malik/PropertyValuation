@@ -6,7 +6,7 @@
                $roles = !empty($employeesIn->user->roles)?$employeesIn->user->roles:array();
                foreach ($roles as $role){
                    $roleName = $role->name ?? '';
-                   if($roleName == 'Valuater'){
+                   if($roleName == 'Valuator'){
                        $isValuator = true;
                        break;
                    }

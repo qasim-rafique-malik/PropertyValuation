@@ -1240,4 +1240,27 @@ class PropertyController extends ValuationAdminBaseController
         echo "i am here ";
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createPropertyModalView()
+    {
+        return view($this->viewFolderPath . 'createPropertyWithModal', $this->data);
+    }
+
+    public function savePropertyWithModal(Request $request)
+    {
+        $this->__customConstruct($this->data);
+        $properties = new ValuationProperty();
+        $properties->company_id = isset($this->data['companyId']) ? $this->data['companyId'] : 0;
+        $properties->title = isset($request->propertyTitle)?$request->propertyTitle:'Temp';
+        $properties->status = 'Draft';
+        $properties->save();
+        $propertyId = $properties->id;
+        return Reply::successWithData('Property Added successfully', array('title'=>$properties->title, 'id'=>$propertyId));
+
+    }
+
 }

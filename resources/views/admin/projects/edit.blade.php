@@ -86,7 +86,7 @@
                                                 data-style="form-control">
 
                                             @forelse($approaches as $key => $value)
-                                                <option value="{{$key}}" @if($key==$approaches_value)'selected':'' @endif> {{ ucwords($value) }}</option>
+                                                <option value="{{$key}}" {{(isset($approaches_value) && ($key==$approaches_value))?'selected':''}}> {{ ucwords($value) }}</option>
                                             @empty
                                                 <option value=""><a href="javascript:void(0)"
                                                                     role="menuitem">@lang('messages.noRecordFound')</a>
@@ -98,10 +98,10 @@
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Select Methods</label>
-                                        <select class="selectpicker form-control" name="approaches" id="approaches"
+                                        <select class="selectpicker form-control" name="methods" id="methods"
                                                 data-style="form-control">
                                             @forelse($selectMethods as $key => $value)
-                                                <option value="{{$key}}" @if($key==$methods_value)'selected':'' @endif> {{ ucwords($value) }}</option>
+                                                <option value="{{$key}}" {{(isset($methods_value) && ($key==$methods_value))?'selected':''}}@if($key==$methods_value)'selected':'' @endif> {{ ucwords($value) }}</option>
                                             @empty
                                                 <option value=""><a href="javascript:void(0)"
                                                                     role="menuitem">@lang('messages.noRecordFound')</a>
@@ -281,7 +281,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Select Property</label>
+                                        <label class="control-label required">Select Property <a
+                                                    href="javascript:;" id="addProperty"  class="btn btn-xs btn-success btn-outline"><i
+                                                        class="fa fa-plus"></i></a>
+                                        </label>
                                         <select name="projectPropertyId"
                                                 id="projectPropertyId"
                                                 class="form-control projectPropertyId select2"
@@ -458,6 +461,30 @@
         <!-- /.modal-dialog -->
     </div>
     {{--Ajax Modal Ends--}}
+
+    {{--Ajax Modal--}}
+    <div class="modal fade bs-modal-md in" id="addPropertyModal" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-md" id="modal-data-application">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <span class="caption-subject font-red-sunglo bold uppercase" id="modelHeading"></span>
+                </div>
+                <div class="modal-body">
+                    Loading...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn blue">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    {{--Ajax Modal Ends--}}
+
 @endsection
 
 @push('footer-script')
@@ -601,6 +628,11 @@
         var url = '{{ route('admin.projectCategory.create-cat')}}';
         $('#modelHeading').html('Manage Project Category');
         $.ajaxModal('#projectCategoryModal', url);
+    })
+    $('#updateProject').on('click', '#addProperty', function () {
+        var url = '{{ route('valuation.admin.property.createPropertyModalView')}}';
+        $('#modelHeading').html('Add New Property');
+        $.ajaxModal('#addPropertyModal', url);
     })
 </script>
 @endpush

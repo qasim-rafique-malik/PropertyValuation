@@ -109,6 +109,12 @@
                                                                                 <input type="text" class="form-control" value="{{$subCategory}}" disabled="disabled">
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-md-6 ">
+                                                                            <div class="form-group">
+                                                                                <label>Property Type</label>
+                                                                                <input type="text" class="form-control" value="{{$selectedPropertyType}}" disabled="disabled">
+                                                                            </div>
+                                                                        </div>
 
 
                                                                     </div>

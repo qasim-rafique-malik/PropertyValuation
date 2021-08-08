@@ -141,6 +141,8 @@ Route::prefix('valuation')->group(function() {
             Route::get('/newCreateView', 'Admin\Properties\PropertyController@newCreateView')->name('valuation.admin.property.newCreateView');
             Route::get('/property-detail/{id?}', 'Admin\Properties\PropertyController@propertyDetail')->name('valuation.admin.property.property-detail');
             Route::get('/getUnit/{id?}','Admin\Properties\PropertyController@getUnit')->name('valuation.admin.property.getUnit');
+            Route::get('/createPropertyModalView','Admin\Properties\PropertyController@createPropertyModalView')->name('valuation.admin.property.createPropertyModalView');
+            Route::post('/savePropertyWithModal','Admin\Properties\PropertyController@savePropertyWithModal')->name('valuation.admin.property.savePropertyWithModal');
 
             //Property Type routes
             Route::get('/type', 'Admin\Properties\TypeController@index')->name('valuation.admin.property.type');

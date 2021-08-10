@@ -10,6 +10,7 @@ class ValuationGeneralSetting extends ValuationBaseModel
         'valuationInfoTitle' => 'Valuation Information',
         'serviceInfoTitle' => 'Service Information',
         'propertyInfoTitle' => 'Valuation Information',
+        'googleApi' => 'Google Api',
         'maxNumberOfBedrooms'=>8,
         'maxNumberOfBathrooms'=>8,
         'maxNumberOfAmenities'=>8,

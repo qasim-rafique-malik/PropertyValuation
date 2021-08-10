@@ -150,7 +150,7 @@
             modal.find('.modal-title').text(recipient);
         })
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initialize" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{$googleApi}}&callback=initialize" async defer></script>
 <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD6kkurmjYtikPMoyinl8R0OTheMOIg30"></script>-->
 <script type="text/javascript">
         function initialize() {

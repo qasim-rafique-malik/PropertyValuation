@@ -8,6 +8,7 @@ use App\Helper\Reply;
 use Illuminate\Http\Request;
 use Modules\Valuation\Entities\ValuationBaseModel;
 use Modules\Valuation\Entities\ValuationBlock;
+use Modules\Valuation\Entities\ValuationGeneralSetting;
 use Modules\Valuation\Entities\ValuationGovernorate;
 use Modules\Valuation\Entities\ValuationPropertyClass;
 use Modules\Valuation\Entities\ValuationPropertyFeature;
@@ -180,6 +181,9 @@ class PropertyController extends ValuationAdminBaseController
         $this->classes = $propertyClassObj->getAllForCompany();
         $featureCategory = new ValuationPropertyFeatureCategory();
         $this->featureCategorList = $featureCategory->getAllForCompany();
+        $ValuationGeneralSettingFeature = new ValuationGeneralSetting();
+        $googleApi = $ValuationGeneralSettingFeature->where('meta_key','=','googleApi')->get();
+        $this->googleApi = $googleApi[0]['meta_value'];
         $staffList = User::allEmployees();
 
         $staff = array();
